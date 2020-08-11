@@ -1,0 +1,7 @@
+//class Api {
+//
+//  async getProfile() {
+//
+//  }
+//
+//}
