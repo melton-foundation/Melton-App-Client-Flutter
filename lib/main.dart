@@ -42,54 +42,44 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  int _currentScreenIndex = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      persistentFooterButtons: [
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center, //todo fix
-          children: [
-            IconButton(
-              icon:
-                Icon(Icons.contacts, color: Constants.meltonBlue),
-                onPressed: () {},
-                iconSize: 30,
-                padding: EdgeInsets.fromLTRB(20, 10, 40, 10), //todo check all paddings, make it relative?
-            ),
-            Text("Directory"),
-          ],
-        ),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-              icon: Icon(Icons.announcement, 
-                  color: Constants.meltonBlue), 
-              onPressed: () { Navigator.pushNamed(context, "/news"); },
-              iconSize: 30,
-              padding: EdgeInsets.fromLTRB(40, 10, 40, 10), //todo check all paddings
-            ),
-            Text("News"),
-          ],
-        ),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-              icon: Icon(Icons.person,
-                  color: Constants.meltonBlue),
-              onPressed: () { Navigator.pushNamed(context, "/profile_view"); },
-              iconSize: 30,
-              padding: EdgeInsets.fromLTRB(40, 10, 50, 10), //todo check all paddings
-            ),
-            Text("My Profile"),
-          ],
-        ),
-      ],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentScreenIndex,
+        type: BottomNavigationBarType.shifting,
+        backgroundColor: Constants.meltonBlue,
+        items: [
+          BottomNavigationBarItem(
+            title: Text("Directory", style: TextStyle(color: Constants.meltonBlue,
+                fontWeight: FontWeight.bold, fontSize: 16.0)),
+            icon: Icon(Icons.contacts, color: Constants.meltonBlue),
+            backgroundColor: Constants.meltonRed,
+          ),
+          BottomNavigationBarItem(
+            title: Text("News", style: TextStyle(color: Constants.meltonBlue,
+                fontWeight: FontWeight.bold, fontSize: 16.0)),
+            icon: Icon(Icons.announcement, color: Constants.meltonBlue),
+            backgroundColor: Constants.meltonYellow,
+          ),
+          BottomNavigationBarItem(
+            title: Text("Profile", style: TextStyle(color: Constants.meltonBlue,
+                fontWeight: FontWeight.bold, fontSize: 16.0)),
+            icon:  Icon(Icons.person, color: Constants.meltonBlue),
+            backgroundColor: Constants.meltonGreen,
+          ),
+        ],
+        onTap: (index) {
+          setState(() {
+            _currentScreenIndex = index;
+          });
+        },
+      ),
       body: Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
