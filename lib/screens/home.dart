@@ -13,7 +13,6 @@ class _HomeState extends State<Home> {
       body: Column(
         children: [
           Text("HOME"),
-          Image.asset("assets/UN_SDG/sdg_1.png"),
         ],
       ),
     );

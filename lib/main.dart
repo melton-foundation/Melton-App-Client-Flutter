@@ -58,8 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Row(
           children: [
-//            Image.network('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-//            Image.asset("assets/icon.png", fit: BoxFit.cover), //todo fix icon
+            Image.asset("assets/icon.png", height: 40.0, width: 40.0),
+            SizedBox(width: 20.0),
             Text(widget.title, style: TextStyle(
                 color: Constants.meltonRedYellowGreen[_currentScreenIndex],
                 fontWeight: FontWeight.bold,

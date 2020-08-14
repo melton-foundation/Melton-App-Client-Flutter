@@ -11,6 +11,9 @@ class _ProfileState extends State<Profile> {
 //    return Container();
       return Scaffold(
         body: Text("PROFILE"),
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.edit),
+            onPressed: null),
       );
   }
 }
