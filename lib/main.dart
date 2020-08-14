@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:melton_app/constants/constants.dart' as Constants;
 import 'package:melton_app/screens/profile.dart';
+import 'package:melton_app/screens/directory.dart';
+import 'package:melton_app/screens/news.dart';
 
 
 void main() {
@@ -44,11 +46,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int _currentScreenIndex = 1;
 
+  final screens = [
+    Profile(),
+    Directory(),
+    News(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Row(
+          children: [
+//            Image.network('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+//            Image.asset("assets/icon.png", fit: BoxFit.cover), //todo fix icon
+            Text(widget.title, style: TextStyle(
+                color: Constants.meltonRedYellowGreen[_currentScreenIndex],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.white,
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentScreenIndex,
@@ -59,19 +78,19 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text("Directory", style: TextStyle(color: Constants.meltonBlue,
                 fontWeight: FontWeight.bold, fontSize: 16.0)),
             icon: Icon(Icons.contacts, color: Constants.meltonBlue),
-            backgroundColor: Constants.meltonRed,
+            backgroundColor: Constants.meltonRedAccent,
           ),
           BottomNavigationBarItem(
             title: Text("News", style: TextStyle(color: Constants.meltonBlue,
                 fontWeight: FontWeight.bold, fontSize: 16.0)),
-            icon: Icon(Icons.announcement, color: Constants.meltonBlue),
-            backgroundColor: Constants.meltonYellow,
+            icon: Icon(Icons.group, color: Constants.meltonBlue),
+            backgroundColor: Constants.meltonYellowAccent,
           ),
           BottomNavigationBarItem(
             title: Text("Profile", style: TextStyle(color: Constants.meltonBlue,
                 fontWeight: FontWeight.bold, fontSize: 16.0)),
             icon:  Icon(Icons.person, color: Constants.meltonBlue),
-            backgroundColor: Constants.meltonGreen,
+            backgroundColor: Constants.meltonGreenAccent,
           ),
         ],
         onTap: (index) {
@@ -80,29 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         },
       ),
-      body: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            FlatButton(
-              onPressed: () {},
-              color: Colors.amber,
-              child: Text("button 1"),
-            ),
-            FlatButton(
-              onPressed: () {},
-              color: Colors.redAccent,
-              child: Text("button 2"),
-            ),
-            FlatButton(
-              onPressed: () {},
-              color: Colors.purpleAccent,
-              child: Text("button 3"),
-            ),
-          ],
-        ),
-      ),
+      body: screens[_currentScreenIndex],
     );
   }
 }
