@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:melton_app/constants/constants.dart' as Constants;
 import 'package:melton_app/screens/profile.dart';
 import 'package:melton_app/screens/directory.dart';
-import 'package:melton_app/screens/news.dart';
+import 'package:melton_app/screens/home.dart';
 
 
 void main() {
@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final screens = [
     Directory(),
-    News(),
+    Home(),
     Profile(),
   ];
 
@@ -81,9 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
             backgroundColor: Constants.meltonRedAccent,
           ),
           BottomNavigationBarItem(
-            title: Text("News", style: TextStyle(color: Constants.meltonBlue,
+            title: Text("Home", style: TextStyle(color: Constants.meltonBlue,
                 fontWeight: FontWeight.bold, fontSize: 16.0)),
-            icon: Icon(Icons.group, color: Constants.meltonBlue),
+            icon: Icon(Icons.home, color: Constants.meltonBlue),
             backgroundColor: Constants.meltonYellowAccent,
           ),
           BottomNavigationBarItem(
