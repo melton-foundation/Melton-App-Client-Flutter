@@ -44,12 +44,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  int _currentScreenIndex = 1;
+  int _currentScreenIndex = 2;
 
   final screens = [
-    Profile(),
     Directory(),
     News(),
+    Profile(),
   ];
 
   @override
