@@ -2,8 +2,6 @@ library constants;
 
 import 'package:flutter/material.dart';
 
-const apiUrl = "https://meltonapp.com/api/";
-
 //todo handle token
 
 const Color meltonBlue = Color.fromRGBO(0, 66, 119, 1.0);
@@ -30,3 +28,7 @@ const MaterialColor meltonMaterialBlue = MaterialColor(0xFF004277, {
   800: Color.fromRGBO(0, 66, 119, 1.0),
   900: Color.fromRGBO(0, 66, 119, 1.0),
 });
+
+const placeholder_avatar = "assets/profile_avatar_placeholder_256px.png";
+
+const List<String> campuses = ["AU", "BMS", "DU", "FSU", "UFRO", "ZU", "None of the above"];
