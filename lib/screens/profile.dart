@@ -3,7 +3,7 @@ import 'package:melton_app/screens/profile_edit.dart';
 import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/constants/constants.dart' as Constants;
-import 'package:melton_app/screens/profile_line_item.dart';
+import 'package:melton_app/screens/components/profile_line_item.dart';
 import 'package:melton_app/screens/sdg_profile.dart';
 
 import 'package:melton_app/screens/components/JF_badge.dart';
