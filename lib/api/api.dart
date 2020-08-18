@@ -52,8 +52,8 @@ class ApiService {
     http.Response response = await http.get(apiUrl + store_shop, headers: authHeader);
     bool result = handleError(response);
     if (result) {
-      Map<String, dynamic> jsonResponse = json.decode(response.body);
-      List<StoreModel> items;
+      List<dynamic> jsonResponse = json.decode(response.body);
+      List<StoreModel> items = new List<StoreModel>();
       for (int i = 0; i < jsonResponse.length; i++) {
         StoreModel item =  StoreModel.fromJson(jsonResponse[i]);
         items.add(item);

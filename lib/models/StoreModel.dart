@@ -10,7 +10,9 @@ class StoreModel {
       this.purchased});
 
   factory StoreModel.fromJson(Map<String, dynamic> json) {
-
+    return StoreModel(id: json['id'], name: json['name'],
+    description: json['description'], points: json['points'],
+    active: json['active'], purchased: json['purchased']);
   }
 
 }
