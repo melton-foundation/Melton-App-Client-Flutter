@@ -18,7 +18,10 @@ class SocialMediaLineItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return
+      (facebook == null && instagram == null && twitter == null && wechat == null && linkedin == null && others.length == 0)
+          ? empty :
+      Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SizedBox(height: 20.0),
@@ -33,7 +36,6 @@ class SocialMediaLineItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //todo color - meltonBlue + meltonGreen or actual app colors or just leave it black??
               facebook == null ? empty : IconButton(
                 icon: Icon(FontAwesomeIcons.facebook), onPressed:() {_launchURL(facebook);},
                 iconSize: 36.0, color: Constants.meltonBlue,),
@@ -49,11 +51,48 @@ class SocialMediaLineItem extends StatelessWidget {
               linkedin == null ? empty : IconButton(
                 icon: Icon(FontAwesomeIcons.linkedin), onPressed:() {_launchURL(linkedin);},
                 iconSize: 36.0, color: Constants.meltonBlueAccent,),
-              //todo OTHERS links
+              others.length == 0 ? empty : IconButton(
+                icon: Icon(FontAwesomeIcons.ellipsisH),
+                onPressed:() {
+                  otherLinksDialog(context);
+                },
+                iconSize: 36.0,),
             ],
           ),
       ],
     );
+  }
+
+  otherLinksDialog(BuildContext context) {
+    return showDialog(context: context, builder: (context) {
+      return AlertDialog(
+        title: Text("OTHER LINKS", style: TextStyle(color: Constants.meltonBlue, fontWeight: FontWeight.bold),),
+        content: Container(
+          height: 150.0,
+          width: 100.0,
+          child: ListView(
+            children: others.map((e) =>
+                RaisedButton(
+                  onPressed: () {_launchURL(e);},
+                  child: Text(e.split("https://")[1],
+                    style: TextStyle(
+                      color: Constants.meltonBlueAccent,
+                      fontStyle: FontStyle.italic,
+                      decoration: TextDecoration.underline
+                    ),
+                  ),
+                )).toList(),
+          ),
+        ),
+        actions: [
+          MaterialButton(
+            elevation: 10.0,
+            child: Text("OK", style: TextStyle(color: Constants.meltonBlue, fontWeight: FontWeight.bold),),
+            onPressed: () {Navigator.of(context).pop();},
+          ),
+        ],
+      );
+    });
   }
 
   //todo test on android and ios
@@ -65,7 +104,7 @@ class SocialMediaLineItem extends StatelessWidget {
       }
     } else {
       //todo handle correctly
-      // show toast notification?
+      // show toast notification/snackbar?
       print("ERROR: Could not open $url");
     }
   }

@@ -98,10 +98,10 @@ class SocialMediaAccounts {
 
   static bool validateAccount(Map<String, String> account, String type) {
     if (type == "other") {
-      return account['account'].toLowerCase().startsWith("https");
+      return account['account'].toLowerCase().startsWith("https://");
     }
     return account['type'].toLowerCase() == type
-        && account['account'].toLowerCase().startsWith("https");
+        && account['account'].toLowerCase().startsWith("https://");
   }
 
 }
