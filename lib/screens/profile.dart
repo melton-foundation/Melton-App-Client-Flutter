@@ -46,7 +46,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     ProfileLineItem(label: "", content: snapshot.data.name.toUpperCase()),
                     Center(child: JFBadge(isJF: snapshot.data.isJuniorFellow)),
-                    snapshot.data.points == null ? empty : StoreLineItem(points: snapshot.data.points,),
+                    snapshot.data.points == 0 ? empty : StoreLineItem(points: snapshot.data.points,),
                     SocialMediaLineItem(
                       facebook: snapshot.data.socialMediaAccounts.facebook,
                       instagram: snapshot.data.socialMediaAccounts.instagram,
