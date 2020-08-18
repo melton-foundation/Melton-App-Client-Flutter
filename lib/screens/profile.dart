@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:melton_app/screens/components/store_line_item.dart';
 import 'package:melton_app/screens/profile_edit.dart';
 import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/api/api.dart';
+
 import 'package:melton_app/constants/constants.dart' as Constants;
 import 'package:melton_app/screens/components/profile_line_item.dart';
 import 'package:melton_app/screens/components/sdg_profile.dart';
-
 import 'package:melton_app/screens/components/JF_badge.dart';
-
-import 'components/social_media_line_item.dart';
+import 'package:melton_app/screens/components/social_media_line_item.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -44,8 +44,9 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                     ),
-                    snapshot.data.name == null ? ProfileLineItem(label: "NAME", content: "----") : ProfileLineItem(label: "", content: snapshot.data.name.toUpperCase()),
+                    ProfileLineItem(label: "", content: snapshot.data.name.toUpperCase()),
                     Center(child: JFBadge(isJF: snapshot.data.isJuniorFellow)),
+                    snapshot.data.points == null ? empty : StoreLineItem(points: snapshot.data.points,),
                     SocialMediaLineItem(
                       facebook: snapshot.data.socialMediaAccounts.facebook,
                       instagram: snapshot.data.socialMediaAccounts.instagram,
@@ -54,17 +55,18 @@ class _ProfileState extends State<Profile> {
                       linkedin: snapshot.data.socialMediaAccounts.linkedin,
                       others: snapshot.data.socialMediaAccounts.others,
                       ),
-                    snapshot.data.work == null ? empty : ProfileLineItem(label: "WORK", content: snapshot.data.work),
+                    //todo rename "work" to "bio"??
+                    (snapshot.data.work == null || snapshot.data.work.length == 0) ? empty : ProfileLineItem(label: "WORK", content: snapshot.data.work),
                     snapshot.data.SDGs == null ? empty : SDGProfile(
                       firstSDG: snapshot.data.SDGs.firstSDG,
                       secondSDG: snapshot.data.SDGs.secondSDG,
                       thirdSDG: snapshot.data.SDGs.thirdSDG,
                     ),
-                    snapshot.data.campus == null ? empty : ProfileLineItem(label: "CAMPUS", content: snapshot.data.campus),
-                    snapshot.data.batch == null ? empty : ProfileLineItem(label: "BATCH", content: snapshot.data.batch.toString()),
-                    snapshot.data.city == null ? empty : ProfileLineItem(label: "CITY", content: snapshot.data.city),
+                    ProfileLineItem(label: "CAMPUS", content: snapshot.data.campus.toUpperCase()),
+                    ProfileLineItem(label: "BATCH", content: snapshot.data.batch.toString()),
+                    (snapshot.data.city == null || snapshot.data.city.length == 0) ? empty : ProfileLineItem(label: "CITY", content: snapshot.data.city),
                     //todo convert to mailto:url
-                    snapshot.data.email == null ? empty : ProfileLineItem(label: "EMAIL", content: snapshot.data.email),
+                    ProfileLineItem(label: "EMAIL", content: snapshot.data.email),
 
 
                   ],

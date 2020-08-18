@@ -66,22 +66,26 @@ class SocialMediaLineItem extends StatelessWidget {
   otherLinksDialog(BuildContext context) {
     return showDialog(context: context, builder: (context) {
       return AlertDialog(
-        title: Text("OTHER LINKS", style: TextStyle(color: Constants.meltonBlue, fontWeight: FontWeight.bold),),
-        content: Container(
-          height: 150.0,
+        title: Text("MORE LINKS", style: TextStyle(color: Constants.meltonBlue, fontWeight: FontWeight.bold),),
+        content:
+        Container(
+          height: 175.0,
           width: 100.0,
-          child: ListView(
-            children: others.map((e) =>
-                RaisedButton(
-                  onPressed: () {_launchURL(e);},
-                  child: Text(e.split("https://")[1],
-                    style: TextStyle(
-                      color: Constants.meltonBlueAccent,
-                      fontStyle: FontStyle.italic,
-                      decoration: TextDecoration.underline
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: others.map((e) =>
+                  RaisedButton(
+                    onPressed: () {_launchURL(e);},
+                    child: Text(e.split("https://")[1],
+                      style: TextStyle(
+                        color: Constants.meltonBlueAccent,
+                        fontStyle: FontStyle.italic,
+                        decoration: TextDecoration.underline
+                      ),
                     ),
-                  ),
-                )).toList(),
+                  )).toList(),
+            ),
           ),
         ),
         actions: [

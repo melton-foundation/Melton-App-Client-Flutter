@@ -24,7 +24,7 @@ class ProfileModel {
       isJuniorFellow: json['profile']['isJuniorFellow'],
       points: json['profile']['points'],
       campus: json['profile']['campus'],
-      city: json['profile']['city'] + ", " + json['profile']['country'],
+      city: validateCity(json['profile']['city'], json['profile']['country']),
       batch: json['profile']['batch'],
       work: json['profile']['work'],
       phoneNumber: json['phoneNumber'], //todo
@@ -32,6 +32,14 @@ class ProfileModel {
       SDGs: SDGList.fromJson(new List<int>.from(json['profile']['sdgs'])),
       picture: json['profile']['picture'],
     );
+  }
+
+  static String validateCity(String city, String country) {
+    if (city.length == 0 && country.length == 0) {
+      return "";
+    } else {
+      return city + ", " + country;
+    }
   }
 }
 
@@ -90,6 +98,10 @@ class SocialMediaAccounts {
       } else if (validateAccount(responseSocialMediaAccounts[i], "linkedin")) {
         socialMediaAccounts.linkedin = responseSocialMediaAccounts[i]['account'].toLowerCase();
       } else if (validateAccount(responseSocialMediaAccounts[i], "other")) {
+        // only first 3 "other" links are considered
+        if (socialMediaAccounts.others.length == 3) {
+          continue;
+        }
         socialMediaAccounts.others.add(responseSocialMediaAccounts[i]['account']);
       }
     }

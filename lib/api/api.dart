@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:melton_app/models/UserModel.dart';
 import 'package:melton_app/models/ProfileModel.dart';
+import 'package:melton_app/models/StoreModel.dart';
 
 import 'dart:async';
 import 'dart:convert';
@@ -11,6 +12,8 @@ class ApiService {
   static const apiUrl = "https://meltonapp.com/api/";
   static const users =  "users";
   static const profile = "profile";
+  static const store_shop = "store";
+  static const store_buy = "buy";
 
   //todo handle token
   static String token = "Token " + "3a9a52020a37e9ed4768aba67736c8209f8867b0";
@@ -41,6 +44,23 @@ class ApiService {
     }
     else {
       //todo show error msg
+      print("request failed");
+    }
+  }
+
+  Future<List<StoreModel>> getStoreItems() async {
+    http.Response response = await http.get(apiUrl + store_shop, headers: authHeader);
+    bool result = handleError(response);
+    if (result) {
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      List<StoreModel> items;
+      for (int i = 0; i < jsonResponse.length; i++) {
+        StoreModel item =  StoreModel.fromJson(jsonResponse[i]);
+        items.add(item);
+      }
+      return items;
+    } else {
+      //todo show error msg snackbar?
       print("request failed");
     }
   }

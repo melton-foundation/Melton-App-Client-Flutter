@@ -9,26 +9,29 @@ class ProfileLineItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Divider(),
-        Text(label,
-        textAlign: TextAlign.left,
-        style: TextStyle(letterSpacing: 2.0,
-        color: Constants.meltonBlue,
-        fontWeight: FontWeight.bold),
-        ),
-        Text(
-          content,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Constants.meltonRed,
-            fontWeight: FontWeight.bold,
-            fontSize: 18.0,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Divider(),
+          Text(label,
+          textAlign: TextAlign.left,
+          style: TextStyle(letterSpacing: 2.0,
+          color: Constants.meltonBlue,
+          fontWeight: FontWeight.bold),
           ),
-        ),
-      ],
+          Text(
+            content,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Constants.meltonRed,
+              fontWeight: FontWeight.bold,
+              fontSize: 18.0,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
