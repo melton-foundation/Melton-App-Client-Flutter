@@ -16,3 +16,14 @@ class StoreModel {
   }
 
 }
+
+class StoreItemBuy {
+  int availablePoints;
+
+  StoreItemBuy({this.availablePoints});
+
+  factory StoreItemBuy.fromJson(Map<String, dynamic> json) {
+    return StoreItemBuy(availablePoints: json['details']['availablePoints']);
+  }
+
+}

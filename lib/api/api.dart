@@ -10,14 +10,19 @@ import 'dart:convert';
 class ApiService {
 
   static const apiUrl = "https://meltonapp.com/api/";
-  static const users =  "users";
-  static const profile = "profile";
-  static const store_shop = "store";
-  static const store_buy = "buy";
+  static const users =  "users/";
+  static const profile = "profile/";
+  static const store_shop = "store/";
+  static const store_buy = "buy/";
 
   //todo handle token
   static String token = "Token " + "3a9a52020a37e9ed4768aba67736c8209f8867b0";
   static Map<String, String> authHeader = {"Authorization": token};
+  //todo check if this works for all request types
+  static Map<String, String> authAndJsonContentHeader = {
+    "Authorization": token,
+    "Content-Type": "application/json",
+  };
 
   Future<List<UserModel>> getUsers() async {
     http.Response response = await http.get(apiUrl + users, headers: authHeader);
@@ -62,6 +67,17 @@ class ApiService {
     } else {
       //todo show error msg snackbar?
       print("request failed");
+    }
+  }
+
+  Future<StoreItemBuy> buyStoreItem(int itemId) async {
+    http.Response response = await http.post(apiUrl + store_buy, headers: authAndJsonContentHeader, body: """{"itemId":$itemId}""");
+    bool result = handleError(response);
+    if (result) {
+      return StoreItemBuy.fromJson(json.decode(response.body));
+    } else {
+      // todo show error msg snackbar
+      print("request failed, server is being cranky :(");
     }
   }
 
