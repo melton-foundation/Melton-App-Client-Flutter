@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 //todo handle token
 
+//todo make static
 const Color meltonBlue = Color.fromRGBO(0, 66, 119, 1.0);
 const Color meltonRed = Color.fromRGBO(178, 10, 38, 1.0);
 const Color meltonYellow = Color.fromRGBO(229, 155, 26, 1.0);
@@ -31,4 +32,5 @@ const MaterialColor meltonMaterialBlue = MaterialColor(0xFF004277, {
 
 const placeholder_avatar = "assets/profile_avatar_placeholder_256px.png";
 
-const List<String> campuses = ["AU", "BMS", "DU", "FSU", "UFRO", "ZU", "None of the above"];
+//todo just move it to city hubs b4 others request the change?
+const List<String> campuses = ["AU", "BMS", "DU", "FSU", "UFRO", "WU", "ZU", "None of the above"];

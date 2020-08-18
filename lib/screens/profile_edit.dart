@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:melton_app/constants/constants.dart' as Constants;
 
 class ProfileEdit extends StatelessWidget {
-  bool isPhoneValid = false; // use validator or make this stateful
+  bool isPhoneValid = false; // todo use validator or make this stateful
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +43,11 @@ class ProfileEdit extends StatelessWidget {
             Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
             TextField(
               maxLength: 30,
+              inputFormatters: [FilteringTextInputFormatter.allow(RegExp("\\+[0-9]{1,3}\s+[0-9]{5,15}"))], //todo fix
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Phone number",
-                errorText: isPhoneValid ? null : "'+CC XXXXXXXXXX' where 'CC' is country code.",
+                errorText: isPhoneValid ? null : "'+CC XXXXXXXXXX', 'CC' is country code.",
                 icon: Icon(Icons.phone),
               ),
             ),
@@ -55,6 +57,8 @@ class ProfileEdit extends StatelessWidget {
 //            items: [DropdownMenuItem(child:Text(Constants.campuses[0]), value: 1,)],
 //          ),
 
+          // todo - social media either dropdown or indicate which icons have first-class support??
+            // todo - implicitly convert "weixin" to wechat?
 
             //todo remaining dropdowns and fields
 

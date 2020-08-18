@@ -89,7 +89,7 @@ class SocialMediaAccounts {
         socialMediaAccounts.wechat = responseSocialMediaAccounts[i]['account'].toLowerCase();
       } else if (validateAccount(responseSocialMediaAccounts[i], "linkedin")) {
         socialMediaAccounts.linkedin = responseSocialMediaAccounts[i]['account'].toLowerCase();
-      } else if (responseSocialMediaAccounts[i]['account'].toLowerCase().startsWith("https")) {
+      } else if (validateAccount(responseSocialMediaAccounts[i], "other")) {
         socialMediaAccounts.others.add(responseSocialMediaAccounts[i]['account']);
       }
     }
@@ -97,6 +97,9 @@ class SocialMediaAccounts {
   }
 
   static bool validateAccount(Map<String, String> account, String type) {
+    if (type == "other") {
+      return account['account'].toLowerCase().startsWith("https");
+    }
     return account['type'].toLowerCase() == type
         && account['account'].toLowerCase().startsWith("https");
   }
