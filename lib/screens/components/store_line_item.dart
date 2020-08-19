@@ -27,8 +27,8 @@ class StoreLineItem extends StatelessWidget {
             Text("IMPACT POINTS:", style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.white),),
             Text(points.toString(), style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.white)),
             RaisedButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_) => Store(currentPoints: points)));
+              onPressed: () async {
+                final storeBought = await Navigator.of(context).push(MaterialPageRoute(builder: (_) => Store(currentPoints: points)));
               },
               child: Text("OPEN STORE!", style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.white),),
               color: Constants.meltonYellow,

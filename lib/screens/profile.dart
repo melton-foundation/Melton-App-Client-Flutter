@@ -72,7 +72,8 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
               );
-            } else if (snapshot.hasError) {
+            }
+            if (snapshot.hasError) {
               return Text("${snapshot.error}"); //todo handle correctly
             }
             return Center(child: CircularProgressIndicator());
