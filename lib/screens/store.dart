@@ -6,10 +6,7 @@ import 'package:melton_app/constants/constants.dart' as Constants;
 
 class Store extends StatefulWidget {
 
-  // todo overwrite with value from POST response
   final int currentPoints;
-  //todo futurebuilder hasData hasError is not reset?
-  // use streambuilder or another if condition for connection
 
   Store({this.currentPoints});
 
@@ -19,7 +16,6 @@ class Store extends StatefulWidget {
 
 class _StoreState extends State<Store> {
   Future<List<StoreModel>> _model = ApiService().getStoreItems();
-  bool isBought = false; //needed?
   int pointsIfBought;
 
   _StoreState({this.pointsIfBought});
@@ -30,7 +26,7 @@ class _StoreState extends State<Store> {
       appBar: AppBar(title: Text("Melton Store")),
       body: WillPopScope(
         onWillPop: () {
-          Navigator.pop(context, isBought);
+          Navigator.pop(context, pointsIfBought);
           return new Future(() => false); //todo verify "false"
         },
         child: FutureBuilder<List<StoreModel>>(
@@ -59,7 +55,6 @@ class _StoreState extends State<Store> {
                                 style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                               )),
                             ),
-                            //todo add splash animation like store_line_item button?
                              snapshot.data[index].purchased ? Container(height: 40.0, width: 150.0,
                               color: Constants.meltonGreen,
                               child: Center(child: Text("BOUGHT", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
@@ -68,7 +63,6 @@ class _StoreState extends State<Store> {
                               splashColor: Colors.amberAccent,
                               animationDuration: Duration(seconds: 2),
                               onPressed: (snapshot.data[index].points > widget.currentPoints) ? null :
-                              //todo use StoreItemBuy.availablePoints to update Buy buttons
                               () => {
                                 showDialog(context: context, builder: (context) {
                                   return AlertDialog(title: Text("BUY ${snapshot.data[index].name}?"),
@@ -91,7 +85,7 @@ class _StoreState extends State<Store> {
                                               _model = ApiService().getStoreItems();
                                               pointsIfBought = item.availablePoints;
                                             });
-                                            Navigator.of(context).pop();
+                                            Navigator.of(context).pop(pointsIfBought);
                                           },
                                         ),
                                         MaterialButton(
