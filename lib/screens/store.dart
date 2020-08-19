@@ -72,7 +72,7 @@ class _StoreState extends State<Store> {
                                         child: SingleChildScrollView(
                                           child:
                                           Text("Are you sure you want to buy ${snapshot.data[index].name} for ${snapshot.data[index].points} points? "
-                                              "\n \n Have a wonderful time :) \n \n No takebacks!"),
+                                              "\n \n You've earned it :) \n \n No takebacks!"),
                                         ),
                                       ),
                                       actions: [

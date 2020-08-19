@@ -71,7 +71,8 @@ class ApiService {
   }
 
   Future<StoreItemBuy> buyStoreItem(int itemId) async {
-    http.Response response = await http.post(apiUrl + store_buy, headers: authAndJsonContentHeader, body: """{"itemId":$itemId}""");
+    http.Response response = await http.post(apiUrl + store_buy,
+        headers: authAndJsonContentHeader, body: """{"itemId":$itemId}""");
     bool result = handleError(response);
     if (result) {
       return StoreItemBuy.fromJson(json.decode(response.body));

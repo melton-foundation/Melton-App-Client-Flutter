@@ -46,6 +46,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     ProfileLineItem(label: "", content: snapshot.data.name.toUpperCase()),
                     Center(child: JFBadge(isJF: snapshot.data.isJuniorFellow)),
+                    //todo may need null check for /users reuse
                     snapshot.data.points == 0 ? empty : StoreLineItem(points: snapshot.data.points,),
                     SocialMediaLineItem(
                       facebook: snapshot.data.socialMediaAccounts.facebook,
@@ -79,6 +80,8 @@ class _ProfileState extends State<Profile> {
             return Center(child: CircularProgressIndicator());
           },
         ),
+        //todo move inside futurebuilder to prevent click when api response is not yet ready?
+          // needed if we are prepopulating profile data in edit form
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.edit),
             onPressed: () {
