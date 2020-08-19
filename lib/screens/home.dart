@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:melton_app/screens/posts/posts_preview.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,12 +9,17 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-//    return Container();
     return Scaffold(
-      body: Column(
-        children: [
-          Text("HOME"),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child:
+//        Column(
+//          children: [
+            PostsPreview(),
+            //todo other "home" components
+            // maps api? other stuff?
+//          ],
+//        ),
       ),
     );
   }

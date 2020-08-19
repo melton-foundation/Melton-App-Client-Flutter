@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:melton_app/models/PostModel.dart';
 import 'package:melton_app/models/UserModel.dart';
 import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/models/StoreModel.dart';
@@ -14,11 +15,11 @@ class ApiService {
   static const profile = "profile/";
   static const store_shop = "store/";
   static const store_buy = "buy/";
+  static const post_preview = "posts/";
 
   //todo handle token
   static String token = "Token " + "3a9a52020a37e9ed4768aba67736c8209f8867b0";
   static Map<String, String> authHeader = {"Authorization": token};
-  //todo check if this works for all request types
   static Map<String, String> authAndJsonContentHeader = {
     "Authorization": token,
     "Content-Type": "application/json",
@@ -76,6 +77,36 @@ class ApiService {
     bool result = handleError(response);
     if (result) {
       return StoreItemBuy.fromJson(json.decode(response.body));
+    } else {
+      // todo show error msg snackbar
+      print("request failed, server is being cranky :(");
+    }
+  }
+  
+  Future<List<PostModel>> getPostPreviewList() async {
+    http.Response response = await http.get(apiUrl + post_preview, headers: authHeader);
+    bool result = handleError(response);
+    if (result) {
+      List<dynamic> jsonResponse = json.decode(response.body);
+      List<PostModel> postPreviewList = new List<PostModel>();
+      for (int i = 0; i < jsonResponse.length; i++) {
+        PostModel postPreview = PostModel.fromJson(jsonResponse[i]);
+        postPreviewList.add(postPreview);
+      }
+      return postPreviewList;
+    } else {
+      // todo show error msg snackbar
+      print("request failed, server is being cranky :(");
+    }
+  }
+
+  Future<PostModel> getPostById(int postId) async {
+    http.Response response = await http.get(apiUrl + post_preview + postId.toString(), headers: authHeader);
+    bool result = handleError(response);
+    if (result) {
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      PostModel post = PostModel.fromJson(jsonResponse);
+      return post;
     } else {
       // todo show error msg snackbar
       print("request failed, server is being cranky :(");
