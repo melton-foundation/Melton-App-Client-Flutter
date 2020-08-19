@@ -62,7 +62,7 @@ class _StoreState extends State<Store> {
                             RaisedButton(
                               splashColor: Colors.amberAccent,
                               animationDuration: Duration(seconds: 2),
-                              onPressed: (snapshot.data[index].points > widget.currentPoints) ? null :
+                              onPressed: (snapshot.data[index].points > pointsIfBought) ? null :
                               () => {
                                 showDialog(context: context, builder: (context) {
                                   return AlertDialog(title: Text("BUY ${snapshot.data[index].name}?"),

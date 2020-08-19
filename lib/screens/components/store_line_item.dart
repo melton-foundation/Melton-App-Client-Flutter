@@ -10,14 +10,16 @@ class StoreLineItem extends StatefulWidget {
   StoreLineItem({this.points});
 
   @override
-  _StoreLineItemState createState() => _StoreLineItemState(latestPoints: points);
+  _StoreLineItemState createState() => _StoreLineItemState(points);
 }
 
 class _StoreLineItemState extends State<StoreLineItem> {
 
   int latestPoints;
 
-  _StoreLineItemState({this.latestPoints});
+  _StoreLineItemState(int inputPoints) {
+      latestPoints = inputPoints;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class _StoreLineItemState extends State<StoreLineItem> {
             Text(latestPoints.toString(), style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.white)),
             RaisedButton(
               onPressed: () async {
-                final storeBoughtPoints = await Navigator.of(context).push(MaterialPageRoute(builder: (_) => Store(currentPoints: widget.points)));
+                final storeBoughtPoints = await Navigator.of(context).push(MaterialPageRoute(builder: (_) => Store(currentPoints: latestPoints)));
                 setState(() {
                   latestPoints = storeBoughtPoints;
                 });
