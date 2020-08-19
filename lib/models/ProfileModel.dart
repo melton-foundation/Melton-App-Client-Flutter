@@ -126,7 +126,7 @@ class PhoneNumber {
   factory PhoneNumber.fromJson(List<dynamic> responsePhoneNumbers) {
     for (int i = 0; i < responsePhoneNumbers.length; i++) {
       try {
-        Map<String, String> responsePhoneNumber = responsePhoneNumbers[i];
+        Map<String, String> responsePhoneNumber = new Map<String, String>.from(responsePhoneNumbers[i]);
         if (responsePhoneNumber['number'].length == 0) {
           continue;
         }
