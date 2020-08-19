@@ -7,7 +7,7 @@ class ProfileModel {
   String city;
   int batch;
   String work;
-  String phoneNumber;
+  PhoneNumber phoneNumber;
   SocialMediaAccounts socialMediaAccounts;
   SDGList SDGs;
   String picture;
@@ -26,7 +26,7 @@ class ProfileModel {
       city: validateCity(json['profile']['city'], json['profile']['country']),
       batch: json['profile']['batch'],
       work: json['profile']['work'],
-      phoneNumber: json['phoneNumber'], //todo
+      phoneNumber: PhoneNumber.fromJson(json['profile']['phoneNumber']),
       socialMediaAccounts: SocialMediaAccounts.fromJson(new List<dynamic>.from(json['profile']['socialMediaAccounts'])),
       SDGs: SDGList.fromJson(new List<int>.from(json['profile']['sdgs'])),
       picture: json['profile']['picture'],
@@ -127,9 +127,12 @@ class PhoneNumber {
     for (int i = 0; i < responsePhoneNumbers.length; i++) {
       try {
         Map<String, String> responsePhoneNumber = responsePhoneNumbers[i];
+        if (responsePhoneNumber['number'].length == 0) {
+          continue;
+        }
         // only first phone number is returned
         return PhoneNumber(countryCode: responsePhoneNumber['countryCode'],
-            phoneNumber: responsePhoneNumber['phoneNumber']);
+            phoneNumber: responsePhoneNumber['number']);
       } catch (e) {
         continue;
       }
