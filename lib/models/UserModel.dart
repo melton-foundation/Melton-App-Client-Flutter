@@ -1,3 +1,5 @@
+import 'package:melton_app/models/ProfileModel.dart';
+
 class UserModel {
   int id;
   String email;
@@ -7,18 +9,15 @@ class UserModel {
   String city;
   int batch;
   String work;
-  String phoneNumber;
-  Map<String, String> socialMediaAccounts;
+  PhoneNumber phoneNumber;
+  SocialMediaAccounts socialMediaAccounts;
   List<int> SDGs;
   String picture;
 
-
-//todo constructor
   UserModel({this.id, this.email, this.name, this.isJuniorFellow,
   this.campus, this.city, this.batch, this.work, this.phoneNumber,
   this.socialMediaAccounts, this.SDGs, this.picture});
 
-// todo json decode - handle phone number and social media
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id'],
@@ -29,8 +28,8 @@ class UserModel {
       city: json['city'],
       batch: json['batch'],
       work: json['work'],
-      phoneNumber: json['phoneNumber'], //todo
-      socialMediaAccounts: json['socialMediaAccounts'], //todo
+      phoneNumber: PhoneNumber.fromJson(json['phoneNumber']),
+      socialMediaAccounts: SocialMediaAccounts.fromJson(new List<dynamic>.from(json['socialMediaAccounts'])),
       SDGs: json['SDGs'],
       picture: json['picture'],
     );

@@ -28,8 +28,8 @@ class ApiService {
     http.Response response = await http.get(apiUrl + users, headers: authHeader);
     bool result = handleError(response);
     if (result) {
-      Map<String, dynamic> jsonResponse = json.decode(response.body);
-      List<UserModel> users;
+      List<dynamic> jsonResponse = json.decode(response.body);
+      List<UserModel> users = new List<UserModel>();
       for (int i = 0; i < jsonResponse.length; i++) {
         UserModel user =  UserModel.fromJson(jsonResponse[i]);
         users.add(user);

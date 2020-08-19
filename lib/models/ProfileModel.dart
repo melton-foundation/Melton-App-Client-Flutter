@@ -16,7 +16,6 @@ class ProfileModel {
   this.campus, this.city, this.batch, this.work, this.phoneNumber,
   this.socialMediaAccounts, this.SDGs, this.picture});
 
-  // todo json decode - handle phone number
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
       email: json['profile']['user']['email'],
@@ -114,6 +113,28 @@ class SocialMediaAccounts {
     }
     return account['type'].toLowerCase() == type
         && account['account'].toLowerCase().startsWith("https://");
+  }
+
+}
+
+class PhoneNumber {
+  String countryCode;
+  String phoneNumber;
+
+  PhoneNumber({this.countryCode, this.phoneNumber});
+
+  factory PhoneNumber.fromJson(List<dynamic> responsePhoneNumbers) {
+    for (int i = 0; i < responsePhoneNumbers.length; i++) {
+      try {
+        Map<String, String> responsePhoneNumber = responsePhoneNumbers[i];
+        // only first phone number is returned
+        return PhoneNumber(countryCode: responsePhoneNumber['countryCode'],
+            phoneNumber: responsePhoneNumber['phoneNumber']);
+      } catch (e) {
+        continue;
+      }
+    }
+    return PhoneNumber(countryCode: "", phoneNumber: "");
   }
 
 }
