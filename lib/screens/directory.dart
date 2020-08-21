@@ -103,6 +103,7 @@ class _DirectoryState extends State<Directory> {
         userFilter('Batch Year'),
         userFilter('SDG'),
         IconButton(
+          // todo add alert dialog with info about filter that pops up when you click filter icon
           onPressed: () {},
           icon: Icon(
             FontAwesomeIcons.filter,
