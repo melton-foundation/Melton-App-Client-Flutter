@@ -1,7 +1,7 @@
 class GetHumanTime {
 
   static String getHumanTime(DateTime target) {
-      DateTime now = DateTime.now();
+      DateTime now = DateTime.now(); // todo convert to gmt, by default it returns local time (so german in our case)
       Duration difference = now.difference(target);
       if (difference.inMinutes < 2) {
         return "just now";
