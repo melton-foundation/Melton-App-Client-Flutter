@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:http/http.dart' as http;
 import 'package:melton_app/models/PostModel.dart';
 import 'package:melton_app/models/UserModel.dart';
@@ -83,7 +85,7 @@ class ApiService {
     }
   }
   
-  Future<List<PostModel>> getPostPreviewList() async {
+  Future<List<PostModel>> getPostPreviewList(bool sendTopThree) async {
     http.Response response = await http.get(apiUrl + post_preview, headers: authHeader);
     bool result = handleError(response);
     if (result) {
@@ -93,7 +95,12 @@ class ApiService {
         PostModel postPreview = PostModel.fromJson(jsonResponse[i]);
         postPreviewList.add(postPreview);
       }
-      return postPreviewList;
+      if (sendTopThree) {
+        // return first 3 posts
+        return postPreviewList.sublist(0, min(postPreviewList.length, 3));
+      } else {
+        return postPreviewList;
+      }
     } else {
       // todo show error msg snackbar
       print("request failed, server is being cranky :(");
@@ -129,6 +136,9 @@ class ApiService {
       return false;
     } else if (response.statusCode == 410) {
       // disapproved by admin - show msg
+      return false;
+    } else {
+      // some other error
       return false;
     }
 
