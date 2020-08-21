@@ -85,6 +85,8 @@ class _PostFullPageState extends State<PostFullPage> {
                                 height: 400,
                                 child: Markdown(
                                   data: snapshot.data.content,
+                                  styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
+                                      .copyWith(textScaleFactor: 1.2),
                                   )
                                 ),
                             ],
