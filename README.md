@@ -1,5 +1,7 @@
 # melton_app
 
+todo update readme, see melton-app-client repo
+
 App for Melton Foundation Fellows - https://meltonfoundation.org/
 
 ## Getting Started
