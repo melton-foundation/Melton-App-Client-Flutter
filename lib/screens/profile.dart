@@ -9,6 +9,8 @@ import 'package:melton_app/screens/components/profile_line_item.dart';
 import 'package:melton_app/screens/components/sdg_profile.dart';
 import 'package:melton_app/screens/components/JF_badge.dart';
 import 'package:melton_app/screens/components/social_media_line_item.dart';
+import 'package:melton_app/screens/components/profile_photo.dart';
+
 
 class Profile extends StatefulWidget {
   @override
@@ -22,7 +24,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
+    return Scaffold(
         body: FutureBuilder<ProfileModel>(
           future: _model,
           builder: (context, snapshot) {
@@ -33,20 +35,15 @@ class _ProfileState extends State<Profile> {
                   //todo pull to refresh
                   children: [
                     SizedBox(height: 10.0),
-                    Center(child:
-                      Card(
-                        elevation: 18.0,
-                        shape: CircleBorder(),
-                        child: CircleAvatar(
-                          backgroundImage: snapshot.data.picture == null ?
-                            AssetImage(Constants.placeholder_avatar) :
-                            NetworkImage(snapshot.data.picture), radius: 50.0,
-                        ),
-                      ),
-                    ),
-                    ProfileLineItem(label: "", content: snapshot.data.name.toUpperCase()),
+                    ProfilePhoto(url: snapshot.data.picture),
+                    ProfileLineItem(
+                        label: "", content: snapshot.data.name.toUpperCase()),
                     Center(child: JFBadge(isJF: snapshot.data.isJuniorFellow)),
-                    snapshot.data.points == null ? empty : StoreLineItem(points: snapshot.data.points,),
+                    snapshot.data.points == null
+                        ? empty
+                        : StoreLineItem(
+                            points: snapshot.data.points,
+                          ),
                     SocialMediaLineItem(
                       facebook: snapshot.data.socialMediaAccounts.facebook,
                       instagram: snapshot.data.socialMediaAccounts.instagram,
@@ -54,21 +51,34 @@ class _ProfileState extends State<Profile> {
                       wechat: snapshot.data.socialMediaAccounts.wechat,
                       linkedin: snapshot.data.socialMediaAccounts.linkedin,
                       others: snapshot.data.socialMediaAccounts.others,
-                      ),
-                    //todo rename "work" to "bio"??
-                    (snapshot.data.work == null || snapshot.data.work.length == 0) ? empty : ProfileLineItem(label: "WORK", content: snapshot.data.work),
-                    snapshot.data.SDGs == null ? empty : SDGProfile(
-                      firstSDG: snapshot.data.SDGs.firstSDG,
-                      secondSDG: snapshot.data.SDGs.secondSDG,
-                      thirdSDG: snapshot.data.SDGs.thirdSDG,
                     ),
-                    ProfileLineItem(label: "CAMPUS", content: snapshot.data.campus.toUpperCase()),
-                    ProfileLineItem(label: "BATCH", content: snapshot.data.batch.toString()),
-                    (snapshot.data.city == null || snapshot.data.city.length == 0) ? empty : ProfileLineItem(label: "CITY", content: snapshot.data.city),
+                    //todo rename "work" to "bio"??
+                    (snapshot.data.work == null ||
+                            snapshot.data.work.length == 0)
+                        ? empty
+                        : ProfileLineItem(
+                            label: "WORK", content: snapshot.data.work),
+                    snapshot.data.SDGs == null
+                        ? empty
+                        : SDGProfile(
+                            firstSDG: snapshot.data.SDGs.firstSDG,
+                            secondSDG: snapshot.data.SDGs.secondSDG,
+                            thirdSDG: snapshot.data.SDGs.thirdSDG,
+                          ),
+                    ProfileLineItem(
+                        label: "CAMPUS",
+                        content: snapshot.data.campus.toUpperCase()),
+                    ProfileLineItem(
+                        label: "BATCH",
+                        content: snapshot.data.batch.toString()),
+                    (snapshot.data.city == null ||
+                            snapshot.data.city.length == 0)
+                        ? empty
+                        : ProfileLineItem(
+                            label: "CITY", content: snapshot.data.city),
                     //todo convert to mailto:url
-                    ProfileLineItem(label: "EMAIL", content: snapshot.data.email),
-
-
+                    ProfileLineItem(
+                        label: "EMAIL", content: snapshot.data.email),
                   ],
                 ),
               );
@@ -80,14 +90,15 @@ class _ProfileState extends State<Profile> {
           },
         ),
         //todo move inside futurebuilder to prevent click when api response is not yet ready?
-          // needed if we are prepopulating profile data in edit form
+        // needed if we are prepopulating profile data in edit form
         floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.edit),
-            onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => ProfileEdit()));
-            },
-        )
-      );
+          child: Icon(Icons.edit),
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => ProfileEdit()));
+          },
+        ));
   }
+
 }
+

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:melton_app/constants/constants.dart' as Constants;
 import 'package:melton_app/api/api.dart';
+import 'package:melton_app/constants/constants.dart' as Constants;
 import 'package:melton_app/models/UserModel.dart';
+import 'package:melton_app/screens/components/user_details_dialog.dart';
 
 class Directory extends StatefulWidget {
   @override
@@ -67,10 +69,9 @@ class _DirectoryState extends State<Directory> {
           footer: userTileFooter(snapshot, index),
           child: GestureDetector(
             onTap: (){showUserDetails(snapshot.data[index].id);},
-            child: Image.network(
-              snapshot.data[index].picture,
-              fit: BoxFit.fill,
-            ),
+            child: snapshot.data[index].picture == null ?
+            AssetImage(Constants.placeholder_avatar) :
+            Image.network(snapshot.data[index].picture, fit: BoxFit.fill),
           ),
         );
   }
@@ -94,7 +95,7 @@ class _DirectoryState extends State<Directory> {
     Future<UserModel> model = ApiService().getUserModelById(id);
     model.then((value) => {print(value.name)});
     showDialog(context: context, builder: (context){
-      return UserDetailsAlertDialog();
+      return UserDetailsAlertDialog(model);
     });
   }
 
@@ -125,7 +126,6 @@ class _DirectoryState extends State<Directory> {
           ),
         ),
       )
-//      Text('User Search Bar', style: stylesForFilters()),
     );
   }
 
@@ -209,36 +209,3 @@ class _DirectoryState extends State<Directory> {
     );
   }
 }
-class UserDetailsAlertDialog extends StatefulWidget {
-  @override
-  _UserDetailsAlertDialogState createState() => _UserDetailsAlertDialogState();
-}
-
-class _UserDetailsAlertDialogState extends State<UserDetailsAlertDialog> {
-  Future<UserModel> _userModel = ApiService().getUserModelById(4);
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('User Profile'),
-      content: FutureBuilder<UserModel>(
-        future: _userModel,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
-            return Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasData) {
-            return Expanded(
-              child: Text(snapshot.data.name),
-            );
-          }
-          if (snapshot.hasError) {
-            return Text("${snapshot.error}"); //todo handle correctly
-          }
-          //todo make fun error screen
-          return Center(child: Text("ERROR: SOMETHING WENT WRONG"));
-        },
-      ),
-    );
-  }
-}
-
