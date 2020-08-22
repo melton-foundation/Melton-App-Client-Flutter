@@ -11,7 +11,6 @@ class Directory extends StatefulWidget {
 
 class _DirectoryState extends State<Directory> {
   Future<List<UserModel>> _userListModel = ApiService().getUsers();
-
   @override
   Widget build(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
@@ -66,9 +65,12 @@ class _DirectoryState extends State<Directory> {
   GridTile userTile(AsyncSnapshot<List<UserModel>> snapshot, int index) {
     return GridTile(
           footer: userTileFooter(snapshot, index),
-          child: Image.network(
-            snapshot.data[index].picture,
-            fit: BoxFit.fill,
+          child: GestureDetector(
+            onTap: (){showUserDetails(snapshot.data[index].id);},
+            child: Image.network(
+              snapshot.data[index].picture,
+              fit: BoxFit.fill,
+            ),
           ),
         );
   }
@@ -76,42 +78,76 @@ class _DirectoryState extends State<Directory> {
   GestureDetector userTileFooter(AsyncSnapshot<List<UserModel>> snapshot, int index) {
     return GestureDetector(
           onTap: () {
-            print(
-                'show user profile for ${snapshot.data[index].name} || id : ${snapshot.data[index].id}');
+            showUserDetails(snapshot.data[index].id);
           },
           child: GridTileBar(
             title: Center(
-              child: Text(snapshot.data[index].name),
+              child: Text(snapshot.data[index].name, style: testStyleForUserName()),
             ),
-            backgroundColor: Colors.red,
+            backgroundColor: Constants.userTileFooterColor,
           ),
         );
   }
 
+  void showUserDetails(int id) {
+    print('show user profile for $id');
+    Future<UserModel> model = ApiService().getUserModelById(id);
+    model.then((value) => {print(value.name)});
+    showDialog(context: context, builder: (context){
+      return UserDetailsAlertDialog();
+    });
+  }
+
   userSearch() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-      child: Text('User Search Bar', style: stylesForFilters()),
+      padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+      child: SizedBox(
+        height: 40,
+        child: TextField(
+          onChanged: (value) {
+            if(value.length > 2){
+              print('entered val : '+value);
+              //add search logic here
+            }
+          },
+          style: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.bold),
+          decoration: InputDecoration(
+              suffixIcon: Icon(Icons.search),
+              border: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(
+                  const Radius.circular(40.0),
+                ),
+              ),
+              filled: true,
+//              hintStyle: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.bold),
+//              hintText: "Type in user name",
+              fillColor: Colors.white,
+          ),
+        ),
+      )
+//      Text('User Search Bar', style: stylesForFilters()),
     );
   }
 
   userSearchFilter() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        userFilter('Campus'),
-        userFilter('Batch Year'),
-        userFilter('SDG'),
-        IconButton(
-          // todo add alert dialog with info about filter that pops up when you click filter icon
-          onPressed: () {},
-          icon: Icon(
-            FontAwesomeIcons.filter,
-            color: Colors.white,
-            size: 25,
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          userFilter('Campus'),
+          userFilter('Batch Year'),
+          userFilter('SDG'),
+          IconButton(
+            // todo add alert dialog with info about filter that pops up when you click filter icon
+            onPressed: () {},
+            icon: Icon(
+              FontAwesomeIcons.filter,
+              color: Colors.white,
+              size: 25,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -119,19 +155,90 @@ class _DirectoryState extends State<Directory> {
     return TextStyle(
 //      fontWeight: FontWeight.bold,
       color: Colors.white,
-      fontSize: 17,
+      fontSize: 18,
 //      letterSpacing: 1.2,
     );
   }
 
   userFilter(String title) {
-    return RaisedButton(
-      onPressed: () { print('$title button is pressed'); },
-      color: Constants.userSearchFilters,
-      child: Text(title, style: stylesForFilters()),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
+    int _value = 1;
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50.0),
+        border: Border.all(
+            color: Colors.red, style: BorderStyle.solid, width: 0.80),
+        color: Colors.white,
+      ),
+      child: SizedBox(
+        height: 35,
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton(
+            focusColor: Colors.grey,
+            items: [
+              DropdownMenuItem(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                value: 1,
+              ),
+              DropdownMenuItem(
+                child: Text("Second"),
+                value: 2,
+              ),
+              DropdownMenuItem(child: Text("Third"), value: 3),
+              DropdownMenuItem(child: Text("Fourth"), value: 4)
+            ],
+            onChanged: (value) {},
+            isExpanded: false,
+            value: 1,
+          ),
+        ),
+      ),
+    );
+  }
+
+  testStyleForUserName() {
+    return TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+    );
+  }
+}
+class UserDetailsAlertDialog extends StatefulWidget {
+  @override
+  _UserDetailsAlertDialogState createState() => _UserDetailsAlertDialogState();
+}
+
+class _UserDetailsAlertDialogState extends State<UserDetailsAlertDialog> {
+  Future<UserModel> _userModel = ApiService().getUserModelById(4);
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('User Profile'),
+      content: FutureBuilder<UserModel>(
+        future: _userModel,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasData) {
+            return Expanded(
+              child: Text(snapshot.data.name),
+            );
+          }
+          if (snapshot.hasError) {
+            return Text("${snapshot.error}"); //todo handle correctly
+          }
+          //todo make fun error screen
+          return Center(child: Text("ERROR: SOMETHING WENT WRONG"));
+        },
       ),
     );
   }
 }
+

@@ -17,6 +17,7 @@ const Color meltonGreenAccent = Color.fromRGBO(106, 173, 137, 1.0);
 
 const Color userSearchFilters = Color.fromRGBO(57, 93, 115, 1.0);
 const Color directoryBackground = Color.fromRGBO(0, 40, 66, 1.0);
+const Color userTileFooterColor = Colors.red;
 
 const List<Color> meltonRedYellowGreen = [meltonRed, meltonYellow, meltonGreen];
 
