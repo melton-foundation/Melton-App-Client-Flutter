@@ -44,6 +44,19 @@ class ApiService {
     }
   }
 
+  Future<UserModel> getUserModelById(int id) async{
+    http.Response response = await http.get(apiUrl + users+ id.toString(), headers: authHeader);
+    bool result = handleError(response);
+    if (result) {
+      return UserModel.fromJson(json.decode(response.body));
+    }
+    else {
+      //todo show error msg
+      print("request failed");
+    }
+    return UserModel();
+  }
+
   Future<ProfileModel> getProfile() async {
     http.Response response = await http.get(apiUrl + profile, headers: authHeader);
     bool result = handleError(response);
