@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/constants/constants.dart' as Constants;
 
-class ProfileEdit extends StatelessWidget {
-  bool isPhoneValid = false; // todo use validator or make this stateful
+class ProfileEdit extends StatefulWidget {
+//  final ProfileModel currentModel;
+//  const ProfileEdit({this.currentModel});
+
+  @override
+  _ProfileEditState createState() => _ProfileEditState();
+//  _ProfileEditState createState() => _ProfileEditState(latestModel: currentModel);
+}
+
+class _ProfileEditState extends State<ProfileEdit> {
+//  ProfileModel latestModel;
+
+//  _ProfileEditState({this.latestModel});
+
+  bool isPhoneValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +33,7 @@ class ProfileEdit extends StatelessWidget {
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Name",
-                icon: Icon(Icons.account_box), //todo account_box??
+                icon: Icon(Icons.account_box),
               ),
             ),
             Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
@@ -30,6 +45,10 @@ class ProfileEdit extends StatelessWidget {
                 icon: Icon(Icons.home),
               ),
             ),
+            Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
+            IconButton(icon: Icon(Icons.keyboard_arrow_down), onPressed: () { showDatePicker(context: context,
+                initialDate: DateTime.now(), firstDate: DateTime(1990), lastDate: DateTime(2050),
+                helpText: "Which year did you join the foundation?", initialDatePickerMode: DatePickerMode.year); },),
             Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
             TextField(
               maxLines: 3,
@@ -67,7 +86,7 @@ class ProfileEdit extends StatelessWidget {
               child: Text("UPDATE MY PROFILE", style: TextStyle(color: Colors.white),),
               onPressed: () {
                 //todo POST api call
-                // todo based on true/false, show toast notification?
+                // todo based on true/false, show toast notification/snackbar?
                 Navigator.pop(context, true);
               },
             ),
