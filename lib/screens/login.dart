@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:melton_app/util/secrets.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -7,7 +8,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  GoogleSignIn _googleSignIn = GoogleSignIn(clientId: "");
+  GoogleSignIn _googleSignIn = GoogleSignIn(clientId: Secrets.GOOGLE_OAUTH_CLIENT_ID);
 
   @override
   Widget build(BuildContext context) {

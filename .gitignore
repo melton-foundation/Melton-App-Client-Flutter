@@ -54,4 +54,4 @@ build/
 *.js.map
 
 # keep secrets out of version control
-assets/oauth_client.json
+lib/util/secrets.dart
