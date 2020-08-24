@@ -1,13 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:melton_app/constants/constants.dart' as Constants;
+import 'package:melton_app/screens/login.dart';
 import 'package:melton_app/screens/profile.dart';
 import 'package:melton_app/screens/directory.dart';
 import 'package:melton_app/screens/home.dart';
 
 
-void main() {
+bool _isLoggedIn = false;
+
+void main() async {
+  _isLoggedIn = await checkOAuthLoggedIn();
   runApp(MyApp());
+}
+
+Future<bool> checkOAuthLoggedIn() {
+  
 }
 
 class MyApp extends StatelessWidget {
@@ -23,6 +31,18 @@ class MyApp extends StatelessWidget {
 //        "/profile_update": ProfileUpdate(),
 //        "directory": Directory(),
 //        "news": News(),
+      },
+      onGenerateRoute: (RouteSettings settings) {
+        switch (settings.name) {
+          case '/':
+            return MaterialPageRoute(builder: (_) {
+              return _isLoggedIn ? Profile() : LoginScreen();
+            });
+          default:
+            return MaterialPageRoute(builder: (_) {
+              return LoginScreen();
+            });
+        }
       },
       theme: ThemeData(
         primarySwatch: Constants.meltonMaterialBlue,
