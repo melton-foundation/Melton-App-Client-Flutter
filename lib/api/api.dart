@@ -11,8 +11,9 @@ import 'dart:convert';
 
 // todo make singleton
 class ApiService {
+
   static const apiUrl = "https://meltonapp.com/api/";
-  static const users = "users/";
+  static const users =  "users/";
   static const profile = "profile/";
   static const store_shop = "store/";
   static const store_buy = "buy/";
@@ -27,14 +28,13 @@ class ApiService {
   };
 
   Future<List<UserModel>> getUsers() async {
-    http.Response response =
-        await http.get(apiUrl + users, headers: authHeader);
+    http.Response response = await http.get(apiUrl + users, headers: authHeader);
     bool result = handleError(response);
     if (result) {
       List<dynamic> jsonResponse = json.decode(response.body);
       List<UserModel> users = new List<UserModel>();
       for (int i = 0; i < jsonResponse.length; i++) {
-        UserModel user = UserModel.fromJson(jsonResponse[i]);
+        UserModel user =  UserModel.fromJson(jsonResponse[i]);
         users.add(user);
       }
       return users;
@@ -44,13 +44,13 @@ class ApiService {
     }
   }
 
-  Future<UserModel> getUserModelById(int id) async {
-    http.Response response =
-        await http.get(apiUrl + users + id.toString(), headers: authHeader);
+  Future<UserModel> getUserModelById(int id) async{
+    http.Response response = await http.get(apiUrl + users+ id.toString(), headers: authHeader);
     bool result = handleError(response);
     if (result) {
       return UserModel.fromJson(json.decode(response.body));
-    } else {
+    }
+    else {
       //todo show error msg
       print("request failed");
     }
@@ -58,26 +58,25 @@ class ApiService {
   }
 
   Future<ProfileModel> getProfile() async {
-    http.Response response =
-        await http.get(apiUrl + profile, headers: authHeader);
+    http.Response response = await http.get(apiUrl + profile, headers: authHeader);
     bool result = handleError(response);
     if (result) {
       return ProfileModel.fromJson(json.decode(response.body));
-    } else {
+    }
+    else {
       //todo show error msg
       print("request failed");
     }
   }
 
   Future<List<StoreModel>> getStoreItems() async {
-    http.Response response =
-        await http.get(apiUrl + store_shop, headers: authHeader);
+    http.Response response = await http.get(apiUrl + store_shop, headers: authHeader);
     bool result = handleError(response);
     if (result) {
       List<dynamic> jsonResponse = json.decode(response.body);
       List<StoreModel> items = new List<StoreModel>();
       for (int i = 0; i < jsonResponse.length; i++) {
-        StoreModel item = StoreModel.fromJson(jsonResponse[i]);
+        StoreModel item =  StoreModel.fromJson(jsonResponse[i]);
         items.add(item);
       }
       return items;
@@ -103,8 +102,7 @@ class ApiService {
   // depending on how api sends "last updated" after ordering
   // we need to get 3 latest posts
   Future<List<PostModel>> getPostPreviewList(bool sendTopThree) async {
-    http.Response response =
-        await http.get(apiUrl + post_preview, headers: authHeader);
+    http.Response response = await http.get(apiUrl + post_preview, headers: authHeader);
     bool result = handleError(response);
     if (result) {
       List<dynamic> jsonResponse = json.decode(response.body);
@@ -126,8 +124,7 @@ class ApiService {
   }
 
   Future<PostModel> getPostById(int postId) async {
-    http.Response response = await http
-        .get(apiUrl + post_preview + postId.toString(), headers: authHeader);
+    http.Response response = await http.get(apiUrl + post_preview + postId.toString(), headers: authHeader);
     bool result = handleError(response);
     if (result) {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
@@ -150,7 +147,7 @@ class ApiService {
     } else if (response.statusCode == 401) {
       //todo trigger oauth and regenerate token
       return false;
-    } else if (response.statusCode == 403) {
+    }  else if (response.statusCode == 403) {
       // not approved by admin yet - show msg
       return false;
     } else if (response.statusCode == 410) {
@@ -160,5 +157,7 @@ class ApiService {
       // some other error
       return false;
     }
+
   }
+
 }
