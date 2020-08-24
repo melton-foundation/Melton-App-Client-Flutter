@@ -21,23 +21,29 @@ class _PostsPreviewPageState extends State<PostsPreviewPage> {
     return Scaffold(
       appBar: AppBar(title: Text("Melton News")),
       backgroundColor: Colors.grey[200],
-      body: FutureBuilder<List<PostModel>>(future: _model, builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-        return Center(child: CircularProgressIndicator());
-        }
-        if (snapshot.hasData) {
-        //todo make a nice widget for no /posts - like "all caught up!"
-        return snapshot.data.length == 0 ? Container() : ListView.builder(itemCount: snapshot.data.length,
-        itemBuilder: (BuildContext context, int index) {
-          return postPreviewCard(context, snapshot.data[index]);
-        });
-        }
-        if (snapshot.hasError) {
-        return Text("${snapshot.error}"); //todo handle correctly
-        }
-        //todo make fun error screen
-        return Center(child: Text("ERROR: SOMETHING WENT WRONG"));
-      },),
+      body: FutureBuilder<List<PostModel>>(
+        future: _model,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasData) {
+            //todo make a nice widget for no /posts - like "all caught up!"
+            return snapshot.data.length == 0
+                ? Container()
+                : ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return postPreviewCard(context, snapshot.data[0]);
+                    });
+          }
+          if (snapshot.hasError) {
+            return Text("${snapshot.error}"); //todo handle correctly
+          }
+          //todo make fun error screen
+          return Center(child: Text("ERROR: SOMETHING WENT WRONG"));
+        },
+      ),
     );
   }
 }
@@ -52,10 +58,11 @@ Widget postPreviewCard(BuildContext context, PostModel postModel) {
       ),
       child: Column(
         children: [
-          postModel.previewImage == null ? Container() :
-          Image(
-            image: NetworkImage(postModel.previewImage),
-          ),
+          postModel.previewImage == null
+              ? Container()
+              : Image(
+                  image: NetworkImage(postModel.previewImage),
+                ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -73,9 +80,11 @@ Widget postPreviewCard(BuildContext context, PostModel postModel) {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  postModel.lastUpdated == null ?
-                  "Created " + GetHumanTime.getHumanTime(postModel.created) :
-                  "Updated " + GetHumanTime.getHumanTime(postModel.lastUpdated),
+                  postModel.lastUpdated == null
+                      ? "Created " +
+                          GetHumanTime.getHumanTime(postModel.created)
+                      : "Updated " +
+                          GetHumanTime.getHumanTime(postModel.lastUpdated),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16.0,
@@ -94,42 +103,48 @@ Widget postPreviewCard(BuildContext context, PostModel postModel) {
               ),
             ),
           ),
-          postModel.tags.length == 0 ? Container() : Wrap(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(FontAwesomeIcons.tags, color: Colors.white),
-              ),
-              for(String tag in postModel.tags)
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Constants.meltonRed,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Padding(
+          postModel.tags.length == 0
+              ? Container()
+              : Wrap(
+                  children: [
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        tag,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
+                      child: Icon(FontAwesomeIcons.tags, color: Colors.white),
                     ),
-                  ),
-                )
-            ],
-          ),
+                    for (String tag in postModel.tags)
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Constants.meltonRed,
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              tag,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                  ],
+                ),
           RaisedButton(
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => PostFullPage(postId: postModel.id)));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => PostFullPage(postId: postModel.id)));
             },
             color: Constants.meltonYellow,
             splashColor: Constants.meltonRed,
-            child: Text("READ MORE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+            child: Text(
+              "READ MORE",
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
