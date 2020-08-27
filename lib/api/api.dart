@@ -20,12 +20,57 @@ class ApiService {
   static const post_preview = "posts/";
 
   //todo handle token
-  static String token = "Token " + "3a9a52020a37e9ed4768aba67736c8209f8867b0";
+  static String token = "Token " + "f901b685f231785596f52c1d8551bb496f51b54f";
   static Map<String, String> authHeader = {"Authorization": token};
   static Map<String, String> authAndJsonContentHeader = {
     "Authorization": token,
     "Content-Type": "application/json",
   };
+
+  static Map<String, String> contentHeader = {
+    "Content-Type": "application/json"
+  };
+
+  Future<String> getAppToken(String email, String oauthToken,
+      {String oauthProvider="GOOGLE"}) async {
+    print("calling login/ ");
+    print(email);
+    print(oauthToken);
+    print(oauthProvider);
+    http.Response response = await http.post(apiUrl + "login/",
+    headers: contentHeader,
+    body:
+    """
+    {
+      "email" : $email,
+      "token" : $oauthToken,
+      "authProvider" : $oauthProvider,
+    }
+    """);
+    print('print statuscode');
+    print(response.statusCode);
+    print('print body');
+    print(response.body);
+    print('print json body');
+    print(jsonDecode(response.body)); //todo remove
+    if (response.statusCode == 200) {
+      var jsonRes = json.decode(response.body);
+      print(jsonRes);
+      return jsonRes['appToken'];
+    } else {
+      return "";
+    }
+  }
+
+  //add support for no internet error screen?
+  // todo IMP - handle 403 case
+  Future<bool> verifyAppTokenValid() async {
+    http.Response response = await http.get(apiUrl + "profile/", headers: authHeader);
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
 
   Future<List<UserModel>> getUsers() async {
     http.Response response = await http.get(apiUrl + users, headers: authHeader);
