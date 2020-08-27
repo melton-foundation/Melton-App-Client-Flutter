@@ -52,11 +52,9 @@ Widget postPreviewCard(BuildContext context, PostModel postModel) {
       ),
       child: Column(
         children: [
-          //todo implement preview image support
-//          postModel.previewImage == null ? Container() :
+          postModel.previewImage == null ? Container() :
           Image(
-//            image: postModel.previewImage,
-            image: AssetImage("assets/splash.png"), // todo remove
+            image: NetworkImage(postModel.previewImage),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
