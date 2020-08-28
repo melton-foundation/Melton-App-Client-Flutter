@@ -20,7 +20,7 @@ class ApiService {
   static const post_preview = "posts/";
 
   //todo handle token
-  static String token = "Token " + "3a9a52020a37e9ed4768aba67736c8209f8867b0";
+  static String token = "Token " + "f901b685f231785596f52c1d8551bb496f51b54f";
   static Map<String, String> authHeader = {"Authorization": token};
   static Map<String, String> authAndJsonContentHeader = {
     "Authorization": token,
