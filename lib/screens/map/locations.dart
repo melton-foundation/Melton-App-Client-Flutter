@@ -19,55 +19,55 @@ class LatLng {
   final double lng;
 }
 
-@JsonSerializable()
-class Region {
-  Region({
-    this.coords,
-    this.id,
-    this.name,
-    this.zoom,
-  });
+// @JsonSerializable()
+// class Region {
+//   Region({
+//     this.coords,
+//     this.id,
+//     this.name,
+//     this.zoom,
+//   });
 
-  factory Region.fromJson(Map<String, dynamic> json) => _$RegionFromJson(json);
-  Map<String, dynamic> toJson() => _$RegionToJson(this);
+//   factory Region.fromJson(Map<String, dynamic> json) => _$RegionFromJson(json);
+//   Map<String, dynamic> toJson() => _$RegionToJson(this);
 
-  final LatLng coords;
-  final String id;
-  final String name;
-  final double zoom;
-}
+//   final LatLng coords;
+//   final String id;
+//   final String name;
+//   final double zoom;
+// }
 
 @JsonSerializable()
 class Office {
   Office({
-    this.address,
-    this.id,
-    this.image,
+    this.country,
+    //  this.id,
+    //  this.image,
     this.lat,
     this.lng,
     this.name,
-    this.phone,
-    this.region,
+    //  this.phone,
+    //  this.region,
   });
 
   factory Office.fromJson(Map<String, dynamic> json) => _$OfficeFromJson(json);
   Map<String, dynamic> toJson() => _$OfficeToJson(this);
 
-  final String address;
-  final String id;
-  final String image;
+  final String country;
+  // final String id;
+  // final String image;
   final double lat;
   final double lng;
   final String name;
-  final String phone;
-  final String region;
+  // final String phone;
+  // final String region;
 }
 
 @JsonSerializable()
 class Locations {
   Locations({
     this.offices,
-    this.regions,
+    //  this.regions,
   });
 
   factory Locations.fromJson(Map<String, dynamic> json) =>
@@ -75,11 +75,28 @@ class Locations {
   Map<String, dynamic> toJson() => _$LocationsToJson(this);
 
   final List<Office> offices;
-  final List<Region> regions;
+  //final List<Region> regions;
 }
 
-Future<Locations> MeltonPeeps() async {
-  const locationsURL = 'https://arunjoseph19.github.io/leaf/loc.json';
+// JsonDecoder LOC() async {
+//   const loc = 'http://www.mapquestapi.com/geocoding/v1/address?key=FCiBSq5dYIEcxsIkDFHHeU4pdxl2KalZ&location=Bangalore';
+//   //add ur github json file here
+
+//   // Retrieve the locations of Google offices
+//   final response = await http.get(loc);
+//   if (response.statusCode == 200) {
+//     return (json.decode(response.body));
+//   } else {
+//     throw HttpException(
+//         'Unexpected status code ${response.statusCode}:'
+//         ' ${response.reasonPhrase}',
+//         uri: Uri.parse(loc));
+//   }
+// }
+
+Future<Locations> meltonpeeps() async {
+  const locationsURL = 'http://arunjoseph19.github.io/leaf/short.json';
+  //const locationsURL = 'https://arunjoseph19.github.io/leaf/chumma.json';
   //add ur github json file here
 
   // Retrieve the locations of Google offices

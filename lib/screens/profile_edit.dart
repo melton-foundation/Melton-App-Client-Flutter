@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:melton_app/models/ProfileModel.dart';
-import 'package:melton_app/constants/constants.dart' as Constants;
-
 class ProfileEdit extends StatefulWidget {
 //  final ProfileModel currentModel;
 //  const ProfileEdit({this.currentModel});
@@ -46,9 +43,18 @@ class _ProfileEditState extends State<ProfileEdit> {
               ),
             ),
             Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
-            IconButton(icon: Icon(Icons.keyboard_arrow_down), onPressed: () { showDatePicker(context: context,
-                initialDate: DateTime.now(), firstDate: DateTime(1990), lastDate: DateTime(2050),
-                helpText: "Which year did you join the foundation?", initialDatePickerMode: DatePickerMode.year); },),
+            IconButton(
+              icon: Icon(Icons.keyboard_arrow_down),
+              onPressed: () {
+                showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1990),
+                    lastDate: DateTime(2050),
+                    helpText: "Which year did you join the foundation?",
+                    initialDatePickerMode: DatePickerMode.year);
+              },
+            ),
             Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
             TextField(
               maxLines: 3,
@@ -62,11 +68,16 @@ class _ProfileEditState extends State<ProfileEdit> {
             Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
             TextField(
               maxLength: 30,
-              inputFormatters: [FilteringTextInputFormatter.allow(RegExp("\\+[0-9]{1,3}\s+[0-9]{5,15}"))], //todo fix
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                    RegExp("\\+[0-9]{1,3}\s+[0-9]{5,15}"))
+              ], //todo fix
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Phone number",
-                errorText: isPhoneValid ? null : "'+CC XXXXXXXXXX', 'CC' is country code.",
+                errorText: isPhoneValid
+                    ? null
+                    : "'+CC XXXXXXXXXX', 'CC' is country code.",
                 icon: Icon(Icons.phone),
               ),
             ),
@@ -76,14 +87,17 @@ class _ProfileEditState extends State<ProfileEdit> {
 //            items: [DropdownMenuItem(child:Text(Constants.campuses[0]), value: 1,)],
 //          ),
 
-          // todo - social media either dropdown or indicate which icons have first-class support??
+            // todo - social media either dropdown or indicate which icons have first-class support??
             // todo - implicitly convert "weixin" to wechat?
 
             //todo remaining dropdowns and fields
 
             RaisedButton(
               color: Theme.of(context).primaryColor,
-              child: Text("UPDATE MY PROFILE", style: TextStyle(color: Colors.white),),
+              child: Text(
+                "UPDATE MY PROFILE",
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () {
                 //todo POST api call
                 // todo based on true/false, show toast notification/snackbar?
