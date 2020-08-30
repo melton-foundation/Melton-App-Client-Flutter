@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'dart:developer' as dev; //todo remove
+
 import 'package:http/http.dart' as http;
 import 'package:melton_app/models/PostModel.dart';
 import 'package:melton_app/models/UserModel.dart';
@@ -8,6 +10,8 @@ import 'package:melton_app/models/StoreModel.dart';
 
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:melton_app/util/persistent_storage.dart';
 
 // todo make singleton
 class ApiService {
@@ -18,6 +22,12 @@ class ApiService {
   static const store_shop = "store/";
   static const store_buy = "buy/";
   static const post_preview = "posts/";
+
+  Future<String> getToken() async {
+    PersistentStorage instance = await PersistentStorage.getInstance();
+    return await PersistentStorage.readStringFromStorage(PersistentStorage.APP_TOKEN_KEY);
+  }
+
 
   //todo handle token
   static String token = "Token " + "f901b685f231785596f52c1d8551bb496f51b54f";
@@ -37,16 +47,15 @@ class ApiService {
     print(email);
     print(oauthToken);
     print(oauthProvider);
+    Map<String, String> jsonBodyMap = {
+      "email": email,
+      "token": oauthToken,
+      "authProvider": oauthProvider
+    };
     http.Response response = await http.post(apiUrl + "login/",
     headers: contentHeader,
-    body:
-    """
-    {
-      "email" : $email,
-      "token" : $oauthToken,
-      "authProvider" : $oauthProvider,
-    }
-    """);
+    body: json.encode(jsonBodyMap)
+    );
     print('print statuscode');
     print(response.statusCode);
     print('print body');
@@ -90,7 +99,7 @@ class ApiService {
   }
 
   Future<UserModel> getUserModelById(int id) async{
-    http.Response response = await http.get(apiUrl + users+ id.toString(), headers: authHeader);
+    http.Response response = await http.get(apiUrl + users + id.toString(), headers: authHeader);
     bool result = handleError(response);
     if (result) {
       return UserModel.fromJson(json.decode(response.body));

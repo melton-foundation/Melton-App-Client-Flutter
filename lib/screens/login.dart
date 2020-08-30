@@ -71,8 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<String> oauthLoginAndGetAppToken() async {
-    await _googleSignIn.signIn().then((result) {
-      result.authentication.then((googleKey) async {
+    await _googleSignIn.signIn().then((result) async {
+      await result.authentication.then((googleKey) async {
         print(googleKey.accessToken);
         log(googleKey.idToken); //todo cleanup
         print(result.email);

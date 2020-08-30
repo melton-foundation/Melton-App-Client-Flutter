@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
 //todo use "signinsilently"?
   Future<void> isLoggedIn() async {
-    bool isLoggedIn = await _googleSignIn.isSignedIn();
+    bool isLoggedIn = await _googleSignIn.isSignedIn(); //todo needed?
     bool isAppTokenValid = await ApiService().verifyAppTokenValid();
 
     //todo remove
@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
     print("isAppTokenValid");
     print(isAppTokenValid);
 
-
+    // isLoggedIn required?
     if (isLoggedIn && isAppTokenValid) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
         return MyHomePage(title: 'Melton Foundation');

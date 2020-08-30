@@ -4,6 +4,7 @@ import 'package:melton_app/constants/constants.dart' as Constants;
 import 'package:melton_app/screens/login.dart';
 import 'package:melton_app/screens/profile.dart';
 import 'package:melton_app/screens/splash.dart';
+import 'package:melton_app/util/persistent_storage.dart';
 import 'package:melton_app/screens/main_home.dart';
 
 bool _isLoggedIn = false;
@@ -11,6 +12,7 @@ bool _isLoggedIn = false;
 void main() async {
   _isLoggedIn = false;
 //  _isLoggedIn = await checkOAuthLoggedIn(); //todo
+//  await PersistentStorage.getInstance();
   runApp(MyApp());
 }
 
@@ -20,7 +22,11 @@ Future<bool> checkOAuthLoggedIn() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+
+  void initState() {
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,6 +55,7 @@ class MyApp extends StatelessWidget {
       },
       theme: ThemeData(
         primarySwatch: Constants.meltonMaterialBlue,
+        highlightColor: Constants.meltonBlueAccent,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );
