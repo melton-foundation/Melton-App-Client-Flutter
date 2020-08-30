@@ -6,18 +6,10 @@ void main() {
   runApp(map());
 }
 
-double lat = 12.9791198;
-double lng = 77.5612997;
-
 class map extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
-
-// Map<String, dynamic> map = jsonDecode(
-//     'https://nominatim.openstreetmap.org/?q=Bangalore&format=json&limit=1');
-// double lat = map['lat'];
-// double lng = map['lon'];
 
 class _MyAppState extends State<map> {
   final Map<String, Marker> _markers = {};
@@ -26,17 +18,17 @@ class _MyAppState extends State<map> {
     setState(() {
       _markers.clear();
       for (final office in MelLoc.offices) {
-        final marker = Marker(
-          markerId: MarkerId(office.country),
-          position: LatLng(office.lat, office.lng),
-          infoWindow: InfoWindow(
-            title: office.name,
-            snippet: office.country,
-          ),
-        );
-        lat++;
-        lng++;
-        _markers[office.country] = marker;
+        if (office.name == 'Jena') {
+          final marker = Marker(
+            markerId: MarkerId(office.country),
+            position: LatLng(office.lat, office.lng),
+            infoWindow: InfoWindow(
+              title: office.name,
+              snippet: office.country,
+            ),
+          );
+          _markers[office.country] = marker;
+        }
       }
     });
   }
@@ -48,7 +40,7 @@ class _MyAppState extends State<map> {
         //appBar: AppBar(
         //title: const Text('Melton Foundation'),
         //   backgroundColor: Colors.green[700],
-        //  ),
+        //),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(

@@ -1,5 +1,3 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 part of 'locations.dart';
 
 // **************************************************************************
@@ -18,46 +16,20 @@ Map<String, dynamic> _$LatLngToJson(LatLng instance) => <String, dynamic>{
       'lng': instance.lng,
     };
 
-// Region _$RegionFromJson(Map<String, dynamic> json) {
-//   return Region(
-//     coords: json['coords'] == null
-//         ? null
-//         : LatLng.fromJson(json['coords'] as Map<String, dynamic>),
-//     id: json['id'] as String,
-//     name: json['name'] as String,
-//     zoom: (json['zoom'] as num)?.toDouble(),
-//   );
-// }
-
-// Map<String, dynamic> _$RegionToJson(Region instance) => <String, dynamic>{
-//       'coords': instance.coords,
-//       'id': instance.id,
-//       'name': instance.name,
-//       'zoom': instance.zoom,
-//     };
-
 Office _$OfficeFromJson(Map<String, dynamic> json) {
   return Office(
     country: json['country'] as String,
-    //id: json['id'] as String,
-    //image: json['image'] as String,
     lat: (json['lat'] as num)?.toDouble(),
     lng: (json['lng'] as num)?.toDouble(),
-    //name: json['name'] as String,
-    //phone: json['phone'] as String,
-    //region: json['region'] as String,
+    name: json['name'] as String,
   );
 }
 
 Map<String, dynamic> _$OfficeToJson(Office instance) => <String, dynamic>{
       'country': instance.country,
-      //'id': instance.id,
-      //'image': instance.image,
       'lat': instance.lat,
       'lng': instance.lng,
-      //'name': instance.name,
-      //'phone': instance.phone,
-      //'region': instance.region,
+      'name': instance.name,
     };
 
 Locations _$LocationsFromJson(Map<String, dynamic> json) {
@@ -66,14 +38,9 @@ Locations _$LocationsFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : Office.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    // regions: (json['regions'] as List)
-    //     ?.map((e) =>
-    //         e == null ? null : Region.fromJson(e as Map<String, dynamic>))
-    //     ?.toList(),
   );
 }
 
 Map<String, dynamic> _$LocationsToJson(Locations instance) => <String, dynamic>{
       'offices': instance.offices,
-      //'regions': instance.regions,
     };
