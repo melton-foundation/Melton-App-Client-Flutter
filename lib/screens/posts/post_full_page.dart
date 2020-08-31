@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/util/get_human_time.dart';
 import 'package:melton_app/models/PostModel.dart';
@@ -18,7 +20,8 @@ class _PostFullPageState extends State<PostFullPage> {
 
   @override
   Widget build(BuildContext context) {
-    _model = ApiService().getPostById(widget.postId);
+    //todo test and replace all screens with singleton ApiService
+    _model = GetIt.instance.get<ApiService>().getPostById(widget.postId);
     return Scaffold(
         backgroundColor: Colors.grey[200],
         appBar: AppBar(title: Text("Melton News")),

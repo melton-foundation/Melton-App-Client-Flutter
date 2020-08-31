@@ -11,9 +11,9 @@ import 'package:melton_app/models/StoreModel.dart';
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:melton_app/util/persistent_storage.dart';
+import 'package:get_it/get_it.dart';
+import 'package:melton_app/util/token_handler.dart';
 
-// todo make singleton
 class ApiService {
 
   static const apiUrl = "https://meltonapp.com/api/";
@@ -23,19 +23,18 @@ class ApiService {
   static const store_buy = "buy/";
   static const post_preview = "posts/";
 
-  Future<String> getToken() async {
-    PersistentStorage instance = await PersistentStorage.getInstance();
-    return await PersistentStorage.readStringFromStorage(PersistentStorage.APP_TOKEN_KEY);
+  String get token => GetIt.instance.get<TokenHandler>().getToken();
+
+  Map<String, String> getAuthHeader() {
+    return {"Authorization": token};
   }
 
-
-  //todo handle token
-  static String token = "Token " + "f901b685f231785596f52c1d8551bb496f51b54f";
-  static Map<String, String> authHeader = {"Authorization": token};
-  static Map<String, String> authAndJsonContentHeader = {
-    "Authorization": token,
-    "Content-Type": "application/json",
-  };
+  Map<String, String> getAuthAndJsonContentHeader() {
+    return {
+      "Authorization": token,
+      "Content-Type": "application/json",
+    };
+  }
 
   static Map<String, String> contentHeader = {
     "Content-Type": "application/json"
@@ -74,7 +73,9 @@ class ApiService {
   //add support for no internet error screen?
   // todo IMP - handle 403 case
   Future<bool> verifyAppTokenValid() async {
-    http.Response response = await http.get(apiUrl + "profile/", headers: authHeader);
+    print('verifying app token');
+    print(getAuthHeader());
+    http.Response response = await http.get(apiUrl + "profile/", headers: getAuthHeader());
     if (response.statusCode == 200) {
       return true;
     }
@@ -82,7 +83,7 @@ class ApiService {
   }
 
   Future<List<UserModel>> getUsers() async {
-    http.Response response = await http.get(apiUrl + users, headers: authHeader);
+    http.Response response = await http.get(apiUrl + users, headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
       List<dynamic> jsonResponse = json.decode(response.body);
@@ -99,7 +100,7 @@ class ApiService {
   }
 
   Future<UserModel> getUserModelById(int id) async{
-    http.Response response = await http.get(apiUrl + users + id.toString(), headers: authHeader);
+    http.Response response = await http.get(apiUrl + users + id.toString(), headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
       return UserModel.fromJson(json.decode(response.body));
@@ -112,7 +113,7 @@ class ApiService {
   }
 
   Future<ProfileModel> getProfile() async {
-    http.Response response = await http.get(apiUrl + profile, headers: authHeader);
+    http.Response response = await http.get(apiUrl + profile, headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
       return ProfileModel.fromJson(json.decode(response.body));
@@ -124,7 +125,7 @@ class ApiService {
   }
 
   Future<List<StoreModel>> getStoreItems() async {
-    http.Response response = await http.get(apiUrl + store_shop, headers: authHeader);
+    http.Response response = await http.get(apiUrl + store_shop, headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
       List<dynamic> jsonResponse = json.decode(response.body);
@@ -142,7 +143,7 @@ class ApiService {
 
   Future<StoreItemBuy> buyStoreItem(int itemId) async {
     http.Response response = await http.post(apiUrl + store_buy,
-        headers: authAndJsonContentHeader, body: """{"itemId":$itemId}""");
+        headers: getAuthAndJsonContentHeader(), body: """{"itemId":$itemId}""");
     bool result = handleError(response);
     if (result) {
       return StoreItemBuy.fromJson(json.decode(response.body));
@@ -153,7 +154,7 @@ class ApiService {
   }
   
   Future<List<PostModel>> getPostPreviewList(bool sendTopThree) async {
-    http.Response response = await http.get(apiUrl + post_preview, headers: authHeader);
+    http.Response response = await http.get(apiUrl + post_preview, headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
       List<dynamic> jsonResponse = json.decode(response.body);
@@ -175,7 +176,7 @@ class ApiService {
   }
 
   Future<PostModel> getPostById(int postId) async {
-    http.Response response = await http.get(apiUrl + post_preview + postId.toString(), headers: authHeader);
+    http.Response response = await http.get(apiUrl + post_preview + postId.toString(), headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
       Map<String, dynamic> jsonResponse = json.decode(response.body);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:melton_app/constants/constants.dart' as Constants;
 import 'package:melton_app/screens/login.dart';
 import 'package:melton_app/screens/profile.dart';
@@ -6,9 +7,9 @@ import 'package:melton_app/screens/directory.dart';
 import 'package:melton_app/screens/home.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key key}) : super(key: key);
 
-  final String title;
+  final String title = "Melton Foundation";
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
