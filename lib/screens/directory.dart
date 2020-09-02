@@ -4,6 +4,7 @@ import 'package:melton_app/constants/constants.dart' as Constants;
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/models/UserModel.dart';
 import 'package:melton_app/screens/components/user_details_dialog.dart';
+import 'package:melton_app/api/userSearchService.dart';
 
 class Directory extends StatefulWidget {
   @override
@@ -11,7 +12,14 @@ class Directory extends StatefulWidget {
 }
 
 class _DirectoryState extends State<Directory> {
-  Future<List<UserModel>> _userListModel = ApiService().getUsers();
+  final UserSearchService searchService = new UserSearchService();   // make this singleton
+  bool isPageLoaded = false;
+  void dispose(){
+    /*TODO : check whether dispose is placed in correct place or not*/
+    print('dispose directory');
+    searchService.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
@@ -22,27 +30,47 @@ class _DirectoryState extends State<Directory> {
             userSearch(),
             userSearchFilter(),
             Expanded(
-              child: FutureBuilder<List<UserModel>>(
-                future: _userListModel,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState != ConnectionState.done) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.hasData) {
-                    return buildGridViewForUsersList(orientation, snapshot);
-                  }
-                  if (snapshot.hasError) {
-                    return Text("${snapshot.error}"); //todo handle correctly
-                  }
-                  //todo make fun error screen
-                  return Center(child: Text("ERROR: SOMETHING WENT WRONG"));
-                },
-//                child: ,
-              ),
+              child: buildStreamBuilder(orientation)
             ),
           ],
         )
     );
+  }
+
+  StreamBuilder<List<UserModel>> buildStreamBuilder(Orientation orientation) {
+    return StreamBuilder<List<UserModel>>(
+        stream: searchService.results,
+        builder: (context, AsyncSnapshot<List<UserModel>> snapshot) {
+          if (snapshot.hasError) {
+            return Text("${snapshot.error}"); //todo handle correctly
+          }
+          else{
+            switch(snapshot.connectionState){
+              case ConnectionState.waiting:
+              case ConnectionState.none:
+                if (!isPageLoaded) {
+                  isPageLoaded = true;
+                  searchService.searchUser(" ");
+                }
+                return Center(child: CircularProgressIndicator());
+              case ConnectionState.active:
+                if(snapshot.hasData){
+                  if (snapshot.data.length == 0) {
+                    return Center(child: Text("No results found"));
+                  }
+                  else{
+                    return buildGridViewForUsersList(orientation, snapshot);
+                  }
+                }
+                else{
+                  return Center(child: Text("ERROR: SOMETHING WENT WRONG"));
+                }
+//              case ConnectionState.done
+            }
+          }
+          //todo make fun error screen
+          return Center(child: Text("ERROR: SOMETHING WENT WRONG"));
+        });
   }
 
   GridView buildGridViewForUsersList(
@@ -107,9 +135,12 @@ class _DirectoryState extends State<Directory> {
         height: 40,
         child: TextField(
           onChanged: (value) {
+            /*TODO : show loading or some indicator when user is typing */
             if(value.length > 2){
-              print('entered val : '+value);
-              //add search logic here
+              searchService.searchUser(value);
+            }
+            else if(value.length == 0){
+              searchService.searchUser(" ");
             }
           },
           style: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.bold),
