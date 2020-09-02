@@ -40,12 +40,12 @@ class Constants {
 
 //todo verify spellings and alpghabetical order
   static const List<String> campuses = [
-    "Accra",
-    "Bangalore",
-    "Hangzhou",
-    "Jena",
-    "New Orleans",
-    "Temuco",
+    "AU / Accra",
+    "BMS / Bangalore",
+    "DU / New Orleans",
+    "FSU / Jena",
+    "UFRO / Temuco",
+    "ZU / Hangzhou",
     "Westmar University",
     "Other"
   ];
