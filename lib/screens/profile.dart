@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:melton_app/screens/components/store_line_item.dart';
+
 import 'package:melton_app/screens/profile_edit.dart';
 import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/api/api.dart';
 
+import 'package:melton_app/screens/components/store_line_item.dart';
 import 'package:melton_app/screens/components/profile_line_item.dart';
 import 'package:melton_app/screens/components/sdg_profile.dart';
 import 'package:melton_app/screens/components/JF_badge.dart';
@@ -17,6 +18,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   Future<ProfileModel> _model = ApiService().getProfile();
+  ProfileModel _loaded;
 
   final Widget empty = Container(width: 0.0, height: 0.0);
 
@@ -27,6 +29,7 @@ class _ProfileState extends State<Profile> {
           future: _model,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              _loaded = snapshot.data;
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ListView(
@@ -87,13 +90,12 @@ class _ProfileState extends State<Profile> {
             return Center(child: CircularProgressIndicator());
           },
         ),
-        //todo move inside futurebuilder to prevent click when api response is not yet ready?
-        // needed if we are prepopulating profile data in edit form
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.edit),
           onPressed: () {
+            _loaded == null ? null :
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => ProfileEdit()));
+                .push(MaterialPageRoute(builder: (_) => ProfileEdit(initialModel: _loaded)));
           },
         )
     );

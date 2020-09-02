@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:melton_app/models/ProfileModel.dart';
-import 'package:melton_app/constants/constants.dart' as Constants;
+
+import 'package:melton_app/constants/constants.dart';
 
 class ProfileEdit extends StatefulWidget {
 //  final ProfileModel currentModel;
@@ -94,5 +95,12 @@ class _ProfileEditState extends State<ProfileEdit> {
         ),
       ),
     );
+  }
+
+  bool isPhoneNumberFormatted(String str) {
+    if (phoneNumberRegex.hasMatch(str)) {
+      return true;
+    }
+    return false;
   }
 }
