@@ -46,13 +46,17 @@ class SocialMediaLineItem extends StatelessWidget {
                 icon: Icon(FontAwesomeIcons.twitter), onPressed:() {_launchURL(twitter);},
                 iconSize: 36.0, color: Constants.meltonBlueAccent,),
               wechat == null ? empty : IconButton(
-                icon: Icon(FontAwesomeIcons.weixin), onPressed:() {_launchURL(wechat);},
+                icon: Icon(FontAwesomeIcons.weixin), onPressed:() {
+                  showDialog(context: context, builder: (context) {
+                    return AlertDialog(title: Text("WeChat/Weixin ID"), content: Text(wechat),);
+                  });
+                },
                 iconSize: 36.0, color: Constants.meltonGreenAccent,),
               linkedin == null ? empty : IconButton(
                 icon: Icon(FontAwesomeIcons.linkedin), onPressed:() {_launchURL(linkedin);},
                 iconSize: 36.0, color: Constants.meltonBlueAccent,),
               others.length == 0 ? empty : IconButton(
-                icon: Icon(FontAwesomeIcons.ellipsisH),
+                icon: Icon(FontAwesomeIcons.globeAmericas, color: Constants.meltonBlueAccent,),
                 onPressed:() {
                   otherLinksDialog(context);
                 },
