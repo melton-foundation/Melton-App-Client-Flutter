@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:melton_app/screens/profile_edit.dart';
@@ -17,17 +19,37 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Future<ProfileModel> _model = ApiService().getProfile();
+  StreamController<ProfileModel> _streamController;
   ProfileModel _loaded;
-  bool isProfileUpdated = false; //todo rebuild page if true
+  bool isProfileUpdated = false;
 
   final Widget empty = Container(width: 0.0, height: 0.0);
 
   @override
+  void initState() {
+    _streamController = StreamController<ProfileModel>();
+    loadProfile();
+    super.initState();
+  }
+
+  loadProfile() async {
+    ApiService().getProfile().then((res) async {
+      _streamController.add(res);
+      return res;
+    });
+  }
+
+  Future<Null> _handleRefresh() async {
+    await loadProfile();
+    await Future.delayed(Duration(seconds: 2));
+    return null;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FutureBuilder<ProfileModel>(
-          future: _model,
+        body: StreamBuilder<ProfileModel>(
+          stream: _streamController.stream,
           builder: (context, snapshot) {
             //todo use connection state != done
             // todo also add connection.none for "no internet" error in all futures
@@ -37,7 +59,7 @@ class _ProfileState extends State<Profile> {
                 padding: const EdgeInsets.all(8.0),
                 //todo implement pull to refresh
                 child: RefreshIndicator(
-                  onRefresh: () {print("REFRESH");},
+                  onRefresh: _handleRefresh,
                   child: ListView(
                     children: [
                       SizedBox(height: 10.0),
@@ -110,8 +132,7 @@ class _ProfileState extends State<Profile> {
                 .push(MaterialPageRoute(builder: (_) => ProfileEdit(initialModel: _loaded)));
             if (isProfileUpdated != null && isProfileUpdated) {
               Scaffold.of(context).showSnackBar(SnackBar(content: Text("Saved profile."),));
-              await Future.delayed(Duration(seconds: 2));
-              setState(() {}); //todo test if this rebuilds the page
+              loadProfile();
             }
           },
         )
