@@ -48,7 +48,7 @@ class SocialMediaLineItem extends StatelessWidget {
               wechat == null ? empty : IconButton(
                 icon: Icon(FontAwesomeIcons.weixin), onPressed:() {
                   showDialog(context: context, builder: (context) {
-                    return AlertDialog(title: Text("WeChat/Weixin ID"), content: Text(wechat),);
+                    return AlertDialog(title: Text("WeChat/Weixin ID"), content: SelectableText(wechat),);
                   });
                 },
                 iconSize: 36.0, color: Constants.meltonGreenAccent,),
