@@ -93,7 +93,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                     SizedBox(width: 10,),
                     Expanded(
                       child: SearchableDropdown.single(
-//                key: _formKey, //todo required?
                         value: widget.initialModel.city,
                         hint: "------------------------",
                         searchHint: "Search city or country",
@@ -204,10 +203,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                   children: [
                     Icon(FontAwesomeIcons.handHoldingHeart, color: Colors.grey,),
                     SizedBox(width: 10,),
-                    //todo map sdgs from /profile to be preselected
-                    //todo validate sdg dropdown before saving
                     SearchableDropdown.multiple(
-//                key: _formKey, //todo required?
                     selectedItems: getSDGNumsFromSDGList(widget.initialModel.SDGs),
                     hint: "------------------------",
                     searchHint: "Select up to 3",
@@ -218,11 +214,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                         );
                       }).toList(),
                       onChanged: (selections) {},
-//                    print(selections);
-//                      setState(() {
-////                        selections.
-//                      });
-//                    },
                       validator: (selections) {
                         if (selections.length > 3)  {
                           return "Maximum 3 selections allowed!";
@@ -245,14 +236,10 @@ class _ProfileEditState extends State<ProfileEdit> {
                       //todo make close as dismiss and dont save changed items
                       closeButton: null,
                       displayClearIcon: false,
-//                    closeButton: (selections) {
-//                      return isInvalidSDGsSelection(selections.length) ? null : "DONE";
-//                    },
                     ),
                   ],
                 ),
 
-                // todo - implicitly convert "weixin" to wechat?
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
                 Text("Social Media", style: TextStyle(color: Constants.meltonBlue),),
                 Column(
@@ -271,8 +258,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                       print("VALID");
-                      //todo POST api call
-                      // todo based on true/false, show toast notification/snackbar?
                       _model.phoneNumber = _phoneModel;
                       _model.socialMediaAccounts = _socialModel;
                       _model.SDGs = _sdgModel;
