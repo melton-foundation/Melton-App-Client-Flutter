@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(cluster());
 
-class MyApp extends StatelessWidget {
+class cluster extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -43,6 +44,16 @@ class Tag {
   factory Tag.fromJson(Map<String, dynamic> json) {
     return Tag(json['lat'] as double, json['lng'] as double);
   }
+}
+
+Future<String> _loadAStudentAsset() async {
+  return await rootBundle.loadString('assets/student.json');
+}
+
+Future<Tag> loadStudent() async {
+  String jsonString = await _loadAStudentAsset();
+  final jsonResponse = json.decode(jsonString);
+  return new Tag.fromJson(jsonResponse);
 }
 
 // A function that converts a response body into a List<Tag>.
@@ -87,22 +98,24 @@ class MapSampleState extends State<MapSample> {
 //We have to put the ones we got from above.
 //I'm stuck at this part.
   List<ClusterItem<Place>> items = [
-    for (int i = 0; i < 10; i++)
-      ClusterItem(LatLng(48.848200 + i * 0.001, 2.319124 + i * 0.001),
-          item: Place(name: 'Place $i')),
-    for (int i = 0; i < 10; i++)
-      ClusterItem(LatLng(48.858265 - i * 0.001, 2.350107 + i * 0.001),
-          item: Place(name: 'Restaurant $i', isClosed: i % 2 == 0)),
-    for (int i = 0; i < 10; i++)
-      ClusterItem(LatLng(48.858265 + i * 0.01, 2.350107 - i * 0.01),
-          item: Place(name: 'Bar $i')),
-    for (int i = 0; i < 10; i++)
-      ClusterItem(LatLng(48.858265 - i * 0.1, 2.350107 - i * 0.01),
-          item: Place(name: 'Hotel $i')),
-    for (int i = 0; i < 10; i++)
-      ClusterItem(LatLng(48.858265 + i * 0.1, 2.350107 + i * 0.1)),
-    for (int i = 0; i < 10; i++)
-      ClusterItem(LatLng(48.858265 + i * 1, 2.350107 + i * 1)),
+    for (int i = 0; i < 7; i++)
+      ClusterItem(LatLng(5.55 + i * 0.001, -0.2167 + i * 0.001),
+          item: Place(name: 'Ashesi Ghana $i')),
+    for (int i = 0; i < 8; i++)
+      ClusterItem(LatLng(12.97 - i * 0.001, 77.56 + i * 0.001),
+          item: Place(name: 'BMS Bangalore $i')),
+    for (int i = 0; i < 4; i++)
+      ClusterItem(LatLng(30.0687 + i * 0.01, -89.9288 - i * 0.01),
+          item: Place(name: 'Dillard New Orleans $i')),
+    for (int i = 0; i < 2; i++)
+      ClusterItem(LatLng(50.9304 - i * 0.1, 11.58 - i * 0.01),
+          item: Place(name: 'FSU Jena $i')),
+    for (int i = 0; i < 5; i++)
+      ClusterItem(LatLng(-38.73 - i * 0.1, -72.58 - i * 0.01),
+          item: Place(name: 'UFFRO Chile $i')),
+    for (int i = 0; i < 5; i++)
+      ClusterItem(LatLng(24.5204 - i * 0.1, 117.67 - i * 0.01),
+          item: Place(name: 'Zhejiang Hangzhou $i')),
   ];
 
   @override

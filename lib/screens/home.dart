@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:melton_app/screens/posts/posts_home_preview.dart';
 import 'package:melton_app/screens/posts/posts_preview_page.dart';
-import 'package:melton_app/screens/map/map.dart';
+//import 'package:melton_app/screens/map/map.dart';
+import 'package:melton_app/screens/map/cluster.dart';
 
 import 'package:melton_app/constants/constants.dart' as Constants;
 
@@ -41,7 +42,7 @@ class _HomeState extends State<Home> {
             ),
             //todo other "home" components
             // maps api? other stuff?
-            Expanded(child: map()),
+            Expanded(child: cluster()),
           ],
         ),
       ),
