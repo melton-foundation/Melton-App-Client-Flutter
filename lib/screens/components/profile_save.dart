@@ -22,7 +22,6 @@ class _ProfileSaveState extends State<ProfileSave> {
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return Scaffold(
-//              color: Colors.white,
                 body: Container(
                   color: Colors.white,
                   child: Center(child: CircularProgressIndicator())

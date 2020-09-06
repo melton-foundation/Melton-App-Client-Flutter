@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:melton_app/screens/profile_edit.dart';
 import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/api/api.dart';
+import 'package:melton_app/constants/constants.dart';
 
+import 'package:melton_app/screens/profile_edit.dart';
 import 'package:melton_app/screens/components/store_line_item.dart';
 import 'package:melton_app/screens/components/profile_line_item.dart';
 import 'package:melton_app/screens/components/sdg_profile.dart';
@@ -57,7 +58,6 @@ class _ProfileState extends State<Profile> {
               _loaded = snapshot.data;
               return Padding(
                 padding: const EdgeInsets.all(8.0),
-                //todo implement pull to refresh
                 child: RefreshIndicator(
                   onRefresh: _handleRefresh,
                   child: ListView(
@@ -80,7 +80,6 @@ class _ProfileState extends State<Profile> {
                         linkedin: snapshot.data.socialMediaAccounts.linkedin,
                         others: snapshot.data.socialMediaAccounts.others,
                       ),
-                      //todo rename "work" to "bio"??
                       (snapshot.data.work == null ||
                               snapshot.data.work.length == 0)
                           ? empty
@@ -131,7 +130,16 @@ class _ProfileState extends State<Profile> {
             isProfileUpdated = await Navigator.of(context)
                 .push(MaterialPageRoute(builder: (_) => ProfileEdit(initialModel: _loaded)));
             if (isProfileUpdated != null && isProfileUpdated) {
-              Scaffold.of(context).showSnackBar(SnackBar(content: Text("Saved profile."),));
+              Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text("Saved profile."),
+                action: SnackBarAction(
+                  label: "REFRESH",
+                  textColor: Constants.meltonYellow,
+                  onPressed: () {
+                    loadProfile();
+                  },
+                ),
+              ));
               loadProfile();
             }
           },

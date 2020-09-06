@@ -336,13 +336,13 @@ class _ProfileEditState extends State<ProfileEdit> {
   static List<int> getSDGNumsFromSDGList(SDGList sdgList) {
     List<int> sdgNums = List<int>();
     if (sdgList.firstSDG != 0) {
-      sdgNums.add(sdgList.firstSDG);
+      sdgNums.add(sdgList.firstSDG - 1);
     }
     if (sdgList.secondSDG != 0) {
-      sdgNums.add(sdgList.secondSDG);
+      sdgNums.add(sdgList.secondSDG - 1);
     }
     if (sdgList.thirdSDG != 0) {
-      sdgNums.add(sdgList.thirdSDG);
+      sdgNums.add(sdgList.thirdSDG - 1);
     }
     return sdgNums;
   }
