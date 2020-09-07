@@ -12,6 +12,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:get_it/get_it.dart';
+import 'package:melton_app/models/UserRegisterModel.dart';
+import 'package:melton_app/models/UserRegisterResponseModel.dart';
 import 'package:melton_app/util/token_handler.dart';
 
 class ApiService {
@@ -210,6 +212,21 @@ class ApiService {
       return false;
     }
 
+  }
+
+  Future<UserRegisterResponseModel> postRegisterUser(UserRegisterModel model) async {
+    Map<String, dynamic> modelMap = model.toJson(model);
+//    String modelJson = json.encode(modelMap);
+    print(modelMap);
+    print(json.encode(modelMap));
+    http.Response response = await http.post(apiUrl + "register/",
+        headers: getAuthAndJsonContentHeader(), body: json.encode(modelMap));
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201 || response.statusCode == 400) {
+      UserRegisterResponseModel responseModel = UserRegisterResponseModel.fromJson(json.decode(response.body));
+      return responseModel;
+    }
   }
 
 }

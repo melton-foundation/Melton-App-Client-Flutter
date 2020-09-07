@@ -13,6 +13,8 @@ import 'package:melton_app/screens/main_home.dart';
 import 'package:melton_app/constants/constants.dart' as Constants;
 import 'package:melton_app/util/token_handler.dart';
 
+import 'package:melton_app/screens/components/sign_up.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -26,29 +28,34 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Constants.meltonBlue,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Constants.meltonYellowAccent, Constants.meltonGreenAccent]//, Constants.meltonBlueAccent, Constants.meltonGreenAccent],
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               WelcomeText("WELCOME TO THE MELTON APP!"),
-              WelcomeText("We need you to sign in with Google to prove that you are a Melton Fellow."),
-              WelcomeText("We will use your Google profile picture and email. "),
+              WelcomeText("Let's get started!"),
+              WelcomeText("Hope you're as excited as us..."),
               WelcomeText("Your data is used solely by the Melton Foundation. "),
-              WelcomeText("For a detailed overview, see our privacy policy here: meltonapp.com/privacy"), //todo add link
+              WelcomeText("For more details see: meltonapp.com/privacy"),
               RaisedButton(onPressed: () {
                 triggerLogin();
               },
-              child: Text("SIGN IN"),
+              child: Text("SIGN IN WITH GOOGLE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
               color: Constants.meltonYellow,
               splashColor: Constants.meltonRed,
               ),
               RaisedButton(onPressed: () {
-                //todo open modal and ask details needed for /register
-                triggerLogin();
+                triggerRegister();
               },
-                child: Text("SIGN UP"),
+                child: Text("SIGN UP", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                 color: Constants.meltonBlueAccent,
                 splashColor: Constants.meltonRed,
               ),
@@ -63,8 +70,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<bool> triggerLogin() async {
     print('calling oauth');
     String appToken = await oauthLoginAndGetAppToken();
-    print('saving to storage');
     if (appToken != null) {
+      print('saving to storage');
       PersistentStorage storage = GetIt.I.get<PersistentStorage>();
       await storage.saveStringToStorage(TokenHandler.APP_TOKEN_KEY, appToken);
       await GetIt.I.get<TokenHandler>().refresh(storage);
@@ -94,6 +101,13 @@ class _LoginScreenState extends State<LoginScreen> {
     return appToken;
   }
 
+  Future<String> triggerRegister() async {
+    showModalBottomSheet(context: context, isScrollControlled: true,
+        builder: (BuildContext context) {
+      return SignUp();
+    });
+  }
+
 }
 
 class WelcomeText extends StatelessWidget {
@@ -103,7 +117,7 @@ class WelcomeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,
+    return Text(text, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,
       color: Colors.white),);
   }
 }
