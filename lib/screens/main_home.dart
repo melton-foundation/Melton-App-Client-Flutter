@@ -5,6 +5,7 @@ import 'package:melton_app/screens/login.dart';
 import 'package:melton_app/screens/profile.dart';
 import 'package:melton_app/screens/directory.dart';
 import 'package:melton_app/screens/home.dart';
+import 'package:melton_app/screens/authorization_wall.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -23,7 +24,8 @@ class _MyHomePageState extends State<MyHomePage> {
     Directory(),
     Home(),
     Profile(),
-    LoginScreen()
+    LoginScreen(),
+    AuthorizationWall()
   ];
 
   @override

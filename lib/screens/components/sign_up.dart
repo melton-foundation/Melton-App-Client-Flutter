@@ -166,7 +166,7 @@ class _SignUpState extends State<SignUp> {
               RaisedButton(
                 child: Text("CLOSE", style: TextStyle(color: Colors.white),),
                 color: Constants.meltonRedAccent,
-                onPressed: () async {
+                onPressed: () {
                   Navigator.pop(context);
                 }
               ),

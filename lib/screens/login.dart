@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:melton_app/api/api.dart';
+import 'package:melton_app/models/UserRegistrationStatusModel.dart';
+import 'package:melton_app/screens/authorization_wall.dart';
 import 'package:melton_app/screens/splash.dart';
 import 'package:melton_app/util/secrets.dart';
 import 'package:melton_app/util/persistent_storage.dart';
@@ -42,9 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               WelcomeText("WELCOME TO THE MELTON APP!"),
               WelcomeText("Let's get started!"),
-              WelcomeText("Hope you're as excited as us..."),
-              WelcomeText("Your data is used solely by the Melton Foundation. "),
-              WelcomeText("For more details see: meltonapp.com/privacy"),
+              WelcomeText("Only Melton Fellows can use this app. "),
+              WelcomeText("Your data is used solely by the Melton Foundation. For more details see: meltonapp.com/privacy"),
               RaisedButton(onPressed: () {
                 triggerLogin();
               },
@@ -69,36 +70,45 @@ class _LoginScreenState extends State<LoginScreen> {
   //todo use "signinsilently"
   Future<bool> triggerLogin() async {
     print('calling oauth');
-    String appToken = await oauthLoginAndGetAppToken();
-    if (appToken != null) {
+    UserRegistrationStatusModel tokenOrUnauthorized = await oauthLoginAndGetAppToken();
+    if (tokenOrUnauthorized?.appToken != null) {
       print('saving to storage');
       PersistentStorage storage = GetIt.I.get<PersistentStorage>();
-      await storage.saveStringToStorage(TokenHandler.APP_TOKEN_KEY, appToken);
+      await storage.saveStringToStorage(TokenHandler.APP_TOKEN_KEY, tokenOrUnauthorized.appToken);
       await GetIt.I.get<TokenHandler>().refresh(storage);
+      await Future.delayed(Duration(seconds: 3)); //todo remove?
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+        return MyHomePage();
+      }));
+    } else if (tokenOrUnauthorized?.isApproved == false) {
+      Navigator.push(context, MaterialPageRoute(builder: (_) {
+        return AuthorizationWall();
+      }));
     } else {
       //todo error screen or again push login page
+      await Future.delayed(Duration(seconds: 3));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+        return MyHomePage();
+      }));
     }
-    await Future.delayed(Duration(seconds: 3));
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-      return MyHomePage();
-    }));
+
   }
 
-  Future<String> oauthLoginAndGetAppToken() async {
-    String appToken;
+  Future<UserRegistrationStatusModel> oauthLoginAndGetAppToken() async {
+    UserRegistrationStatusModel tokenOrUnauthorized;
     await _googleSignIn.signIn().then((result) async {
       await result.authentication.then((googleKey) async {
         print(googleKey.accessToken);
         log(googleKey.idToken); //todo cleanup
         print(result.email);
-        appToken = await ApiService().getAppToken(result.email, googleKey.idToken);
+        tokenOrUnauthorized = await ApiService().getAppToken(result.email, googleKey.idToken);
       }).catchError((err) {
         print('oauth inner error'); //todo error screen
       });
     }).catchError((err) {
       print('oauth error occured'); //todo error screen
     });
-    return appToken;
+    return tokenOrUnauthorized;
   }
 
   Future<String> triggerRegister() async {

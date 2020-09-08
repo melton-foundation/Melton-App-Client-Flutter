@@ -14,6 +14,7 @@ import 'dart:convert';
 import 'package:get_it/get_it.dart';
 import 'package:melton_app/models/UserRegisterModel.dart';
 import 'package:melton_app/models/UserRegisterResponseModel.dart';
+import 'package:melton_app/models/UserRegistrationStatusModel.dart';
 import 'package:melton_app/util/token_handler.dart';
 
 class ApiService {
@@ -24,6 +25,7 @@ class ApiService {
   static const store_shop = "store/";
   static const store_buy = "buy/";
   static const post_preview = "posts/";
+  static const registration_status = "registration-status/";
 
   String get token => GetIt.instance.get<TokenHandler>().getToken();
 
@@ -42,7 +44,7 @@ class ApiService {
     "Content-Type": "application/json"
   };
 
-  Future<String> getAppToken(String email, String oauthToken,
+  Future<UserRegistrationStatusModel> getAppToken(String email, String oauthToken,
       {String oauthProvider="GOOGLE"}) async {
     print("calling login/ ");
     print(email);
@@ -63,17 +65,17 @@ class ApiService {
     print(response.body);
     print('print json body');
     print(jsonDecode(response.body)); //todo remove
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 403) {
       var jsonRes = json.decode(utf8.decode(response.bodyBytes));
       print(jsonRes);
-      return jsonRes['appToken'];
+      return UserRegistrationStatusModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
-      return "";
+      return null;
     }
   }
 
   //add support for no internet error screen?
-  // todo IMP - handle 403 case
+  // todo IMP - handle 403 case for all api calls - redirect to error screen
   Future<bool> verifyAppTokenValid() async {
     print('verifying app token');
     print(getAuthHeader());
@@ -119,6 +121,18 @@ class ApiService {
     bool result = handleError(response);
     if (result) {
       return ProfileModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+    }
+    else {
+      //todo show error msg
+      print("request failed");
+    }
+  }
+
+  Future<UserRegistrationStatusModel> getRegistrationStatus() async {
+    http.Response response = await http.get(apiUrl + registration_status, headers: getAuthHeader());
+    bool result = handleError(response);
+    if (result) {
+      return UserRegistrationStatusModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     }
     else {
       //todo show error msg
