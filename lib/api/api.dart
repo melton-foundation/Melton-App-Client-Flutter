@@ -64,7 +64,7 @@ class ApiService {
     print('print json body');
     print(jsonDecode(response.body)); //todo remove
     if (response.statusCode == 200) {
-      var jsonRes = json.decode(response.body);
+      var jsonRes = json.decode(utf8.decode(response.bodyBytes));
       print(jsonRes);
       return jsonRes['appToken'];
     } else {
@@ -88,7 +88,7 @@ class ApiService {
     http.Response response = await http.get(apiUrl + users, headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
-      List<dynamic> jsonResponse = json.decode(response.body);
+      List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
       List<UserModel> users = new List<UserModel>();
       for (int i = 0; i < jsonResponse.length; i++) {
         UserModel user =  UserModel.fromJson(jsonResponse[i]);
@@ -105,7 +105,7 @@ class ApiService {
     http.Response response = await http.get(apiUrl + users + id.toString(), headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
-      return UserModel.fromJson(json.decode(response.body));
+      return UserModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     }
     else {
       //todo show error msg
@@ -118,7 +118,7 @@ class ApiService {
     http.Response response = await http.get(apiUrl + profile, headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
-      return ProfileModel.fromJson(json.decode(response.body));
+      return ProfileModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     }
     else {
       //todo show error msg
@@ -130,7 +130,7 @@ class ApiService {
     http.Response response = await http.get(apiUrl + store_shop, headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
-      List<dynamic> jsonResponse = json.decode(response.body);
+      List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
       List<StoreModel> items = new List<StoreModel>();
       for (int i = 0; i < jsonResponse.length; i++) {
         StoreModel item =  StoreModel.fromJson(jsonResponse[i]);
@@ -148,7 +148,7 @@ class ApiService {
         headers: getAuthAndJsonContentHeader(), body: """{"itemId":$itemId}""");
     bool result = handleError(response);
     if (result) {
-      return StoreItemBuy.fromJson(json.decode(response.body));
+      return StoreItemBuy.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       // todo show error msg snackbar
       print("request failed, server is being cranky :(");
@@ -159,7 +159,7 @@ class ApiService {
     http.Response response = await http.get(apiUrl + post_preview, headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
-      List<dynamic> jsonResponse = json.decode(response.body);
+      List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
       List<PostModel> postPreviewList = new List<PostModel>();
       for (int i = 0; i < jsonResponse.length; i++) {
         PostModel postPreview = PostModel.fromJson(jsonResponse[i]);
@@ -181,7 +181,7 @@ class ApiService {
     http.Response response = await http.get(apiUrl + post_preview + postId.toString(), headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
-      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      Map<String, dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
       PostModel post = PostModel.fromJson(jsonResponse);
       return post;
     } else {
@@ -224,7 +224,7 @@ class ApiService {
     print(response.statusCode);
     print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201 || response.statusCode == 400) {
-      UserRegisterResponseModel responseModel = UserRegisterResponseModel.fromJson(json.decode(response.body));
+      UserRegisterResponseModel responseModel = UserRegisterResponseModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       return responseModel;
     }
   }
