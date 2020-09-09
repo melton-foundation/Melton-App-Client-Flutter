@@ -6,6 +6,9 @@ class TokenHandler {
 
   Future<void> refresh(PersistentStorage storage) async {
     token = await storage.readStringFromStorage(APP_TOKEN_KEY);
+    if (token == null) {
+      token = "token_not_saved_fallback";
+    }
   }
 
   String getToken() {
