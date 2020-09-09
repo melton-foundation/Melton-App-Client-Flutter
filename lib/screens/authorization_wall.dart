@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:melton_app/constants/constants.dart' as Constants;
 
-class AuthorizationWall extends StatefulWidget {
-  @override
-  _AuthorizationWallState createState() => _AuthorizationWallState();
-}
 
-class _AuthorizationWallState extends State<AuthorizationWall> {
+class AuthorizationWall extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
