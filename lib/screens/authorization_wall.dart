@@ -7,25 +7,32 @@ class AuthorizationWall extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          SizedBox(height: 150,),
-          Image.asset("assets/splash.png"),
-          FormTitle("OOPS!"),
-          FormSubtitle("Your email wasn't saved in a Melton database."),
-          FormSubtitle("We will verify and approve you."),
-          FormSubtitle("Try signing in again later :)"),
-          Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
-          RaisedButton(
-              child: Text("CLOSE", style: TextStyle(color: Colors.white),),
-              color: Constants.meltonRedAccent,
-              onPressed: () {
-                Navigator.pop(context);
-              }
+    return Material(
+      child: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            children: [
+              SizedBox(height: 150,),
+              Image.asset("assets/splash.png"),
+              FormTitle("OOPS!"),
+              FormTitle(""),
+              FormSubtitle("Your email wasn't saved in a Melton database."),
+              FormSubtitle("We will verify that you're a Melton Fellow, and approve you."),
+              FormTitle(""),
+              FormSubtitle("Try signing in again later :)"),
+              Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
+              RaisedButton(
+                  child: Text("CLOSE", style: TextStyle(color: Colors.white),),
+                  color: Constants.meltonRedAccent,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

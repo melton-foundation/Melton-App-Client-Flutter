@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
               },
                 child: Text("SIGN UP", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                 color: Constants.meltonBlueAccent,
-                splashColor: Constants.meltonRed,
+                splashColor: Constants.meltonYellow,
               ),
             ],
           ),
