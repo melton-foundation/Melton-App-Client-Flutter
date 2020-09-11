@@ -139,6 +139,9 @@ class _DirectoryState extends State<Directory> {
             if(value.length > 2){
               searchService.searchUser(value);
             }
+            else if(value.length == 0){
+              searchService.searchUser(" ");
+            }
           },
           onEditingComplete: () => {
             searchService.searchUser(" ")
