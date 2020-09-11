@@ -97,7 +97,7 @@ class _DirectoryState extends State<Directory> {
           child: GestureDetector(
             onTap: (){showUserDetails(snapshot.data[index].id);},
             child: snapshot.data[index].picture == null ?
-            AssetImage(Constants.placeholder_avatar) :
+            Image.asset(Constants.placeholder_avatar) :
             Image.network(snapshot.data[index].picture, fit: BoxFit.fill),
           ),
         );
