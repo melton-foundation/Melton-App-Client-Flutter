@@ -132,18 +132,22 @@ class _DirectoryState extends State<Directory> {
     return Padding(
       padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
       child: SizedBox(
-        height: 40,
+        height: 45,
         child: TextField(
           onChanged: (value) {
             /*TODO : show loading or some indicator when user is typing */
             if(value.length > 2){
               searchService.searchUser(value);
             }
-            else if(value.length == 0){
-              searchService.searchUser(" ");
-            }
           },
-          style: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.bold),
+          onEditingComplete: () => {
+            searchService.searchUser(" ")
+          },
+
+          style: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.bold,
+            height: 1.0,
+            fontSize: 20,
+          ),
           decoration: InputDecoration(
               suffixIcon: Icon(Icons.search),
               border: OutlineInputBorder(
