@@ -20,6 +20,7 @@ class _DirectoryState extends State<Directory> {
     searchService.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
@@ -29,12 +30,9 @@ class _DirectoryState extends State<Directory> {
           children: [
             userSearch(),
             userSearchFilter(),
-            Expanded(
-              child: buildStreamBuilder(orientation)
-            ),
+            Expanded(child: buildStreamBuilder(orientation)),
           ],
-        )
-    );
+        ));
   }
 
   StreamBuilder<List<UserModel>> buildStreamBuilder(Orientation orientation) {
@@ -43,9 +41,8 @@ class _DirectoryState extends State<Directory> {
         builder: (context, AsyncSnapshot<List<UserModel>> snapshot) {
           if (snapshot.hasError) {
             return Text("${snapshot.error}"); //todo handle correctly
-          }
-          else{
-            switch(snapshot.connectionState){
+          } else {
+            switch (snapshot.connectionState) {
               case ConnectionState.waiting:
               case ConnectionState.none:
                 if (!isPageLoaded) {
@@ -54,15 +51,13 @@ class _DirectoryState extends State<Directory> {
                 }
                 return Center(child: CircularProgressIndicator());
               case ConnectionState.active:
-                if(snapshot.hasData){
+                if (snapshot.hasData) {
                   if (snapshot.data.length == 0) {
                     return Center(child: Text("No results found"));
-                  }
-                  else{
+                  } else {
                     return buildGridViewForUsersList(orientation, snapshot);
                   }
-                }
-                else{
+                } else {
                   return Center(child: Text("ERROR: SOMETHING WENT WRONG"));
                 }
 //              case ConnectionState.done
@@ -93,66 +88,75 @@ class _DirectoryState extends State<Directory> {
 
   GridTile userTile(AsyncSnapshot<List<UserModel>> snapshot, int index) {
     return GridTile(
-          footer: userTileFooter(snapshot, index),
-          child: GestureDetector(
-            onTap: (){showUserDetails(snapshot.data[index].id);},
-            child: snapshot.data[index].picture == null ?
-            Image.asset(Constants.placeholder_avatar) :
-            Image.network(snapshot.data[index].picture, fit: BoxFit.fill),
-          ),
-        );
+      footer: userTileFooter(snapshot, index),
+      child: GestureDetector(
+        onTap: () {
+          showUserDetails(snapshot.data[index].id);
+        },
+        child: snapshot.data[index].picture == null
+            ? Image.asset(Constants.placeholder_avatar)
+            : Image.network(snapshot.data[index].picture, fit: BoxFit.fill),
+      ),
+    );
   }
 
-  GestureDetector userTileFooter(AsyncSnapshot<List<UserModel>> snapshot, int index) {
+  GestureDetector userTileFooter(
+      AsyncSnapshot<List<UserModel>> snapshot, int index) {
     return GestureDetector(
-          onTap: () {
-            showUserDetails(snapshot.data[index].id);
-          },
-          child: GridTileBar(
-            title: Center(
-              child: Text(snapshot.data[index].name, style: testStyleForUserName()),
-            ),
-            backgroundColor: Constants.userTileFooterColor,
-          ),
-        );
+      onTap: () {
+        showUserDetails(snapshot.data[index].id);
+      },
+      child: GridTileBar(
+        title: Center(
+          child: Text(snapshot.data[index].name, style: testStyleForUserName()),
+        ),
+        backgroundColor: Constants.userTileFooterColor,
+      ),
+    );
   }
 
   void showUserDetails(int id) {
 //    print('show user profile for $id');
     Future<UserModel> model = ApiService().getUserModelById(id);
-    model.then((value) => {print(value.name)}).catchError((error)=>{
-      print(error.toString())
-    });
+    model
+        .then((value) => {print(value.name)})
+        .catchError((error) => {print(error.toString())});
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (_) => UserDetails(model)));
-
   }
 
   userSearch() {
+    var _controller = TextEditingController();
     return Padding(
-      padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-      child: SizedBox(
-        height: 45,
-        child: TextField(
-          onChanged: (value) {
-            /*TODO : show loading or some indicator when user is typing */
-            if(value.length > 2){
-              searchService.searchUser(value);
-            }
-            else if(value.length == 0){
-              searchService.searchUser(" ");
-            }
-          },
-          onEditingComplete: () => {
-            searchService.searchUser(" ")
-          },
-
-          style: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.bold,
-            height: 1.0,
-            fontSize: 20,
-          ),
-          decoration: InputDecoration(
-              suffixIcon: Icon(Icons.search),
+        padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+        child: SizedBox(
+          height: 45,
+          child: TextField(
+            onChanged: (value) {
+              /*TODO : show loading or some indicator when user is typing */
+              if (value.length > 2) {
+                searchService.searchUser(value);
+              } else if (value.length == 0) {
+                searchService.searchUser(" ");
+              }
+            },
+            onEditingComplete: () => {searchService.searchUser(" ")},
+            style: TextStyle(
+              color: Colors.grey[800],
+              fontWeight: FontWeight.bold,
+              height: 1.0,
+              fontSize: 20,
+            ),
+            controller: _controller,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.search),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  _controller.clear();
+                  searchService.searchUser(" ");
+                },
+                icon: Icon(Icons.clear),
+              ),
               border: OutlineInputBorder(
                 borderRadius: const BorderRadius.all(
                   const Radius.circular(40.0),
@@ -162,9 +166,9 @@ class _DirectoryState extends State<Directory> {
 //              hintStyle: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.bold),
 //              hintText: "Type in user name",
               fillColor: Colors.white,
+            ),
           ),
-        ),
-      )
+        )
     );
   }
 
