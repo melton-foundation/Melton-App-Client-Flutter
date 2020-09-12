@@ -1,20 +1,15 @@
-import 'dart:developer'; //todo remove
-
 import 'package:flutter/material.dart';
+
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/models/UserRegistrationStatusModel.dart';
 import 'package:melton_app/screens/authorization_wall.dart';
-import 'package:melton_app/screens/splash.dart';
-import 'package:melton_app/util/secrets.dart';
 import 'package:melton_app/util/persistent_storage.dart';
-import 'package:melton_app/main.dart';
 import 'package:melton_app/screens/main_home.dart';
-
 import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/util/token_handler.dart';
-
 import 'package:melton_app/screens/components/sign_up.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -67,16 +62,12 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  //todo use "signinsilently"
   Future<bool> triggerLogin() async {
-    print('calling oauth');
     UserRegistrationStatusModel tokenOrUnauthorized = await oauthLoginAndGetAppToken();
     if (tokenOrUnauthorized?.appToken != null) {
-      print('saving to storage');
       PersistentStorage storage = GetIt.I.get<PersistentStorage>();
       await storage.saveStringToStorage(TokenHandler.APP_TOKEN_KEY, tokenOrUnauthorized.appToken);
       await GetIt.I.get<TokenHandler>().refresh(storage);
-      await Future.delayed(Duration(seconds: 3)); //todo remove?
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
         return MyHomePage();
       }));
@@ -98,9 +89,6 @@ class _LoginScreenState extends State<LoginScreen> {
     UserRegistrationStatusModel tokenOrUnauthorized;
     await _googleSignIn.signIn().then((result) async {
       await result.authentication.then((googleKey) async {
-        print(googleKey.accessToken);
-        log(googleKey.idToken); //todo cleanup
-        print(result.email);
         tokenOrUnauthorized = await ApiService().getAppToken(result.email, googleKey.idToken);
       }).catchError((err) {
         print('oauth inner error'); //todo error screen

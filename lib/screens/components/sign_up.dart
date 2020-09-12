@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/models/UserRegisterModel.dart';
 import 'package:melton_app/models/UserRegisterResponseModel.dart';
-
-import 'package:melton_app/screens/main_home.dart';
 import 'package:melton_app/screens/components/user_register.dart';
 
 class SignUp extends StatefulWidget {

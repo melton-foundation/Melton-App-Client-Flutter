@@ -1,21 +1,21 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
-import 'dart:developer' as dev; //todo remove
+import 'package:get_it/get_it.dart';
 
 import 'package:http/http.dart' as http;
+
+import 'package:melton_app/util/token_handler.dart';
+
 import 'package:melton_app/models/PostModel.dart';
 import 'package:melton_app/models/UserModel.dart';
 import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/models/StoreModel.dart';
-
-import 'dart:async';
-import 'dart:convert';
-
-import 'package:get_it/get_it.dart';
 import 'package:melton_app/models/UserRegisterModel.dart';
 import 'package:melton_app/models/UserRegisterResponseModel.dart';
 import 'package:melton_app/models/UserRegistrationStatusModel.dart';
-import 'package:melton_app/util/token_handler.dart';
+
 
 class ApiService {
 
@@ -46,10 +46,6 @@ class ApiService {
 
   Future<UserRegistrationStatusModel> getAppToken(String email, String oauthToken,
       {String oauthProvider="GOOGLE"}) async {
-    print("calling login/ ");
-    print(email);
-    print(oauthToken);
-    print(oauthProvider);
     Map<String, String> jsonBodyMap = {
       "email": email,
       "token": oauthToken,
@@ -59,15 +55,8 @@ class ApiService {
     headers: contentHeader,
     body: json.encode(jsonBodyMap)
     );
-    print('print statuscode');
-    print(response.statusCode);
-    print('print body');
-    print(response.body);
-    print('print json body');
-    print(jsonDecode(response.body)); //todo remove
     if (response.statusCode == 200 || response.statusCode == 403) {
       var jsonRes = json.decode(utf8.decode(response.bodyBytes));
-      print(jsonRes);
       return UserRegistrationStatusModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       return null;
