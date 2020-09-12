@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:melton_app/constants/constants.dart' as Constants;
+import 'package:melton_app/constants/constants.dart';
 
 class SDGProfile extends StatelessWidget {
   static const String SDG_image_path = "assets/UN_SDG/sdg_";

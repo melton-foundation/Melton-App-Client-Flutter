@@ -1,3 +1,5 @@
+import 'package:melton_app/util/social_media.dart';
+
 class ProfileModel {
   String email;
   String name;
@@ -5,6 +7,7 @@ class ProfileModel {
   int points;
   String campus;
   String city;
+  String country;
   int batch;
   String work;
   PhoneNumber phoneNumber;
@@ -13,7 +16,7 @@ class ProfileModel {
   String picture;
 
   ProfileModel({this.email, this.name, this.isJuniorFellow, this.points,
-  this.campus, this.city, this.batch, this.work, this.phoneNumber,
+  this.campus, this.city, this.country, this.batch, this.work, this.phoneNumber,
   this.socialMediaAccounts, this.SDGs, this.picture});
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -40,12 +43,29 @@ class ProfileModel {
       return city + ", " + country;
     }
   }
+
+  //todo handle null and required fields
+  static Map<String, dynamic> toJson(ProfileModel model) {
+    return {
+      "name": model.name,
+      "campus": model.campus,
+      "city": model.city,
+      "country": model.country,
+      "batch": model.batch,
+      "work": model.work,
+      "phoneNumber": PhoneNumber.toJson(model.phoneNumber),
+      "socialMediaAccounts": SocialMediaAccounts.toJson(model.socialMediaAccounts),
+      "sdgs": SDGList.toJson(model.SDGs)
+    };
+  }
 }
 
 class SDGList {
   int firstSDG = 0;
   int secondSDG = 0;
   int thirdSDG = 0;
+
+  SDGList.profileUpdateConstructor();
 
   SDGList(List<int> sdgList) {
     firstSDG = sdgList[0];
@@ -64,6 +84,19 @@ class SDGList {
     return SDGList(sdg_list);
   }
 
+  static List<dynamic> toJson(SDGList model) {
+    List<dynamic> returnList = [];
+    if (model.firstSDG != null) {
+      returnList.add(model.firstSDG);
+    }
+    if (model.secondSDG != null) {
+      returnList.add(model.secondSDG);
+    }
+    if (model.thirdSDG != null) {
+      returnList.add(model.thirdSDG);
+    }
+    return returnList;
+  }
 }
 
 class SocialMediaAccounts {
@@ -107,12 +140,51 @@ class SocialMediaAccounts {
     return socialMediaAccounts;
   }
 
+  static List<dynamic> toJson(SocialMediaAccounts model) {
+    List<dynamic> returnList = [];
+    if (model.facebook != null && model.facebook.length > 0) {
+      appendMapToList(SocialMedia.FACEBOOK_KEY, model.facebook, returnList);
+    }
+    if (model.instagram != null && model.instagram.length > 0) {
+      appendMapToList(SocialMedia.INSTAGRAM_KEY, model.instagram, returnList);
+    }
+    if (model.twitter != null && model.twitter.length > 0) {
+      appendMapToList(SocialMedia.TWITTER_KEY, model.twitter, returnList);
+    }
+    if (model.wechat != null && model.wechat.length > 0) {
+      appendMapToList(SocialMedia.WECHAT_KEY, model.wechat, returnList);
+    }
+    if (model.linkedin != null && model.linkedin.length > 0) {
+      appendMapToList(SocialMedia.LINKEDIN_KEY, model.linkedin, returnList);
+    }
+    if (model.others != null && model.others.length > 0) {
+      if (model.others[0].length > 0) {
+        appendMapToList(SocialMedia.OTHER_KEY, model.others[0], returnList);
+      }
+      if (model.others.length > 1) {
+        if (model.others[1].length > 0) {
+          appendMapToList(SocialMedia.OTHER_KEY, model.others[1], returnList);
+        }
+      }
+    }
+    return returnList;
+  }
+
+  static void appendMapToList(String key, String value, List<dynamic> list) {
+    list.add({
+      "type": key,
+      "account": value,
+    });
+  }
+
   static bool validateAccount(Map<String, String> account, String type) {
     if (type == "other") {
-      return account['account'].toLowerCase().startsWith("https://");
+      return account['account'].toLowerCase().startsWith(SocialMedia.HTTPS);
+    } else if (type == "wechat") {
+      return account['type'].toLowerCase() == type && account['account'].length > 0;
     }
     return account['type'].toLowerCase() == type
-        && account['account'].toLowerCase().startsWith("https://");
+        && account['account'].toLowerCase().startsWith(SocialMedia.HTTPS);
   }
 
 }
@@ -138,6 +210,18 @@ class PhoneNumber {
       }
     }
     return PhoneNumber(countryCode: "", phoneNumber: "");
+  }
+
+  static List<dynamic> toJson(PhoneNumber model) {
+    List<dynamic> returnList = [];
+    if (model.phoneNumber != null && model.phoneNumber.length > 0 &&
+        model.countryCode!= null && model.countryCode.length > 0) {
+      returnList.add({
+        "number": model.phoneNumber,
+        "countryCode": model.countryCode
+      });
+    }
+    return returnList;
   }
 
 }

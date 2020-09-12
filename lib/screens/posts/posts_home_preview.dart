@@ -4,7 +4,7 @@ import 'package:melton_app/api/api.dart';
 import 'package:melton_app/util/get_human_time.dart';
 import 'package:melton_app/models/PostModel.dart';
 
-import 'package:melton_app/constants/constants.dart' as Constants;
+import 'package:melton_app/constants/constants.dart';
 
 class PostsHomePreview extends StatefulWidget {
 
