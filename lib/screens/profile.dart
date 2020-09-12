@@ -36,14 +36,14 @@ class _ProfileState extends State<Profile> {
   loadProfile() async {
     ApiService().getProfile().then((res) async {
       _streamController.add(res);
-      return res;
     });
   }
 
-  Future<Null> _handleRefresh() async {
+  Future<void> _handleRefresh() async {
     await loadProfile();
     await Future.delayed(Duration(seconds: 2));
-    return null;
+    Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text("Refreshed!")));
   }
 
   @override
@@ -70,6 +70,7 @@ class _ProfileState extends State<Profile> {
                       snapshot.data.points == null
                           ? empty
                           : StoreLineItem(
+                              key: UniqueKey(),
                               points: snapshot.data.points,
                             ),
                       SocialMediaLineItem(
@@ -93,6 +94,8 @@ class _ProfileState extends State<Profile> {
                               thirdSDG: snapshot.data.SDGs.thirdSDG,
                             ),
                       //todo convert to tel:
+                      !(snapshot.data.phoneNumber.phoneNumber.length > 0 &&
+                          snapshot.data.phoneNumber.countryCode.length > 0) ? empty :
                       ProfileLineItem(
                         label: "PHONE",
                         content: "+" + snapshot.data.phoneNumber.countryCode +
