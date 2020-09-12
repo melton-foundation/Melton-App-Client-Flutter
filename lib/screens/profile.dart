@@ -70,6 +70,7 @@ class _ProfileState extends State<Profile> {
                       snapshot.data.points == null
                           ? empty
                           : StoreLineItem(
+                              key: UniqueKey(),
                               points: snapshot.data.points,
                             ),
                       SocialMediaLineItem(

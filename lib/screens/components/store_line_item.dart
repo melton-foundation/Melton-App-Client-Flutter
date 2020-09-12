@@ -6,8 +6,10 @@ import 'package:melton_app/constants/constants.dart';
 class StoreLineItem extends StatefulWidget {
 
   final int points;
+  final Key key;
 
-  StoreLineItem({this.points});
+  StoreLineItem({this.points, this.key});
+
 
   @override
   _StoreLineItemState createState() => _StoreLineItemState(points);
