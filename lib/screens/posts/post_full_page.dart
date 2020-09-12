@@ -43,11 +43,9 @@ class _PostFullPageState extends State<PostFullPage> {
                           ),
                           child: Column(
                             children: [
-                              //todo implement preview image support
-//          postModel.previewImage == null ? Container() :
+                              snapshot.data.previewImage == null ? Container() :
                               Image(
-//            image: postModel.previewImage,
-                                image: AssetImage("assets/splash.png"), // todo remove
+                                image: NetworkImage(snapshot.data.previewImage),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),

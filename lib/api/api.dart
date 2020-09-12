@@ -168,7 +168,10 @@ class ApiService {
       print("request failed, server is being cranky :(");
     }
   }
-  
+
+  //todo convert to sendBottomThree - or not
+  // depending on how api sends "last updated" after ordering
+  // we need to get 3 latest posts
   Future<List<PostModel>> getPostPreviewList(bool sendTopThree) async {
     http.Response response = await http.get(apiUrl + post_preview, headers: getAuthHeader());
     bool result = handleError(response);
@@ -204,8 +207,19 @@ class ApiService {
     }
   }
 
-  Future<bool> postProfile(ProfileModel profileModel) {
-    // todo - need to post all data or only posted data will be updated
+  Future<bool> postProfile(ProfileModel model) async {
+    Map<String, dynamic> modelMap = ProfileModel.toJson(model);
+    String modelJson = jsonEncode(modelMap);
+    print(modelJson);
+    http.Response response = await http.post(apiUrl + profile,
+        headers: getAuthAndJsonContentHeader(), body: modelJson);
+    bool result = handleError(response);
+    if (result) {
+      return true;
+    } else {
+      // todo show error msg snackbar
+      print("request failed, server is being cranky :(");
+    }
   }
 
   bool handleError(http.Response response) {

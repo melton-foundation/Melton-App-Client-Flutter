@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:melton_app/constants/constants.dart' as Constants;
+import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/api/api.dart';
-import 'package:melton_app/constants/constants.dart' as Constants;
 import 'package:melton_app/models/UserModel.dart';
 import 'package:melton_app/screens/components/user_details_dialog.dart';
 
@@ -70,7 +69,7 @@ class _DirectoryState extends State<Directory> {
           child: GestureDetector(
             onTap: (){showUserDetails(snapshot.data[index].id);},
             child: snapshot.data[index].picture == null ?
-            AssetImage(Constants.placeholder_avatar) :
+            Image.asset(Constants.placeholder_avatar) :
             Image.network(snapshot.data[index].picture, fit: BoxFit.fill),
           ),
         );
@@ -91,12 +90,14 @@ class _DirectoryState extends State<Directory> {
   }
 
   void showUserDetails(int id) {
-    print('show user profile for $id');
+//    print('show user profile for $id');
     Future<UserModel> model = ApiService().getUserModelById(id);
-    model.then((value) => {print(value.name)});
-    showDialog(context: context, builder: (context){
-      return UserDetailsAlertDialog(model);
+    model.then((value) => {print(value.name)}).catchError((error)=>{
+      print(error.toString())
     });
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => UserDetails(model)));
+
   }
 
   userSearch() {

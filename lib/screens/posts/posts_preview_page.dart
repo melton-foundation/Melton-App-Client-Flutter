@@ -6,7 +6,7 @@ import 'package:melton_app/util/get_human_time.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:melton_app/screens/posts/post_full_page.dart';
 
-import 'package:melton_app/constants/constants.dart' as Constants;
+import 'package:melton_app/constants/constants.dart';
 
 class PostsPreviewPage extends StatefulWidget {
   @override
@@ -52,11 +52,9 @@ Widget postPreviewCard(BuildContext context, PostModel postModel) {
       ),
       child: Column(
         children: [
-          //todo implement preview image support
-//          postModel.previewImage == null ? Container() :
+          postModel.previewImage == null ? Container() :
           Image(
-//            image: postModel.previewImage,
-            image: AssetImage("assets/splash.png"), // todo remove
+            image: NetworkImage(postModel.previewImage),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

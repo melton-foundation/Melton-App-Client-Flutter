@@ -12,7 +12,7 @@ import 'package:melton_app/util/persistent_storage.dart';
 import 'package:melton_app/main.dart';
 import 'package:melton_app/screens/main_home.dart';
 
-import 'package:melton_app/constants/constants.dart' as Constants;
+import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/util/token_handler.dart';
 
 import 'package:melton_app/screens/components/sign_up.dart';
