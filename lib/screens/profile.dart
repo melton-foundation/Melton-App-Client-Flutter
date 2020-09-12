@@ -94,6 +94,8 @@ class _ProfileState extends State<Profile> {
                               thirdSDG: snapshot.data.SDGs.thirdSDG,
                             ),
                       //todo convert to tel:
+                      !(snapshot.data.phoneNumber.phoneNumber.length > 0 &&
+                          snapshot.data.phoneNumber.countryCode.length > 0) ? empty :
                       ProfileLineItem(
                         label: "PHONE",
                         content: "+" + snapshot.data.phoneNumber.countryCode +
