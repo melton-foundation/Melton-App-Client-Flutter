@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:melton_app/api/api.dart';
@@ -13,7 +12,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
   void initState() {
@@ -40,17 +38,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
 //todo use "signinsilently"?
   Future<void> isLoggedIn() async {
-    bool isLoggedIn = await _googleSignIn.isSignedIn(); //todo needed?
     bool isAppTokenValid = await GetIt.I.get<ApiService>().verifyAppTokenValid();
 
-    //todo remove
-    print("isLoggedIn");
-    print(isLoggedIn);
-    print("isAppTokenValid");
-    print(isAppTokenValid);
-
-    // isLoggedIn required?
-    if (isLoggedIn && isAppTokenValid) {
+    if (isAppTokenValid) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
         return MyHomePage();
       }));

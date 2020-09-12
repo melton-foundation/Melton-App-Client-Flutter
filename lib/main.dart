@@ -10,8 +10,9 @@ import 'package:melton_app/util/service_locator.dart';
 
 // todo optimize imports in all files
 
-void main() {
-  setup();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupLocator();
   runApp(MyApp());
 }
 

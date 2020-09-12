@@ -5,7 +5,7 @@ import 'package:melton_app/util/token_handler.dart';
 
 final GetIt locator = GetIt.instance;
 
-Future<void> setup() async {
+Future<void> setupLocator() async {
   locator.registerSingletonAsync<PersistentStorage>(() async {
     PersistentStorage ps = PersistentStorage();
     await ps.init();
