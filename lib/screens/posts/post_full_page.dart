@@ -80,7 +80,8 @@ class _PostFullPageState extends State<PostFullPage> {
                                 ),
                               ),
                               Container(
-                                height: 400,
+                                //todo make single scrollable page?
+                                height: 800,
                                 child: Markdown(
                                   data: snapshot.data.content,
                                   styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
