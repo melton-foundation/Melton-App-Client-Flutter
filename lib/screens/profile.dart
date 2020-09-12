@@ -36,14 +36,14 @@ class _ProfileState extends State<Profile> {
   loadProfile() async {
     ApiService().getProfile().then((res) async {
       _streamController.add(res);
-      return res;
     });
   }
 
-  Future<Null> _handleRefresh() async {
+  Future<void> _handleRefresh() async {
     await loadProfile();
     await Future.delayed(Duration(seconds: 2));
-    return null;
+    Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text("Refreshed!")));
   }
 
   @override

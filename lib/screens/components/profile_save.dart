@@ -29,7 +29,6 @@ class _ProfileSaveState extends State<ProfileSave> {
             );
           }
           if (snapshot.hasData) {
-            Future.delayed(Duration(seconds: 2));
             Navigator.pop(context, true);
           }
           if (snapshot.hasError) {
