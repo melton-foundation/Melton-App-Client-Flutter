@@ -11,12 +11,7 @@ class UserSearchService {
         .debounce((_) => TimerStream(true, Duration(milliseconds: 250)))
         .switchMap((searchedName) async* {
       print('searching: $searchedName');
-      if(searchedName == ""){
-        yield await ApiService().getUsers();
-      }
-      else{
-        yield await ApiService().getUserModelByName(searchedName);
-      }
+      yield await ApiService().getUserModelByName(searchedName.trim());
     });
   }
 

@@ -4,25 +4,30 @@ import 'package:melton_app/models/UserModel.dart';
 
 import 'UserTilesGrid.dart';
 
-class UserSearchStreamBuilder extends StatefulWidget {
+class UserSearchStreamBuilder extends StatelessWidget {
   final UserSearchService searchService;
-  UserSearchStreamBuilder({@required this.searchService});
-
-  @override
-  _UserSearchStreamBuilderState createState() => _UserSearchStreamBuilderState(searchService: searchService);
-}
-
-class _UserSearchStreamBuilderState extends State<UserSearchStreamBuilder> {
-  final UserSearchService searchService;
-  _UserSearchStreamBuilderState({@required this.searchService});
+  final bool showLoading;
+  UserSearchStreamBuilder({@required this.searchService, @required this.showLoading});
 
   @override
   Widget build(BuildContext context) {
-    bool isPageLoaded = false;
-    return Expanded(child: buildStreamBuilder(isPageLoaded));
+//    bool isPageLoaded = false;
+    return Expanded(
+        child: getResults(),
+    );
   }
 
-  StreamBuilder<List<UserModel>> buildStreamBuilder(bool isPageLoaded) {
+  Widget getResults(){
+    if(showLoading) {
+      searchService.searchUser(" ");
+      return Center(child: CircularProgressIndicator());
+    }
+    else{
+      return buildStreamBuilder();
+    }
+  }
+
+  StreamBuilder<List<UserModel>> buildStreamBuilder() {
     return StreamBuilder<List<UserModel>>(
         stream: searchService.results,
         builder: (context, AsyncSnapshot<List<UserModel>> snapshot) {
@@ -32,10 +37,7 @@ class _UserSearchStreamBuilderState extends State<UserSearchStreamBuilder> {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
               case ConnectionState.none:
-                if (!isPageLoaded) {
-                  isPageLoaded = true;
-                  searchService.searchUser(" ");
-                }
+                searchService.searchUser(" ");
                 return Center(child: CircularProgressIndicator());
               case ConnectionState.active:
                 if (snapshot.hasData) {
