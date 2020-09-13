@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/models/PostModel.dart';
 import 'package:melton_app/util/get_human_time.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:melton_app/screens/posts/post_full_page.dart';
 
 import 'package:melton_app/constants/constants.dart';

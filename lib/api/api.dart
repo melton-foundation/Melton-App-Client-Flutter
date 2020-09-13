@@ -1,15 +1,22 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:get_it/get_it.dart';
+
 import 'package:http/http.dart' as http;
+
+import 'package:melton_app/util/token_handler.dart';
+
 import 'package:melton_app/models/PostModel.dart';
 import 'package:melton_app/models/UserModel.dart';
 import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/models/StoreModel.dart';
+import 'package:melton_app/models/UserRegisterModel.dart';
+import 'package:melton_app/models/UserRegisterResponseModel.dart';
+import 'package:melton_app/models/UserRegistrationStatusModel.dart';
 
-import 'dart:async';
-import 'dart:convert';
 
-// todo make singleton
 class ApiService {
 
   static const apiUrl = "https://meltonapp.com/api/";
@@ -18,20 +25,71 @@ class ApiService {
   static const store_shop = "store/";
   static const store_buy = "buy/";
   static const post_preview = "posts/";
+  static const registration_status = "registration-status/";
 
-  //todo handle token
-  static String token = "Token " + "f901b685f231785596f52c1d8551bb496f51b54f";
-  static Map<String, String> authHeader = {"Authorization": token};
-  static Map<String, String> authAndJsonContentHeader = {
-    "Authorization": token,
-    "Content-Type": "application/json",
+  String get token => GetIt.instance.get<TokenHandler>().getToken();
+
+  Map<String, String> getAuthHeader() {
+    return {"Authorization": token};
+  }
+
+  Map<String, String> getAuthAndJsonContentHeader() {
+    return {
+      "Authorization": token,
+      "Content-Type": "application/json",
+    };
+  }
+
+  static Map<String, String> contentHeader = {
+    "Content-Type": "application/json"
   };
 
+  Future<UserRegistrationStatusModel> getAppToken(String email, String oauthToken,
+      {String oauthProvider="GOOGLE"}) async {
+    Map<String, String> jsonBodyMap = {
+      "email": email,
+      "token": oauthToken,
+      "authProvider": oauthProvider
+    };
+    http.Response response = await http.post(apiUrl + "login/",
+    headers: contentHeader,
+    body: json.encode(jsonBodyMap)
+    );
+    if (response.statusCode == 200 || response.statusCode == 403) {
+      var jsonRes = json.decode(utf8.decode(response.bodyBytes));
+      return UserRegistrationStatusModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+    } else {
+      return null;
+    }
+  }
+
+  Future<bool> checkNetworkConnectivity() async {
+    try {
+      http.Response response = await http.get(apiUrl);
+      if (response.statusCode == 200) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  //add support for no internet error screen?
+  // todo IMP - handle 403 case for all api calls - redirect to error screen
+  Future<bool> verifyAppTokenValid() async {
+    http.Response response = await http.get(apiUrl + "profile/", headers: getAuthHeader());
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
   Future<List<UserModel>> getUsers() async {
-    http.Response response = await http.get(apiUrl + users, headers: authHeader);
+    http.Response response = await http.get(apiUrl + users, headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
-      List<dynamic> jsonResponse = json.decode(response.body);
+      List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
       List<UserModel> users = new List<UserModel>();
       for (int i = 0; i < jsonResponse.length; i++) {
         UserModel user =  UserModel.fromJson(jsonResponse[i]);
@@ -45,10 +103,10 @@ class ApiService {
   }
 
   Future<UserModel> getUserModelById(int id) async{
-    http.Response response = await http.get(apiUrl + users+ id.toString(), headers: authHeader);
+    http.Response response = await http.get(apiUrl + users + id.toString(), headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
-      return UserModel.fromJson(json.decode(response.body));
+      return UserModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     }
     else {
       //todo show error msg
@@ -58,10 +116,22 @@ class ApiService {
   }
 
   Future<ProfileModel> getProfile() async {
-    http.Response response = await http.get(apiUrl + profile, headers: authHeader);
+    http.Response response = await http.get(apiUrl + profile, headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
-      return ProfileModel.fromJson(json.decode(response.body));
+      return ProfileModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+    }
+    else {
+      //todo show error msg
+      print("request failed");
+    }
+  }
+
+  Future<UserRegistrationStatusModel> getRegistrationStatus() async {
+    http.Response response = await http.get(apiUrl + registration_status, headers: getAuthHeader());
+    bool result = handleError(response);
+    if (result) {
+      return UserRegistrationStatusModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     }
     else {
       //todo show error msg
@@ -70,10 +140,10 @@ class ApiService {
   }
 
   Future<List<StoreModel>> getStoreItems() async {
-    http.Response response = await http.get(apiUrl + store_shop, headers: authHeader);
+    http.Response response = await http.get(apiUrl + store_shop, headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
-      List<dynamic> jsonResponse = json.decode(response.body);
+      List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
       List<StoreModel> items = new List<StoreModel>();
       for (int i = 0; i < jsonResponse.length; i++) {
         StoreModel item =  StoreModel.fromJson(jsonResponse[i]);
@@ -88,10 +158,10 @@ class ApiService {
 
   Future<StoreItemBuy> buyStoreItem(int itemId) async {
     http.Response response = await http.post(apiUrl + store_buy,
-        headers: authAndJsonContentHeader, body: """{"itemId":$itemId}""");
+        headers: getAuthAndJsonContentHeader(), body: """{"itemId":$itemId}""");
     bool result = handleError(response);
     if (result) {
-      return StoreItemBuy.fromJson(json.decode(response.body));
+      return StoreItemBuy.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       // todo show error msg snackbar
       print("request failed, server is being cranky :(");
@@ -102,10 +172,10 @@ class ApiService {
   // depending on how api sends "last updated" after ordering
   // we need to get 3 latest posts
   Future<List<PostModel>> getPostPreviewList(bool sendTopThree) async {
-    http.Response response = await http.get(apiUrl + post_preview, headers: authHeader);
+    http.Response response = await http.get(apiUrl + post_preview, headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
-      List<dynamic> jsonResponse = json.decode(response.body);
+      List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
       List<PostModel> postPreviewList = new List<PostModel>();
       for (int i = 0; i < jsonResponse.length; i++) {
         PostModel postPreview = PostModel.fromJson(jsonResponse[i]);
@@ -124,10 +194,10 @@ class ApiService {
   }
 
   Future<PostModel> getPostById(int postId) async {
-    http.Response response = await http.get(apiUrl + post_preview + postId.toString(), headers: authHeader);
+    http.Response response = await http.get(apiUrl + post_preview + postId.toString(), headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
-      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      Map<String, dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
       PostModel post = PostModel.fromJson(jsonResponse);
       return post;
     } else {
@@ -141,7 +211,7 @@ class ApiService {
     String modelJson = jsonEncode(modelMap);
     print(modelJson);
     http.Response response = await http.post(apiUrl + profile,
-        headers: authAndJsonContentHeader, body: modelJson);
+        headers: getAuthAndJsonContentHeader(), body: modelJson);
     bool result = handleError(response);
     if (result) {
       return true;
@@ -169,6 +239,21 @@ class ApiService {
       return false;
     }
 
+  }
+
+  Future<UserRegisterResponseModel> postRegisterUser(UserRegisterModel model) async {
+    Map<String, dynamic> modelMap = model.toJson(model);
+//    String modelJson = json.encode(modelMap);
+    print(modelMap);
+    print(json.encode(modelMap));
+    http.Response response = await http.post(apiUrl + "register/",
+        headers: getAuthAndJsonContentHeader(), body: json.encode(modelMap));
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201 || response.statusCode == 400) {
+      UserRegisterResponseModel responseModel = UserRegisterResponseModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+      return responseModel;
+    }
   }
 
 }
