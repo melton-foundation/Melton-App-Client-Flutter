@@ -52,7 +52,6 @@ class UserSearchStreamBuilder extends StatelessWidget {
 //              case ConnectionState.done
             }
           }
-          //todo make fun error screen
           return Center(child: Text("ERROR: SOMETHING WENT WRONG"));
         });
   }

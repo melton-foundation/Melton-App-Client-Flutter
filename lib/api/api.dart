@@ -117,10 +117,10 @@ class ApiService {
   }
 
   Future<List<UserModel>> getUserModelByName(String name) async{
-    http.Response response = await http.get(apiUrl + users + search + name, headers: authHeader);
+    http.Response response = await http.get(apiUrl + users + search + name, headers: getAuthHeader());
     bool result = handleError(response);
     if (result) {
-      List<dynamic> jsonResponse = json.decode(response.body);
+      List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
       List<UserModel> users = new List<UserModel>();
       for (int i = 0; i < jsonResponse.length; i++) {
         UserModel user =  UserModel.fromJson(jsonResponse[i]);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:melton_app/api/userSearchService.dart';
-import 'package:melton_app/constants/constants.dart' as Constants;
+import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/screens/DirectoryComponents/UserSearch.dart';
 import 'package:melton_app/screens/DirectoryComponents/UserSearchFilters.dart';
 import 'package:melton_app/screens/DirectoryComponents/UserSearchStreamBuilder.dart';
