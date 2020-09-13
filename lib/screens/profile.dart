@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/models/ProfileModel.dart';
-import 'package:melton_app/screens/components/JF_badge.dart';
 import 'package:melton_app/screens/components/UserProfileInformation.dart';
-import 'package:melton_app/screens/components/profile_photo.dart';
 import 'package:melton_app/screens/profile_edit.dart';
 
 class Profile extends StatefulWidget {
@@ -55,7 +53,7 @@ class _ProfileState extends State<Profile> {
                 padding: const EdgeInsets.all(8.0),
                 child: RefreshIndicator(
                   onRefresh: _handleRefresh,
-                  child: buildUserDetailsListView(snapshot),
+                  child: buildUserDetailsListView(snapshot.data),
                 ),
               );
             }
@@ -89,26 +87,24 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  ListView buildUserDetailsListView(AsyncSnapshot<ProfileModel> snapshot) {
+  ListView buildUserDetailsListView(ProfileModel data) {
     return ListView(
-      children: [
-        SizedBox(height: 10.0),
-        ProfilePhoto(url: snapshot.data.picture),
-        getProfileLineItemIfNotNull("", snapshot.data.name.toUpperCase()),
-        Center(child: JFBadge(isJF: snapshot.data.isJuniorFellow)),
-        getUserImpactPoints(snapshot.data.points),
-        getUserSocialMediaDetails(snapshot.data.socialMediaAccounts),
-        getProfileLineItemIfNotNullAndEmpty("WORK", snapshot.data.work),
-        getUsersSDGInfo(snapshot.data.SDGs),
-        //todo convert to tel:
-        getUserPhoneNumberDetails(snapshot.data.phoneNumber.phoneNumber,
-            snapshot.data.phoneNumber.countryCode),
-        getProfileLineItem("CAMPUS", snapshot.data.campus.toUpperCase()),
-        getProfileLineItem("BATCH", snapshot.data.batch.toString()),
-        getProfileLineItemIfNotNullAndEmpty("CITY", snapshot.data.city),
-        //todo convert to mailto:url
-        getProfileLineItem("EMAIL", snapshot.data.email),
-      ],
+      children: getUserDetails(
+        isProfileModel: true,
+        picture: data.picture,
+        name: data.name,
+        isJuniorFellow: data.isJuniorFellow,
+        points: data.points,
+        socialMediaAccounts: data.socialMediaAccounts,
+        work: data.work,
+        SDGs: data.SDGs,
+        phoneNumber: data.phoneNumber.phoneNumber,
+        countryCode: data.phoneNumber.countryCode,
+        campus: data.campus,
+        batch: data.batch,
+        city: data.city,
+        email: data.email,
+      ),
     );
   }
 }

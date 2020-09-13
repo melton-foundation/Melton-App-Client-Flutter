@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/models/UserModel.dart';
-import 'package:melton_app/screens/components/JF_badge.dart';
 import 'package:melton_app/screens/components/UserProfileInformation.dart';
-import 'package:melton_app/screens/components/profile_photo.dart';
 
 class UserDetails extends StatelessWidget {
   final String userName;
@@ -27,7 +25,7 @@ class UserDetails extends StatelessWidget {
               return Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasData) {
-              return buildUserDetailsSingleChildScrollView(snapshot);
+              return buildUserDetailsSingleChildScrollView(snapshot.data);
             }
             if (snapshot.hasError) {
               return Text("${snapshot.error}"); //todo handle correctly
@@ -40,28 +38,25 @@ class UserDetails extends StatelessWidget {
     );
   }
 
-  SingleChildScrollView buildUserDetailsSingleChildScrollView(
-      AsyncSnapshot<UserModel> snapshot) {
+  SingleChildScrollView buildUserDetailsSingleChildScrollView(UserModel data) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
-        children: [
-          SizedBox(height: 10.0),
-          ProfilePhoto(url: snapshot.data.picture),
-          getProfileLineItemIfNotNull("", snapshot.data.name.toUpperCase()),
-          Center(child: JFBadge(isJF: snapshot.data.isJuniorFellow)),
-          getUserSocialMediaDetails(snapshot.data.socialMediaAccounts),
-          getProfileLineItemIfNotNullAndEmpty("WORK", snapshot.data.work),
-          getUsersSDGInfo(snapshot.data.SDGs),
-          //todo convert to tel:
-          getUserPhoneNumberDetails(snapshot.data.phoneNumber.phoneNumber,
-              snapshot.data.phoneNumber.countryCode),
-          getProfileLineItem("CAMPUS", snapshot.data.campus.toUpperCase()),
-          getProfileLineItem("BATCH", snapshot.data.batch.toString()),
-          getProfileLineItemIfNotNullAndEmpty("CITY", snapshot.data.city),
-          //todo convert to mailto:url
-          getProfileLineItem("EMAIL", snapshot.data.email),
-        ],
+        children: getUserDetails(
+          isProfileModel: false,
+          picture: data.picture,
+          name: data.name,
+          isJuniorFellow: data.isJuniorFellow,
+          socialMediaAccounts: data.socialMediaAccounts,
+          work: data.work,
+          SDGs: data.SDGs,
+          phoneNumber: data.phoneNumber.phoneNumber,
+          countryCode: data.phoneNumber.countryCode,
+          campus: data.campus,
+          batch: data.batch,
+          city: data.city,
+          email: data.email,
+        ),
       ),
     );
   }

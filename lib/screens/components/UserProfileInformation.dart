@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:melton_app/models/ProfileModel.dart';
+import 'package:melton_app/screens/components/JF_badge.dart';
 import 'package:melton_app/screens/components/profile_line_item.dart';
+import 'package:melton_app/screens/components/profile_photo.dart';
 import 'package:melton_app/screens/components/sdg_profile.dart';
 import 'package:melton_app/screens/components/social_media_line_item.dart';
 import 'package:melton_app/screens/components/store_line_item.dart';
@@ -61,4 +63,27 @@ Widget getUserImpactPoints(int points) {
     key: UniqueKey(),
     points: points,
   );
+}
+
+List<Widget> getUserDetails({bool isProfileModel, String picture, String name,
+  bool isJuniorFellow, int points, SocialMediaAccounts socialMediaAccounts,
+  String work, SDGList SDGs, String phoneNumber, String countryCode,
+  String campus, int batch, String city, String email}){
+  return [
+    SizedBox(height: 10.0),
+    ProfilePhoto(url: picture),
+    getProfileLineItemIfNotNull("", name.toUpperCase()),
+    Center(child: JFBadge(isJF: isJuniorFellow)),
+    (isProfileModel)? getUserImpactPoints(points):empty ,
+    getUserSocialMediaDetails(socialMediaAccounts),
+    getProfileLineItemIfNotNullAndEmpty("WORK", work),
+    getUsersSDGInfo(SDGs),
+    //todo convert to tel:
+    getUserPhoneNumberDetails(phoneNumber, countryCode),
+    getProfileLineItem("CAMPUS", campus.toUpperCase()),
+    getProfileLineItem("BATCH", batch.toString()),
+    getProfileLineItemIfNotNullAndEmpty("CITY", city),
+    //todo convert to mailto:url
+    getProfileLineItem("EMAIL", email),
+  ];
 }
