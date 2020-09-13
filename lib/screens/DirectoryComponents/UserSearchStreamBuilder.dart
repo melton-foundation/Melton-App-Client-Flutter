@@ -6,25 +6,14 @@ import 'UserTilesGrid.dart';
 
 class UserSearchStreamBuilder extends StatelessWidget {
   final UserSearchService searchService;
-  final bool showLoading;
-  UserSearchStreamBuilder({@required this.searchService, @required this.showLoading});
+  UserSearchStreamBuilder({@required this.searchService});
 
   @override
   Widget build(BuildContext context) {
 //    bool isPageLoaded == false;
     return Expanded(
-        child: getResults(),
+        child:buildStreamBuilder(),
     );
-  }
-
-  Widget getResults(){
-    if(showLoading) {
-      searchService.searchUser(" ");
-      return Center(child: CircularProgressIndicator());
-    }
-    else{
-      return buildStreamBuilder();
-    }
   }
 
   StreamBuilder<List<UserModel>> buildStreamBuilder() {

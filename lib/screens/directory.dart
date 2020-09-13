@@ -12,18 +12,11 @@ class Directory extends StatefulWidget {
 
 class _DirectoryState extends State<Directory> {
   final UserSearchService searchService = new UserSearchService();   // make this singleton
-  bool showLoading = false;
   void dispose(){
     /*TODO : check whether dispose is placed in correct place or not*/
     print('dispose directory');
     searchService.dispose();
     super.dispose();
-  }
-
- void _setLoadingStatus(bool loadingStatus){
-    setState(() {
-      showLoading = loadingStatus;
-    });
   }
 
   @override
@@ -32,9 +25,9 @@ class _DirectoryState extends State<Directory> {
         backgroundColor: Constants.directoryBackground,
         body: Column(
           children: [
-            UserSearch(searchService: searchService, setLoadingStatus: _setLoadingStatus),
+            UserSearch(searchService: searchService),
             UserSearchFilters(),
-            UserSearchStreamBuilder(searchService: searchService, showLoading: showLoading),
+            UserSearchStreamBuilder(searchService: searchService),
           ],
         ));
   }

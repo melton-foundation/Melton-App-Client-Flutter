@@ -3,8 +3,6 @@ import 'package:melton_app/api/api.dart';
 import 'package:melton_app/models/UserModel.dart';
 import 'package:rxdart/rxdart.dart';
 
-enum APIError { rateLimitExceeded }
-
 class UserSearchService {
   UserSearchService() {
     _results = _searchText

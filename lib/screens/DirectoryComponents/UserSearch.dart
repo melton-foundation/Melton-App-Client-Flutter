@@ -3,9 +3,8 @@ import 'package:melton_app/api/userSearchService.dart';
 
 class UserSearch extends StatefulWidget {
   final UserSearchService searchService;
-  final ValueChanged<bool> setLoadingStatus;
 
-  UserSearch({@required this.searchService, this.setLoadingStatus});
+  UserSearch({@required this.searchService});
 
   @override
   _UserSearchState createState() => _UserSearchState();
@@ -51,11 +50,8 @@ class _UserSearchState extends State<UserSearch> {
               /*TODO : show loading or some indicator when user is typing */
               if (value.length > 2) {
                 widget.searchService.searchUser(value);
-//                widget.setLoadingStatus(true);
-
               } else if (value.length == 0) {
                 widget.searchService.searchUser(" ");
-//                widget.setLoadingStatus(true);
               }
             },
             onEditingComplete: () => {widget.searchService.searchUser(" ")},
@@ -75,8 +71,6 @@ class _UserSearchState extends State<UserSearch> {
                 ),
               ),
               filled: true,
-//              hintStyle: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.bold),
-//              hintText: "Type in user name",
               fillColor: Colors.white,
             ),
           ),
