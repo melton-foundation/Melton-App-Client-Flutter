@@ -26,11 +26,14 @@ class SocialMediaLineItem extends StatelessWidget {
       children: [
         SizedBox(height: 20.0),
         Divider(),
-        Text("SOCIAL",
-          textAlign: TextAlign.left,
-          style: TextStyle(letterSpacing: 2.0,
-              color: Constants.meltonBlue,
-              fontWeight: FontWeight.bold),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8.0, 0, 0, 0),
+          child: Text("SOCIAL",
+            textAlign: TextAlign.left,
+            style: TextStyle(letterSpacing: 2.0,
+                color: Constants.meltonBlue,
+                fontWeight: FontWeight.bold),
+          ),
         ),
         SizedBox(height: 10.0),
           Row(

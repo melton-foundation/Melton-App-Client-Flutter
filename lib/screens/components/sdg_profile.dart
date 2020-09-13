@@ -17,11 +17,14 @@ class SDGProfile extends StatelessWidget {
       children: [
         SizedBox(height: 20.0),
         Divider(),
-        Text("SDGs",
-          textAlign: TextAlign.left,
-          style: TextStyle(letterSpacing: 2.0,
-              color: Constants.meltonBlue,
-              fontWeight: FontWeight.bold),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8.0, 0, 0, 0),
+          child: Text("SDGs",
+            textAlign: TextAlign.left,
+            style: TextStyle(letterSpacing: 2.0,
+                color: Constants.meltonBlue,
+                fontWeight: FontWeight.bold),
+          ),
         ),
         SizedBox(height: 20.0),
         Row(
