@@ -24,7 +24,7 @@ class UserTile extends StatelessWidget {
       footer: userTileFooter(snapshot, index),
       child: GestureDetector(
         onTap: () {
-          showUserDetails(snapshot.data[index].id);
+          showUserDetails(snapshot.data[index].id, snapshot.data[index].name);
         },
         child: snapshot.data[index].picture == null
             ? Image.asset(Constants.placeholder_avatar)
@@ -37,7 +37,7 @@ class UserTile extends StatelessWidget {
       AsyncSnapshot<List<UserModel>> snapshot, int index) {
     return GestureDetector(
       onTap: () {
-        showUserDetails(snapshot.data[index].id);
+        showUserDetails(snapshot.data[index].id, snapshot.data[index].name);
       },
       child: GridTileBar(
         title: Center(
@@ -48,13 +48,9 @@ class UserTile extends StatelessWidget {
     );
   }
 
-  void showUserDetails(int id) {
-    Future<UserModel> model = ApiService().getUserModelById(id);
-    model
-        .then((value) => {print(value.name)})
-        .catchError((error) => {print(error.toString())});
+  void showUserDetails(int id, String userName) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (_) => UserDetails(model)));
+        .push(MaterialPageRoute(builder: (_) => UserDetails(id: id, userName: userName)));
   }
 
   testStyleForUserName() {
