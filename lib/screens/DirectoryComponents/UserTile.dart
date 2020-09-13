@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:melton_app/api/api.dart';
-import 'package:melton_app/models/UserModel.dart';
 import 'package:melton_app/constants/constants.dart';
+import 'package:melton_app/models/UserModel.dart';
 import 'package:melton_app/screens/components/user_details_dialog.dart';
 
 class UserTile extends StatelessWidget {
@@ -9,7 +8,8 @@ class UserTile extends StatelessWidget {
   final BuildContext context;
   final int index;
 
-  UserTile({@required this.context, @required this.snapshot, @required this.index});
+  UserTile(
+      {@required this.context, @required this.snapshot, @required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +49,8 @@ class UserTile extends StatelessWidget {
   }
 
   void showUserDetails(int id, String userName) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (_) => UserDetails(id: id, userName: userName)));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => UserDetails(id: id, userName: userName)));
   }
 
   testStyleForUserName() {
