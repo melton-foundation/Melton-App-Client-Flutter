@@ -6,6 +6,8 @@ import 'package:melton_app/api/api.dart';
 import 'package:melton_app/screens/login.dart';
 import 'package:melton_app/screens/main_home.dart';
 
+import 'errors/no_internet.dart';
+
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -36,8 +38,15 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
 
-//todo use "signinsilently"?
   Future<void> isLoggedIn() async {
+    bool isInternetConnected = await GetIt.I.get<ApiService>().checkNetworkConnectivity();
+
+    if (!isInternetConnected) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+        return NoInternet();
+      }));
+    }
+
     bool isAppTokenValid = await GetIt.I.get<ApiService>().verifyAppTokenValid();
 
     if (isAppTokenValid) {

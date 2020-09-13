@@ -63,11 +63,21 @@ class ApiService {
     }
   }
 
+  Future<bool> checkNetworkConnectivity() async {
+    try {
+      http.Response response = await http.get(apiUrl);
+      if (response.statusCode == 200) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
   //add support for no internet error screen?
   // todo IMP - handle 403 case for all api calls - redirect to error screen
   Future<bool> verifyAppTokenValid() async {
-    print('verifying app token');
-    print(getAuthHeader());
     http.Response response = await http.get(apiUrl + "profile/", headers: getAuthHeader());
     if (response.statusCode == 200) {
       return true;
