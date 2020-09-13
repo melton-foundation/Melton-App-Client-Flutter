@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),
       theme: ThemeData(
         primarySwatch: Constants.meltonMaterialBlue,
-        highlightColor: Constants.meltonBlueAccent,
+        textSelectionColor: Constants.meltonBlueAccent,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );
