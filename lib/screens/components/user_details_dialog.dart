@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/models/UserModel.dart';
-import 'package:melton_app/screens/components/JF_badge.dart';
-import 'package:melton_app/screens/components/profile_line_item.dart';
-import 'package:melton_app/screens/components/profile_photo.dart';
+import 'package:melton_app/screens/components/UserProfileInformation.dart';
 
 class UserDetails extends StatelessWidget {
+  final String userName;
   final Widget empty = Container(width: 0.0, height: 0.0);
-  final Future<UserModel> _userModel;
+  final id;
 
-  UserDetails(this._userModel);
+  UserDetails({@required this.id, @required this.userName});
 
   @override
   Widget build(BuildContext context) {
+    Future<UserModel> _userModel =
+        ApiService().getUserModelById(id); // TODO: add error case here
     return Scaffold(
-      appBar:  AppBar(title:Text("User Details")),
+      appBar: AppBar(title: Text(userName)),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: FutureBuilder<UserModel>(
@@ -25,45 +25,7 @@ class UserDetails extends StatelessWidget {
               return Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasData) {
-              return SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child:Column(
-                  children: [
-                    ProfilePhoto(url: snapshot.data.picture),
-                    ProfileLineItem(
-                        label: "", content: snapshot.data.name.toUpperCase()),
-                    Center(child: JFBadge(isJF: snapshot.data.isJuniorFellow)),
-                    /*(snapshot.data.work == null ||
-                        snapshot.data.work.length == 0)
-                        ? empty
-                        : ProfileLineItem(
-                        label: "WORK", content: snapshot.data.work),
-                    snapshot.data.SDGs == null
-                        ? empty
-                        : SDGProfile(
-                      firstSDG: snapshot.data.SDGs.firstSDG,
-                      secondSDG: snapshot.data.SDGs.secondSDG,
-                      thirdSDG: snapshot.data.SDGs.thirdSDG,
-                    ),*/
-                    ProfileLineItem(
-                        label: "CAMPUS",
-                        content: snapshot.data.campus.toUpperCase()),
-                    ProfileLineItem(
-                        label: "BATCH",
-                        content: snapshot.data.batch.toString()),
-                    (snapshot.data.city == null ||
-                        snapshot.data.city.length == 0)
-                        ? empty
-                        : ProfileLineItem(
-                        label: "CITY", content: snapshot.data.city),
-                    //todo convert to mailto:url
-                    ProfileLineItem(
-                        label: "EMAIL", content: snapshot.data.email == null?"NA":snapshot.data.email),
-                  ],
-                ),
-
-                //Text(snapshot.data.name),
-              );
+              return buildUserDetailsSingleChildScrollView(snapshot.data);
             }
             if (snapshot.hasError) {
               return Text("${snapshot.error}"); //todo handle correctly
@@ -74,10 +36,28 @@ class UserDetails extends StatelessWidget {
         ),
       ),
     );
-    /*AlertDialog(
-      title: Text('User Profile'),
-      content: ,
-    );*/
+  }
+
+  SingleChildScrollView buildUserDetailsSingleChildScrollView(UserModel data) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Column(
+        children: getUserDetails(
+          isProfileModel: false,
+          picture: data.picture,
+          name: data.name,
+          isJuniorFellow: data.isJuniorFellow,
+          socialMediaAccounts: data.socialMediaAccounts,
+          work: data.work,
+          SDGs: data.SDGs,
+          phoneNumber: data.phoneNumber.phoneNumber,
+          countryCode: data.phoneNumber.countryCode,
+          campus: data.campus,
+          batch: data.batch,
+          city: data.city,
+          email: data.email,
+        ),
+      ),
+    );
   }
 }
-

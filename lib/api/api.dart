@@ -25,6 +25,7 @@ class ApiService {
   static const store_shop = "store/";
   static const store_buy = "buy/";
   static const post_preview = "posts/";
+  static const search = "?search=";
   static const registration_status = "registration-status/";
 
   String get token => GetIt.instance.get<TokenHandler>().getToken();
@@ -113,6 +114,23 @@ class ApiService {
       print("request failed");
     }
     return UserModel();
+  }
+
+  Future<List<UserModel>> getUserModelByName(String name) async{
+    http.Response response = await http.get(apiUrl + users + search + name, headers: getAuthHeader());
+    bool result = handleError(response);
+    if (result) {
+      List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
+      List<UserModel> users = new List<UserModel>();
+      for (int i = 0; i < jsonResponse.length; i++) {
+        UserModel user =  UserModel.fromJson(jsonResponse[i]);
+        users.add(user);
+      }
+      return users;
+    } else {
+      //todo show error msg
+      print("request failed");
+    }
   }
 
   Future<ProfileModel> getProfile() async {

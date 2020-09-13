@@ -1,18 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
-import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/constants/constants.dart';
-
+import 'package:melton_app/models/ProfileModel.dart';
+import 'package:melton_app/screens/components/UserProfileInformation.dart';
 import 'package:melton_app/screens/profile_edit.dart';
-import 'package:melton_app/screens/components/store_line_item.dart';
-import 'package:melton_app/screens/components/profile_line_item.dart';
-import 'package:melton_app/screens/components/sdg_profile.dart';
-import 'package:melton_app/screens/components/JF_badge.dart';
-import 'package:melton_app/screens/components/social_media_line_item.dart';
-import 'package:melton_app/screens/components/profile_photo.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -60,63 +53,7 @@ class _ProfileState extends State<Profile> {
                 padding: const EdgeInsets.all(8.0),
                 child: RefreshIndicator(
                   onRefresh: _handleRefresh,
-                  child: ListView(
-                    children: [
-                      SizedBox(height: 10.0),
-                      ProfilePhoto(url: snapshot.data.picture),
-                      ProfileLineItem(
-                          label: "", content: snapshot.data.name.toUpperCase()),
-                      Center(child: JFBadge(isJF: snapshot.data.isJuniorFellow)),
-                      snapshot.data.points == null
-                          ? empty
-                          : StoreLineItem(
-                              key: UniqueKey(),
-                              points: snapshot.data.points,
-                            ),
-                      SocialMediaLineItem(
-                        facebook: snapshot.data.socialMediaAccounts.facebook,
-                        instagram: snapshot.data.socialMediaAccounts.instagram,
-                        twitter: snapshot.data.socialMediaAccounts.twitter,
-                        wechat: snapshot.data.socialMediaAccounts.wechat,
-                        linkedin: snapshot.data.socialMediaAccounts.linkedin,
-                        others: snapshot.data.socialMediaAccounts.others,
-                      ),
-                      (snapshot.data.work == null ||
-                              snapshot.data.work.length == 0)
-                          ? empty
-                          : ProfileLineItem(
-                              label: "WORK", content: snapshot.data.work),
-                      snapshot.data.SDGs == null
-                          ? empty
-                          : SDGProfile(
-                              firstSDG: snapshot.data.SDGs.firstSDG,
-                              secondSDG: snapshot.data.SDGs.secondSDG,
-                              thirdSDG: snapshot.data.SDGs.thirdSDG,
-                            ),
-                      //todo convert to tel:
-                      !(snapshot.data.phoneNumber.phoneNumber.length > 0 &&
-                          snapshot.data.phoneNumber.countryCode.length > 0) ? empty :
-                      ProfileLineItem(
-                        label: "PHONE",
-                        content: "+" + snapshot.data.phoneNumber.countryCode +
-                            " " + snapshot.data.phoneNumber.phoneNumber,
-                      ),
-                      ProfileLineItem(
-                          label: "CAMPUS",
-                          content: snapshot.data.campus.toUpperCase()),
-                      ProfileLineItem(
-                          label: "BATCH",
-                          content: snapshot.data.batch.toString()),
-                      (snapshot.data.city == null ||
-                              snapshot.data.city.length == 0)
-                          ? empty
-                          : ProfileLineItem(
-                              label: "CITY", content: snapshot.data.city),
-                      //todo convert to mailto:url
-                      ProfileLineItem(
-                          label: "EMAIL", content: snapshot.data.email),
-                    ],
-                  ),
+                  child: buildUserDetailsListView(snapshot.data),
                 ),
               );
             }
@@ -147,6 +84,27 @@ class _ProfileState extends State<Profile> {
             }
           },
         )
+    );
+  }
+
+  ListView buildUserDetailsListView(ProfileModel data) {
+    return ListView(
+      children: getUserDetails(
+        isProfileModel: true,
+        picture: data.picture,
+        name: data.name,
+        isJuniorFellow: data.isJuniorFellow,
+        points: data.points,
+        socialMediaAccounts: data.socialMediaAccounts,
+        work: data.work,
+        SDGs: data.SDGs,
+        phoneNumber: data.phoneNumber.phoneNumber,
+        countryCode: data.phoneNumber.countryCode,
+        campus: data.campus,
+        batch: data.batch,
+        city: data.city,
+        email: data.email,
+      ),
     );
   }
 }
