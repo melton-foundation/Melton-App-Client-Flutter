@@ -54,7 +54,6 @@ class _SplashScreenState extends State<SplashScreen> {
         return MyHomePage();
       }));
     } else {
-      print('pushing loginscreen');
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
         return LoginScreen();
       }));

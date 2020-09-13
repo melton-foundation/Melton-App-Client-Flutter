@@ -11,6 +11,7 @@ import 'package:melton_app/screens/main_home.dart';
 import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/util/token_handler.dart';
 import 'package:melton_app/screens/components/sign_up.dart';
+import 'package:melton_app/screens/splash.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -76,10 +77,9 @@ class _LoginScreenState extends State<LoginScreen> {
         return AuthorizationWall();
       }));
     } else {
-      //todo error screen or again push login page
       await Future.delayed(Duration(seconds: 3));
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-        return MyHomePage();
+        return SplashScreen();
       }));
     }
 
