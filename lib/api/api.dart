@@ -154,8 +154,19 @@ class ApiService {
     }
   }
 
-  Future<bool> postProfile(ProfileModel profileModel) {
-    // todo - need to post all data or only posted data will be updated
+  Future<bool> postProfile(ProfileModel model) async {
+    Map<String, dynamic> modelMap = ProfileModel.toJson(model);
+    String modelJson = jsonEncode(modelMap);
+    print(modelJson);
+    http.Response response = await http.post(apiUrl + profile,
+        headers: authAndJsonContentHeader, body: modelJson);
+    bool result = handleError(response);
+    if (result) {
+      return true;
+    } else {
+      // todo show error msg snackbar
+      print("request failed, server is being cranky :(");
+    }
   }
 
   bool handleError(http.Response response) {

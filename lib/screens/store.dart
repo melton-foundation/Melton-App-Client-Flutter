@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:melton_app/models/StoreModel.dart';
 import 'package:melton_app/api/api.dart';
 
-import 'package:melton_app/constants/constants.dart' as Constants;
+import 'package:melton_app/constants/constants.dart';
 
 class Store extends StatefulWidget {
 

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:melton_app/constants/constants.dart' as Constants;
+import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/screens/profile.dart';
 import 'package:melton_app/screens/directory.dart';
 import 'package:melton_app/screens/home.dart';

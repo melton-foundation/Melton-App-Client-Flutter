@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:melton_app/constants/constants.dart' as Constants;
+import 'package:melton_app/constants/constants.dart';
 
 class JFBadge extends StatelessWidget {
   final bool isJF;

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:melton_app/screens/store.dart';
-import 'package:melton_app/constants/constants.dart' as Constants;
+import 'package:melton_app/constants/constants.dart';
 
 class StoreLineItem extends StatefulWidget {
 
   final int points;
+  final Key key;
 
-  StoreLineItem({this.points});
+  StoreLineItem({this.points, this.key});
+
 
   @override
   _StoreLineItemState createState() => _StoreLineItemState(points);

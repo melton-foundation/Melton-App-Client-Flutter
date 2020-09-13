@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:melton_app/constants/constants.dart' as Constants;
+import 'package:melton_app/constants/constants.dart';
 
 class ProfileLineItem extends StatelessWidget {
   final String label;
