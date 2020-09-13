@@ -7,15 +7,16 @@ import 'package:melton_app/screens/components/profile_line_item.dart';
 import 'package:melton_app/screens/components/profile_photo.dart';
 
 class UserDetails extends StatelessWidget {
+  final String userName;
   final Widget empty = Container(width: 0.0, height: 0.0);
-  final Future<UserModel> _userModel;
-
-  UserDetails(this._userModel);
-
+  final id;
+  UserDetails({@required this.id, @required this.userName});
+    
   @override
   Widget build(BuildContext context) {
+    Future<UserModel> _userModel = ApiService().getUserModelById(id); // TODO: add error case here
     return Scaffold(
-      appBar:  AppBar(title:Text("User Details")),
+      appBar:  AppBar(title:Text(userName)),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: FutureBuilder<UserModel>(
