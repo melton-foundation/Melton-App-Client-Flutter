@@ -11,7 +11,7 @@ class UserModel {
   String work;
   PhoneNumber phoneNumber;
   SocialMediaAccounts socialMediaAccounts;
-  List<int> SDGs;
+  SDGList SDGs;
   String picture;
 
   UserModel({this.id, this.email, this.name, this.isJuniorFellow,
@@ -21,7 +21,7 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id'],
-      email: json['email'],
+      email: json['user']['email'],
       name: json['name'],
       isJuniorFellow: json['isJuniorFellow'],
       campus: json['campus'],
@@ -30,7 +30,7 @@ class UserModel {
       work: json['work'],
       phoneNumber: PhoneNumber.fromJson(json['phoneNumber']),
       socialMediaAccounts: SocialMediaAccounts.fromJson(new List<dynamic>.from(json['socialMediaAccounts'])),
-      SDGs: json['SDGs'],
+      SDGs: SDGList.fromJson(new List<int>.from(json['sdgs'])),
       picture: json['picture'],
     );
   }
