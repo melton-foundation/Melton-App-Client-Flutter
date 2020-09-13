@@ -26,9 +26,6 @@ Widget getProfileLineItemIfNotNullAndEmpty(String label, String content) {
 }
 
 Widget getUsersSDGInfo(SDGList SDGs) {
-  if (SDGs == null) {
-    return empty;
-  }
   return SDGProfile(
     firstSDG: SDGs.firstSDG,
     secondSDG: SDGs.secondSDG,
