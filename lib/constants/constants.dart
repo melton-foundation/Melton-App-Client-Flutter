@@ -15,7 +15,6 @@ class Constants {
 
   static const Color userSearchFilters = Color.fromRGBO(57, 93, 115, 1.0);
   static const Color directoryBackground = Color.fromRGBO(0, 40, 66, 1.0);
-  static const Color userTileFooterColor = Colors.red;
 
   static const List<Color> meltonRedYellowGreen = [
     meltonRed,

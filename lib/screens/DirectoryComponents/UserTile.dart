@@ -43,7 +43,7 @@ class UserTile extends StatelessWidget {
         title: Center(
           child: Text(snapshot.data[index].name, style: testStyleForUserName()),
         ),
-        backgroundColor: Constants.userTileFooterColor,
+        backgroundColor: Constants.meltonRed,
       ),
     );
   }
