@@ -13,14 +13,12 @@ class AuthorizationWall extends StatelessWidget {
         child: Container(
           color: Colors.white,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(height: 150,),
-              Image.asset("assets/splash.png"),
-              FormTitle("OOPS!"),
-              FormTitle(""),
+              Image.asset("assets/errors/error_user_not_found.png"),
+              FormTitle("WHO ARE YOU?"),
               FormSubtitle("Your email wasn't saved in a Melton database."),
               FormSubtitle("We will verify that you're a Melton Fellow, and approve you."),
-              FormTitle(""),
               FormSubtitle("Try signing in again later :)"),
               Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
               RaisedButton(
