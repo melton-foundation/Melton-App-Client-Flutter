@@ -20,8 +20,8 @@ Widget getProfileLineItem(String label, String content) {
   return ProfileLineItem(label: label, content: content);
 }
 
-Widget getProfileLineItemIfNotNullAndEmpty(String label, String content) {
-  if (content == null && content.length == 0) {
+Widget getProfileLineItemIfNotNullOrEmpty(String label, String content) {
+  if (content == null || content.length == 0) {
     return empty;
   }
   return ProfileLineItem(label: label, content: content);
@@ -76,13 +76,13 @@ List<Widget> getUserDetails({bool isProfileModel, String picture, String name,
     Center(child: JFBadge(isJF: isJuniorFellow)),
     (isProfileModel)? getUserImpactPoints(points):empty ,
     getUserSocialMediaDetails(socialMediaAccounts),
-    getProfileLineItemIfNotNullAndEmpty("WORK", work),
+    getProfileLineItemIfNotNullOrEmpty("WORK", work),
     getUsersSDGInfo(SDGs),
     //todo convert to tel:
     getUserPhoneNumberDetails(phoneNumber, countryCode),
     getProfileLineItem("CAMPUS", campus.toUpperCase()),
     getProfileLineItem("BATCH", batch.toString()),
-    getProfileLineItemIfNotNullAndEmpty("CITY", city),
+    getProfileLineItemIfNotNullOrEmpty("CITY", city),
     //todo convert to mailto:url
     getProfileLineItem("EMAIL", email),
   ];

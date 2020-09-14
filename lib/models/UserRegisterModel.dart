@@ -21,7 +21,7 @@ class UserRegisterModel {
     this.campus = "AU / Accra";
     this.batch = 1991;
     this.work = "I'm a Melton Fellow!";
-    this.SDGs = [1, 1, 1];
+    this.SDGs = [1, 2, 3];
   }
 
 

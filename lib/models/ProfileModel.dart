@@ -179,7 +179,8 @@ class SocialMediaAccounts {
 
   static bool validateAccount(Map<String, String> account, String type) {
     if (type == "other") {
-      return account['account'].toLowerCase().startsWith(SocialMedia.HTTPS);
+      return (account['account'].toLowerCase().startsWith(SocialMedia.HTTP) ||
+          account['account'].toLowerCase().startsWith(SocialMedia.HTTPS));
     } else if (type == "wechat") {
       return account['type'].toLowerCase() == type && account['account'].length > 0;
     }

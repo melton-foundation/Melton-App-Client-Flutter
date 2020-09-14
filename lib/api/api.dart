@@ -26,6 +26,7 @@ class ApiService {
   static const store_buy = "buy/";
   static const post_preview = "posts/";
   static const search = "?search=";
+  static const register = "register/";
   static const registration_status = "registration-status/";
 
   String get token => GetIt.instance.get<TokenHandler>().getToken();
@@ -56,9 +57,10 @@ class ApiService {
     headers: contentHeader,
     body: json.encode(jsonBodyMap)
     );
-    if (response.statusCode == 200 || response.statusCode == 403) {
-      var jsonRes = json.decode(utf8.decode(response.bodyBytes));
+    if (response.statusCode == 200) {
       return UserRegistrationStatusModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+    } else if (response.statusCode == 403) {
+      return UserRegistrationStatusModel(isApproved: false, appToken: null);
     } else {
       return null;
     }
@@ -241,7 +243,7 @@ class ApiService {
 
   bool handleError(http.Response response) {
     //todo will 201 be returned in profile post?
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else if (response.statusCode == 401) {
       //todo trigger oauth and regenerate token
@@ -261,10 +263,8 @@ class ApiService {
 
   Future<UserRegisterResponseModel> postRegisterUser(UserRegisterModel model) async {
     Map<String, dynamic> modelMap = model.toJson(model);
-//    String modelJson = json.encode(modelMap);
-    print(modelMap);
     print(json.encode(modelMap));
-    http.Response response = await http.post(apiUrl + "register/",
+    http.Response response = await http.post(apiUrl + register,
         headers: getAuthAndJsonContentHeader(), body: json.encode(modelMap));
     print(response.statusCode);
     print(response.body);

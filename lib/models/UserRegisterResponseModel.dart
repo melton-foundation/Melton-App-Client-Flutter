@@ -1,7 +1,7 @@
 class UserRegisterResponseModel {
 
+  bool isSuccess;
   bool isUserExists;
-  String appToken;
   String emailMessage;
 
   static const SUCCESS = "success";
@@ -9,22 +9,18 @@ class UserRegisterResponseModel {
   static const USER_EXISTS_MESSAGE = "User with this email address already exists.";
   static const INVALID_EMAIL = "Enter a valid email address.";
 
-  UserRegisterResponseModel({this.isUserExists, this.appToken, this.emailMessage});
+  UserRegisterResponseModel({this.isSuccess, this.isUserExists, this.emailMessage});
 
   factory UserRegisterResponseModel.fromJson(Map<String, dynamic> json) {
     return UserRegisterResponseModel(
-      appToken: validateToken(json['type'], json['appToken']),
+      isSuccess: checkSuccess(json['type']),
       isUserExists: checkUserExists(json['type'], json['user']),
       emailMessage: getEmailMessage(json['type'], json['user']),
     );
   }
 
-  static String validateToken(String responseType, String responseToken) {
-    if (responseType == SUCCESS) {
-      return responseToken;
-    } else {
-      return null;
-    }
+  static bool checkSuccess(String responseType) {
+    return responseType == SUCCESS;
   }
 
   static bool checkUserExists(String responseType, Map<String, dynamic> email) {

@@ -24,8 +24,8 @@ class SocialMedia {
   static const OTHER2_KEY = "other2";
 
 
-  // todo? - allow http also on "other" links?
   static const HTTPS = "https://";
+  static const HTTP = "http://";
   static const FACEBOOK_URL = "https://facebook.com/";
   static const INSTAGRAM_URL = "https://instagram.com/";
   static const TWITTER_URL = "https://twitter.com/";
@@ -36,8 +36,8 @@ class SocialMedia {
     INSTAGRAM_KEY : INSTAGRAM_URL,
     TWITTER_KEY   : TWITTER_URL,
     LINKEDIN_KEY  : LINKEDIN_URL,
-    OTHER1_KEY    : HTTPS,
-    OTHER2_KEY    : HTTPS
+    OTHER1_KEY    : HTTP,
+    OTHER2_KEY    : HTTP
   };
 
   //todo test null case behaviour
@@ -107,7 +107,7 @@ class SocialMedia {
   }
 
   static bool isSocialMediaFormatted(String key, String value) {
-    switch(key) {
+    switch (key) {
       case SocialMedia.FACEBOOK_KEY: {
         return value.startsWith(SocialMedia.FACEBOOK_URL);
       } break;
@@ -124,7 +124,7 @@ class SocialMedia {
         return value.startsWith(SocialMedia.LINKEDIN_URL);
       } break;
       default: {
-        return value.startsWith(SocialMedia.HTTPS);
+        return (value.startsWith(SocialMedia.HTTP) || value.startsWith(SocialMedia.HTTPS));
       } break;
     }
   }

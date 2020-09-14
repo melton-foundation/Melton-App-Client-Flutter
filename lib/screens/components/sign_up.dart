@@ -136,7 +136,7 @@ class _SignUpState extends State<SignUp> {
                         return AlertDialog(title: Text(response.emailMessage),);
                       });
                     }
-                    if (response.appToken != null) {
+                    if (response.isSuccess) {
                       dialogShown = true;
                       showDialog(context: context, builder: (context) {
                         return AlertDialog(title: Text("SUCCESS! YOU CAN SIGN IN!"),);
@@ -149,9 +149,9 @@ class _SignUpState extends State<SignUp> {
                       });
                     }
 
+                    print(response.isSuccess);
                     print(response.isUserExists);
                     print(response.emailMessage);
-                    print(response.appToken);
                   } else {
                     return showDialog(context: context, builder: (context) {
                       return AlertDialog(title: FormTitle("FILL IN THE MISSING FIELDS"),);
