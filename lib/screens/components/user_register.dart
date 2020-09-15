@@ -33,8 +33,8 @@ class _UserRegisterState extends State<UserRegister> {
         }
         if (snapshot.hasData) {
           print('user register success');
+          print(snapshot.data.isSuccess);
           print(snapshot.data.isUserExists);
-          print(snapshot.data.appToken);
           print(snapshot.data.emailMessage);
           //todo remove future.delayed from everywhere?
           Future.delayed(Duration(seconds: 2));

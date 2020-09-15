@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:melton_app/api/api.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 import 'package:melton_app/models/ProfileModel.dart';
@@ -8,12 +9,12 @@ import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/util/world_cities.dart';
 
 import 'package:melton_app/screens/components/profile_edit_social_media_item.dart';
-import 'package:melton_app/screens/components/profile_save.dart';
 
 class ProfileEdit extends StatefulWidget {
   final ProfileModel initialModel;
+  final Function profileRefreshFunction;
 
-  ProfileEdit({this.initialModel});
+  ProfileEdit({this.initialModel, this.profileRefreshFunction});
 
   @override
   _ProfileEditState createState() => _ProfileEditState();
@@ -261,13 +262,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                       _model.phoneNumber = _phoneModel;
                       _model.socialMediaAccounts = _socialModel;
                       _model.SDGs = _sdgModel;
-                      bool saveSuccess = await Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (_) => ProfileSave(profileModel: _model,)));
-                      if (saveSuccess != null && saveSuccess == true) {
-                        Navigator.pop(context, true);
-                      } else {
-                        Navigator.pop(context, false);
-                      }
+                      ApiService().postProfile(_model).then((value) => widget.profileRefreshFunction());
+                      Navigator.pop(context, true);
                     }
                   },
                 ),
@@ -344,14 +340,28 @@ class _ProfileEditState extends State<ProfileEdit> {
     return ProfileModel(
       name: initialModel.name,
       campus: initialModel.campus,
-      city: initialModel.city.split(",")[0],
-      country: initialModel.city.split(",")[1],
+      city: validateCityAndCountry(initialModel.city, false),
+      country: validateCityAndCountry(initialModel.city, true),
       batch: initialModel.batch,
       work: initialModel.work,
       phoneNumber: phoneModel,
       socialMediaAccounts: socialModel,
       SDGs: sdgModel
     );
+  }
+
+  validateCityAndCountry(String profileCity, bool getCountry) {
+    if (profileCity == null || profileCity.length == 0 ||
+        profileCity.split(",").length < 2) {
+      return "";
+    } else {
+      if (getCountry) {
+        return profileCity.split(",")[0];
+      } else {
+        // getCity
+        return profileCity.split(",")[1];
+      }
+    }
   }
 
 }

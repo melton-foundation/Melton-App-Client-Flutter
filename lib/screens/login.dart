@@ -42,18 +42,24 @@ class _LoginScreenState extends State<LoginScreen> {
               WelcomeText("Let's get started!"),
               WelcomeText("Only Melton Fellows can use this app. "),
               WelcomeText("Your data is used solely by the Melton Foundation. For more details see: meltonapp.com/privacy"),
-              RaisedButton(onPressed: () {
-                triggerLogin();
-              },
-              child: Text("SIGN IN WITH GOOGLE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-              color: Constants.meltonYellow,
-              splashColor: Constants.meltonRed,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset("assets/google.png"),
+                  RaisedButton(onPressed: () {
+                    triggerLogin();
+                  },
+                  child: Text("SIGN IN WITH GOOGLE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                  color: Constants.meltonBlueAccent,
+                  splashColor: Constants.meltonRed,
+                  ),
+                ],
               ),
               RaisedButton(onPressed: () {
                 triggerRegister();
               },
                 child: Text("SIGN UP", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                color: Constants.meltonBlueAccent,
+                color: Constants.meltonBlue,
                 splashColor: Constants.meltonYellow,
               ),
             ],

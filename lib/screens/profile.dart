@@ -36,7 +36,7 @@ class _ProfileState extends State<Profile> {
     await loadProfile();
     await Future.delayed(Duration(seconds: 2));
     Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text("Refreshed!")));
+        content: Text("Refreshed profile!")));
   }
 
   @override
@@ -68,17 +68,10 @@ class _ProfileState extends State<Profile> {
           onPressed: () async {
             _loaded == null ? null :
             isProfileUpdated = await Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => ProfileEdit(initialModel: _loaded)));
+                .push(MaterialPageRoute(builder: (_) => ProfileEdit(initialModel: _loaded, profileRefreshFunction: loadProfile)));
             if (isProfileUpdated != null && isProfileUpdated) {
               Scaffold.of(context).showSnackBar(SnackBar(
                 content: Text("Saved profile."),
-                action: SnackBarAction(
-                  label: "REFRESH",
-                  textColor: Constants.meltonYellow,
-                  onPressed: () {
-                    loadProfile();
-                  },
-                ),
               ));
               loadProfile();
             }

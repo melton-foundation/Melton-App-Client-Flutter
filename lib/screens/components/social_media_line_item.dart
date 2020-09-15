@@ -84,7 +84,7 @@ class SocialMediaLineItem extends StatelessWidget {
               children: others.map((e) =>
                   RaisedButton(
                     onPressed: () {_launchURL(e);},
-                    child: Text(e.split("https://")[1],
+                    child: Text(e.split("://")[1],
                       style: TextStyle(
                         color: Constants.meltonBlueAccent,
                         fontStyle: FontStyle.italic,

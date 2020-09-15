@@ -83,7 +83,7 @@ class _PostFullPageState extends State<PostFullPage> {
                                 ),
                               ),
                               Container(
-                                height: 400,
+                                height: 800,
                                 child: Markdown(
                                   data: snapshot.data.content,
                                   styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
