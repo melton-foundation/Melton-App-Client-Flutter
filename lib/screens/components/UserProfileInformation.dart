@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:melton_app/models/ProfileModel.dart';
+
+import 'package:melton_app/screens/components/profile_line_item_selectable.dart';
 import 'package:melton_app/screens/components/JF_badge.dart';
 import 'package:melton_app/screens/components/profile_line_item.dart';
 import 'package:melton_app/screens/components/profile_photo.dart';
@@ -16,15 +19,25 @@ Widget getProfileLineItemIfNotNull(String label, String content) {
   return ProfileLineItem(label: label, content: content);
 }
 
-Widget getProfileLineItem(String label, String content) {
-  return ProfileLineItem(label: label, content: content);
-}
-
 Widget getProfileLineItemIfNotNullOrEmpty(String label, String content) {
   if (content == null || content.length == 0) {
     return empty;
   }
   return ProfileLineItem(label: label, content: content);
+}
+
+
+Widget getProfileLineItem(String label, String content) {
+  return ProfileLineItem(label: label, content: content);
+}
+
+Widget getTelephoneProfileLineItem(String phoneNumber, String countryCode) {
+  return !(phoneNumber.length > 0 && countryCode.length > 0)
+      ? empty : ProfileLineItemSelectable(label: "PHONE", content: "+$countryCode $phoneNumber");
+}
+
+Widget getEmailProfileLineItem(String email) {
+  return ProfileLineItemSelectable(label: "EMAIL", content: email);
 }
 
 Widget getUsersSDGInfo(SDGList SDGs) {
@@ -33,15 +46,6 @@ Widget getUsersSDGInfo(SDGList SDGs) {
     secondSDG: SDGs.secondSDG,
     thirdSDG: SDGs.thirdSDG,
   );
-}
-
-Widget getUserPhoneNumberDetails(String phoneNumber, String countryCode) {
-  return !(phoneNumber.length > 0 && countryCode.length > 0)
-      ? empty
-      : ProfileLineItem(
-          label: "PHONE",
-          content: "+" + countryCode + " " + phoneNumber,
-        );
 }
 
 Widget getUserSocialMediaDetails(SocialMediaAccounts socialMediaAccounts) {
@@ -74,16 +78,14 @@ List<Widget> getUserDetails({bool isProfileModel, String picture, String name,
     ProfilePhoto(url: picture),
     getProfileLineItemIfNotNull("", name.toUpperCase()),
     Center(child: JFBadge(isJF: isJuniorFellow)),
-    (isProfileModel)? getUserImpactPoints(points):empty ,
+    getUserImpactPoints(points),
     getUserSocialMediaDetails(socialMediaAccounts),
     getProfileLineItemIfNotNullOrEmpty("WORK", work),
     getUsersSDGInfo(SDGs),
-    //todo convert to tel:
-    getUserPhoneNumberDetails(phoneNumber, countryCode),
+    getTelephoneProfileLineItem(phoneNumber, countryCode),
+    getEmailProfileLineItem(email),
     getProfileLineItem("CAMPUS", campus.toUpperCase()),
     getProfileLineItem("BATCH", batch.toString()),
     getProfileLineItemIfNotNullOrEmpty("CITY", city),
-    //todo convert to mailto:url
-    getProfileLineItem("EMAIL", email),
   ];
 }
