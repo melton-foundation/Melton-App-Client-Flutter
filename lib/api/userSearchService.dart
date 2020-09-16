@@ -10,17 +10,19 @@ class UserSearchService {
         .switchMap((searchedName) async* {
       print('searching: $searchedName');
       yield await ApiService().getUserModelByName(searchedName.trim());
+      _searchedString.add(searchedName);
     });
   }
 
   // Input stream
   final _searchText = BehaviorSubject<String>();
-  BehaviorSubject<String> get searchText => _searchText;
   void searchUser(String searchedName) => _searchText.add(searchedName);
 
   // Output stream
   Stream<List<UserModel>> _results;
   Stream<List<UserModel>> get results => _results;
+  StreamController<String> _searchedString = StreamController<String>();
+  Stream<String> get searchedString => _searchedString.stream;
 
   void dispose() {
     _searchText.close();

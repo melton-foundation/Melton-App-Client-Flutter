@@ -12,7 +12,7 @@ class UserSearchedString extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: searchService.searchText,
+      stream: searchService.searchedString,
       builder: (context, snapshot) {
         if (snapshot.data == null || snapshot.data.trim().length <= 2) {
           return Container();

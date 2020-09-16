@@ -14,7 +14,7 @@ class UserSearchStreamBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
 //    bool isPageLoaded == false;
     return Expanded(
-        child:buildStreamBuilder(),
+      child: buildStreamBuilder(),
     );
   }
 
