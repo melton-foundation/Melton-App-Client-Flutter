@@ -3,6 +3,7 @@ import 'package:melton_app/api/userSearchService.dart';
 import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/screens/DirectoryComponents/UserSearch.dart';
 import 'package:melton_app/screens/DirectoryComponents/UserSearchFilters.dart';
+import 'package:melton_app/screens/DirectoryComponents/UserSearchedString.dart';
 import 'package:melton_app/screens/DirectoryComponents/UserSearchStreamBuilder.dart';
 
 class Directory extends StatefulWidget {
@@ -27,6 +28,7 @@ class _DirectoryState extends State<Directory> {
           children: [
             UserSearch(searchService: searchService),
             UserSearchFilters(),
+            UserSearchedString(searchService: searchService),
             UserSearchStreamBuilder(searchService: searchService),
           ],
         ));

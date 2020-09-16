@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:melton_app/api/userSearchService.dart';
 import 'package:melton_app/models/UserModel.dart';
+import 'package:melton_app/screens/errors/unknown_error.dart';
+import 'package:melton_app/util/text_util.dart';
 
 import 'UserTilesGrid.dart';
 
@@ -21,7 +23,13 @@ class UserSearchStreamBuilder extends StatelessWidget {
         stream: searchService.results,
         builder: (context, AsyncSnapshot<List<UserModel>> snapshot) {
           if (snapshot.hasError) {
-            return Text("${snapshot.error}"); //todo handle correctly
+            //todo test and add everywhere
+            return Column(
+              children: [
+                UnknownError(),
+                Text("${snapshot.error}"),
+              ],
+            ); //todo handle correctly
           } else {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -31,7 +39,14 @@ class UserSearchStreamBuilder extends StatelessWidget {
               case ConnectionState.active:
                 if (snapshot.hasData) {
                   if (snapshot.data.length == 0) {
-                    return Center(child: Text("No results found"));
+                    return Center(child:
+                    Column(
+                      children: [
+                        Image.asset("assets/errors/error_no_results.png"),
+                        WhiteTitleText(content: "NO RESULTS FOUND!"),
+                      ],
+                    )
+                    );
                   } else {
                     return UserTilesGrid(context: context, snapshot: snapshot);
                   }

@@ -38,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              Image.asset("assets/errors/welcome_screen.png"),
               WelcomeText("WELCOME TO THE MELTON APP!"),
               WelcomeText("Let's get started!"),
               WelcomeText("Only Melton Fellows can use this app. "),

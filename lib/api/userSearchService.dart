@@ -6,7 +6,7 @@ import 'package:rxdart/rxdart.dart';
 class UserSearchService {
   UserSearchService() {
     _results = _searchText
-        .debounce((_) => TimerStream(true, Duration(milliseconds: 250)))
+        .debounce((_) => TimerStream(true, Duration(milliseconds: 500)))
         .switchMap((searchedName) async* {
       print('searching: $searchedName');
       yield await ApiService().getUserModelByName(searchedName.trim());
@@ -15,6 +15,7 @@ class UserSearchService {
 
   // Input stream
   final _searchText = BehaviorSubject<String>();
+  BehaviorSubject<String> get searchText => _searchText;
   void searchUser(String searchedName) => _searchText.add(searchedName);
 
   // Output stream
