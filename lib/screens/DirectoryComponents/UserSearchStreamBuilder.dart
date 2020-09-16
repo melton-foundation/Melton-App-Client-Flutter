@@ -39,6 +39,7 @@ class UserSearchStreamBuilder extends StatelessWidget {
                   return Center(child: Text("ERROR: SOMETHING WENT WRONG"));
                 }
 //              case ConnectionState.done
+            //todo fix warning
             }
           }
           return Center(child: Text("ERROR: SOMETHING WENT WRONG"));

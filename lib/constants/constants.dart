@@ -37,7 +37,6 @@ class Constants {
 
   static const placeholder_avatar = "assets/profile_avatar_placeholder_256px.png";
 
-//todo alafia to get back on WU
   static const List<String> campuses = [
     "AU / Accra",
     "BMS / Bangalore",
