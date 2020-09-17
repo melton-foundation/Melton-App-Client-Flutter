@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
-
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:melton_app/api/api.dart';
+
 import 'package:melton_app/util/get_human_time.dart';
+import 'package:melton_app/util/url_launch_util.dart';
+
 import 'package:melton_app/models/PostModel.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 class PostFullPage extends StatefulWidget {
   final int postId;
@@ -92,10 +93,10 @@ class _PostFullPageState extends State<PostFullPage> {
                                   styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
                                       .copyWith(textScaleFactor: 1.2),
                                   onTapLink: (url) {
-                                    _launch(url);
+                                    launchUrlWebview(url);
                                   },
-                                  )
-                                ),
+                                )
+                              ),
                             ],
                           ),
                         ),
@@ -110,16 +111,6 @@ class _PostFullPageState extends State<PostFullPage> {
                 },
               ),
             ),
-//          ],
-//        )
     );
-  }
-}
-
-_launch(String url) async {
-  if (await canLaunch(url)) {
-    launch(url);
-  } else {
-    print("could not launch $url");
   }
 }
