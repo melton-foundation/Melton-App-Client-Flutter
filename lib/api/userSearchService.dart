@@ -9,7 +9,13 @@ class UserSearchService {
         .debounce((_) => TimerStream(true, Duration(milliseconds: 500)))
         .switchMap((searchedName) async* {
       print('searching: $searchedName');
-      yield await ApiService().getUserModelByName(searchedName.trim());
+      if (searchedName.trim().length == 0) {
+        List<UserModel> allUsers = await ApiService().getUsers();
+        allUsers.shuffle();
+        yield allUsers;
+      } else {
+        yield await ApiService().getUserModelByName(searchedName.trim());
+      }
       _searchedString.add(searchedName);
     });
   }
