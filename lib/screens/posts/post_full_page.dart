@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:get_it/get_it.dart';
+
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/util/get_human_time.dart';
@@ -88,6 +91,9 @@ class _PostFullPageState extends State<PostFullPage> {
                                   data: snapshot.data.content,
                                   styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
                                       .copyWith(textScaleFactor: 1.2),
+                                  onTapLink: (url) {
+                                    _launch(url);
+                                  },
                                   )
                                 ),
                             ],
@@ -107,5 +113,13 @@ class _PostFullPageState extends State<PostFullPage> {
 //          ],
 //        )
     );
+  }
+}
+
+_launch(String url) async {
+  if (await canLaunch(url)) {
+    launch(url);
+  } else {
+    print("could not launch $url");
   }
 }
