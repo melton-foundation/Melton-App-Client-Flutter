@@ -184,6 +184,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                   },
                   onSaved: (String newValue) {
                     if (newValue.length == 0) {
+                      _phoneModel.countryCode = "";
+                      _phoneModel.phoneNumber = "";
                       return;
                     }
                     List<String> strings = newValue.substring(1).split(RegExp("\\s+"));

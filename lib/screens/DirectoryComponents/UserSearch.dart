@@ -44,7 +44,7 @@ class _UserSearchState extends State<UserSearch> {
     return Padding(
         padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
         child: SizedBox(
-          height: 45,
+          height: 35,
           child: TextField(
             onChanged: (value) {
               /*TODO : show loading or some indicator when user is typing */

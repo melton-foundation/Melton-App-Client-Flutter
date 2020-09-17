@@ -13,8 +13,7 @@ class Constants {
   static const Color meltonYellowAccent = Color.fromRGBO(230, 178, 90, 1.0);
   static const Color meltonGreenAccent = Color.fromRGBO(106, 173, 137, 1.0);
 
-  static const Color userSearchFilters = Color.fromRGBO(57, 93, 115, 1.0);
-  static const Color directoryBackground = Color.fromRGBO(0, 40, 66, 1.0);
+  static const Color directoryBackground = Color.fromRGBO(0, 59, 98, 1.0);
 
   static const List<Color> meltonRedYellowGreen = [
     meltonRed,
@@ -37,7 +36,6 @@ class Constants {
 
   static const placeholder_avatar = "assets/profile_avatar_placeholder_256px.png";
 
-//todo alafia to get back on WU
   static const List<String> campuses = [
     "AU / Accra",
     "BMS / Bangalore",
