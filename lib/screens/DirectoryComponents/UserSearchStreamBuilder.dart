@@ -34,8 +34,9 @@ class UserSearchStreamBuilder extends StatelessWidget {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
               case ConnectionState.none:
+              case ConnectionState.done:
                 searchService.searchUser(" ");
-                return Center(child: CircularProgressIndicator());
+                return Center(child: CircularProgressIndicator(backgroundColor: Colors.white,));
               case ConnectionState.active:
                 if (snapshot.hasData) {
                   if (snapshot.data.length == 0) {
@@ -53,8 +54,6 @@ class UserSearchStreamBuilder extends StatelessWidget {
                 } else {
                   return Center(child: Text("ERROR: SOMETHING WENT WRONG"));
                 }
-//              case ConnectionState.done
-            //todo fix warning
             }
           }
           return Center(child: Text("ERROR: SOMETHING WENT WRONG"));
