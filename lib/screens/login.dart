@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'dart:io' show Platform;
+
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -12,6 +14,7 @@ import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/util/token_handler.dart';
 import 'package:melton_app/screens/components/sign_up.dart';
 import 'package:melton_app/screens/splash.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -21,6 +24,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ["email", "profile"]);
 
+  final Widget empty = Container(width: 0.0, height: 0.0);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Constants.meltonYellowAccent, Constants.meltonGreenAccent]//, Constants.meltonBlueAccent, Constants.meltonGreenAccent],
+            colors: [Constants.meltonBlueAccent, Constants.meltonRedAccent]//, Constants.meltonBlueAccent, Constants.meltonGreenAccent],
           ),
         ),
         child: Padding(
@@ -40,7 +44,6 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Image.asset("assets/errors/welcome_screen.png"),
               WelcomeText("WELCOME TO THE MELTON APP!"),
-              WelcomeText("Let's get started!"),
               WelcomeText("Only Melton Fellows can use this app. "),
               WelcomeText("Your data is used solely by the Melton Foundation. For more details see: meltonapp.com/privacy"),
               Row(
@@ -48,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Image.asset("assets/google.png"),
                   RaisedButton(onPressed: () {
-                    triggerLogin();
+                    triggerLogin(true);
                   },
                   child: Text("SIGN IN WITH GOOGLE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                   color: Constants.meltonBlueAccent,
@@ -56,6 +59,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
+              Platform.isIOS ?
+              SignInWithAppleButton(
+                onPressed: () async {
+                  triggerLogin(false);
+                  },
+              ) : empty,
               RaisedButton(onPressed: () {
                 triggerRegister();
               },
@@ -70,8 +79,23 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<bool> triggerLogin() async {
-    UserRegistrationStatusModel tokenOrUnauthorized = await oauthLoginAndGetAppToken();
+  Future<void> triggerLogin(bool isGoogleLogin) async {
+    UserRegistrationStatusModel tokenOrUnauthorized;
+    if (isGoogleLogin) {
+      tokenOrUnauthorized = await oauthGoogleLoginAndGetAppToken();
+    } else {
+      final credential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+      print(credential);
+      print(credential.email);
+      print(credential.authorizationCode);
+
+      tokenOrUnauthorized = await ApiService().getAppToken(credential.email, credential.authorizationCode, "APPLE");
+    }
     if (tokenOrUnauthorized?.appToken != null) {
       PersistentStorage storage = GetIt.I.get<PersistentStorage>();
       await storage.saveStringToStorage(TokenHandler.APP_TOKEN_KEY, tokenOrUnauthorized.appToken);
@@ -92,11 +116,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   }
 
-  Future<UserRegistrationStatusModel> oauthLoginAndGetAppToken() async {
+  Future<UserRegistrationStatusModel> oauthGoogleLoginAndGetAppToken() async {
     UserRegistrationStatusModel tokenOrUnauthorized;
     await _googleSignIn.signIn().then((result) async {
       await result.authentication.then((googleKey) async {
-        tokenOrUnauthorized = await ApiService().getAppToken(result.email, googleKey.idToken);
+        tokenOrUnauthorized = await ApiService().getAppToken(result.email, googleKey.idToken, "GOOGLE");
       }).catchError((err) {
         print('oauth inner error'); //todo error screen
       });

@@ -45,7 +45,7 @@ class _SignUpState extends State<SignUp> {
 
               Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
               FormTitle("EMAIL"),
-              FormSubtitle("Use your Google account"),
+              FormSubtitle("Use a Melton-registered email if you can"),
               TextFormField(
                 maxLength: 60,
                 validator: (value) {
