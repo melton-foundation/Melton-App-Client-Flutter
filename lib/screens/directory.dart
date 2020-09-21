@@ -27,7 +27,7 @@ class _DirectoryState extends State<Directory> {
         body: Column(
           children: [
             UserSearch(searchService: searchService),
-            UserSearchFilters(),
+            UserSearchFilters(searchService: searchService),
             UserSearchedString(searchService: searchService),
             UserSearchStreamBuilder(searchService: searchService),
           ],
