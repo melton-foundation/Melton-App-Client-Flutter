@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Constants.meltonBlueAccent, Constants.meltonRedAccent]//, Constants.meltonBlueAccent, Constants.meltonGreenAccent],
+            colors: [Constants.meltonGreenAccent, Constants.meltonYellowAccent]//, Constants.meltonBlueAccent, Constants.meltonGreenAccent],
           ),
         ),
         child: Padding(
@@ -90,6 +90,9 @@ class _LoginScreenState extends State<LoginScreen> {
           AppleIDAuthorizationScopes.fullName,
         ],
       );
+      // TODO email and full name are only sent the first time. save it?
+      // what about new device?
+      // just mark this as enhancement and lave for later?
       print(credential);
       print(credential.email);
       print(credential.authorizationCode);
