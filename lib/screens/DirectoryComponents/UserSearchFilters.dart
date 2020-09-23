@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:melton_app/api/userSearchService.dart';
-import 'package:melton_app/constants/constants.dart';
-
 import 'package:melton_app/screens/DirectoryComponents/UserFilter.dart';
 
 class UserSearchFilters extends StatelessWidget {
   final UserSearchService searchService;
 
   UserSearchFilters({this.searchService});
-
-  final campus = {1: "RVCE", 2: "BMS", 3: "BOSTON", 4: "Harvard"};
-  final batch = {1: "1996", 2: "2001", 3: "2002", 4: "2018"};
-  final SDG = {1: "one", 2: "two", 3: "three", 4: "four"};
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +16,35 @@ class UserSearchFilters extends StatelessWidget {
           if (snapshot.data == null) {
             return Container();
           }
-
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
                 snapshot.data.campusFilter.length > 0
-                    ? UserFilter(title: 'Campus', values: snapshot.data.campusFilter, searchService: searchService)
+                    ? UserFilter(
+                        title: 'Campus',
+                        values: snapshot.data.campusFilter,
+                        searchService: searchService,
+                        alreadySelectedValues: getSelectedValues(snapshot.data.selectedCampusFilterValues, snapshot.data.campusFilter),
+                    isFilterSelected: snapshot.data.selectedCampusFilterValues.length !=0,
+                      )
                     : Container(),
                 snapshot.data.batchYear.length > 0
-                    ? UserFilter(title: 'Batch Year', values: snapshot.data.batchYear, searchService: searchService)
+                    ? UserFilter(
+                        title: 'Batch Year',
+                        values: snapshot.data.batchYear,
+                        searchService: searchService,
+                  alreadySelectedValues: getSelectedValues(snapshot.data.selectedBatchYearFilterValues, snapshot.data.batchYear),
+                  isFilterSelected: snapshot.data.selectedBatchYearFilterValues.length !=0,
+                )
                     : Container(),
-                UserFilter(title: 'SDG', values: Constants.SDGs, searchService: searchService),
+                UserFilter(
+                    title: 'SDG',
+                    values: snapshot.data.SDG,
+                    searchService: searchService,
+                  alreadySelectedValues: getSelectedValues(snapshot.data.selectedSDGFilterValues, snapshot.data.SDG),
+                  isFilterSelected: snapshot.data.selectedSDGFilterValues.length !=0,
+                ),
                 Icon(
                   FontAwesomeIcons.filter,
                   color: Colors.white,
@@ -43,5 +54,19 @@ class UserSearchFilters extends StatelessWidget {
             ),
           );
         });
+  }
+
+  Set<int> getSelectedValues(
+      List<dynamic> selectedValues, Map<int, dynamic> filters) {
+    Set<int> alreadySelectedValues = Set<int>();
+    if (selectedValues.length == 0 || filters.length == 0)
+      return alreadySelectedValues;
+    filters.forEach((key, value) {
+      if (selectedValues.contains(value)) {
+        alreadySelectedValues.add(key);
+      }
+    });
+
+    return alreadySelectedValues;
   }
 }

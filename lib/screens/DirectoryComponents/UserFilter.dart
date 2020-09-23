@@ -4,13 +4,13 @@ import 'package:melton_app/screens/DirectoryComponents/MultiSelectDialog.dart';
 
 class UserFilter extends StatefulWidget {
   final String title;
-  bool isFilterSelected = false;
+  bool isFilterSelected;
   final values;
   Set<int> alreadySelectedValues = Set<int>();
   final UserSearchService searchService;
 
   UserFilter(
-      {Key key, @required this.title, @required this.values, this.alreadySelectedValues, @required this.searchService})
+      {Key key, @required this.title, @required this.values, this.alreadySelectedValues, @required this.searchService, this.isFilterSelected=false})
       : super(key: key);
 
   @override
@@ -35,18 +35,19 @@ class _UserFilterState extends State<UserFilter> {
 
       void updateSelectedFilterValues(Set selection) {
         if (selection != null) {
+          List<dynamic> filterSet;
+          if (widget.title.toLowerCase().contains('campus')) {
+            filterSet = widget.searchService.filterOptions.selectedCampusFilterValues;
+          } else if (widget.title.toLowerCase().contains('sdg')) {
+            filterSet = widget.searchService.filterOptions.selectedSDGFilterValues;
+          } else {
+            filterSet = widget.searchService.filterOptions.selectedBatchYearFilterValues;
+          }
           for (int index in selection.toList()) {
-            if(widget.title.contains('campus')){
-              widget.searchService.filteredCampuses.add(widget.values[index]);
-            }
-            else if(widget.title.contains('SDG')){
-              widget.searchService.filteredSDGs.add(widget.values[index]);
-            }
-            else{
-              widget.searchService.filteredBatchYear.add(widget.values[index]);
-            }
+            filterSet.add(widget.values[index]);
             print(widget.values[index]);
           }
+          widget.searchService.applyFiltersOnAvailableResults();
         }
       }
 
@@ -65,12 +66,12 @@ class _UserFilterState extends State<UserFilter> {
         if (selectedFilterValues.isNotEmpty) {
           isFilterSelected = true;
           widget.alreadySelectedValues = selectedFilterValues.toSet();
+          updateSelectedFilterValues(selectedFilterValues);
         }
         setState(() {
           widget.isFilterSelected = isFilterSelected;
         });
       }
-      updateSelectedFilterValues(selectedFilterValues);
     }
 
     return Container(
