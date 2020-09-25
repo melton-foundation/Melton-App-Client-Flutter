@@ -20,6 +20,11 @@ class UserSearchFilters extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
+                Icon(
+                  FontAwesomeIcons.filter,
+                  color: Colors.white,
+                  size: 25,
+                ),
                 snapshot.data.campusFilter.length > 0
                     ? UserFilter(
                         title: 'Campus',
@@ -44,11 +49,6 @@ class UserSearchFilters extends StatelessWidget {
                     searchService: searchService,
                   alreadySelectedValues: getSelectedValues(snapshot.data.selectedSDGFilterValues, snapshot.data.SDG),
                   isFilterSelected: snapshot.data.selectedSDGFilterValues.length !=0,
-                ),
-                Icon(
-                  FontAwesomeIcons.filter,
-                  color: Colors.white,
-                  size: 25,
                 ),
               ],
             ),

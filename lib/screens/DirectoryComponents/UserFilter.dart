@@ -55,7 +55,7 @@ class _UserFilterState extends State<UserFilter> {
         context: context,
         builder: (BuildContext context) {
           return MultiSelectDialog(
-            title: "Select Checkboxes",
+            title: widget.title,
             items: items,
             initialSelectedValues: widget.alreadySelectedValues,
           );

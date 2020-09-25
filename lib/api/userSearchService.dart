@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/models/UserModel.dart';
@@ -22,11 +21,11 @@ class UserSearchService {
         allUsers = await ApiService().getUsers();
         allUsers.shuffle();
         updateAvailableFilters(allUsers);
-        yield anyFilterSelected()? applyFiltersOnResponse(allUsers): allUsers;
+        yield anyFilterSelected() ? applyFiltersOnResponse(allUsers): allUsers;
       } else {
         allUsers = await ApiService().getUserModelByName(searchedName.trim());
         updateAvailableFilters(allUsers);
-        yield anyFilterSelected()? applyFiltersOnResponse(allUsers): allUsers;
+        yield anyFilterSelected() ? applyFiltersOnResponse(allUsers): allUsers;
       }
       _searchedString.add(searchedName);
       _filters.add(filterOptions);
