@@ -32,7 +32,9 @@ class FilterOptions{
   void addAlreadySelectedOptions(List<dynamic> selectedFilterValues,
       Map<int, dynamic> filter) {
     for (dynamic filterOption in selectedFilterValues) {
-      filter.addAll({filter.length: filterOption});
+      if (!filter.containsValue(filterOption)) {
+        filter.addAll({filter.length: filterOption});
+      }
     }
   }
 }
