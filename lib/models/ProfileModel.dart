@@ -79,7 +79,9 @@ class SDGList {
       return SDGList(sdg_list);
     }
     for (int i = 0; i < responseSDGs.length && i < 3; i++) {
-      sdg_list[i] = responseSDGs[i].toInt();
+      if (responseSDGs[i].toInt() >= 1 && responseSDGs[i].toInt() <= 17) {
+        sdg_list[i] = responseSDGs[i].toInt();
+      }
     }
     return SDGList(sdg_list);
   }
