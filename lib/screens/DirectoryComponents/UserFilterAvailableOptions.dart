@@ -17,9 +17,22 @@ class FilterOptions{
     selectedBatchYearFilterValues = List<dynamic>();
     selectedSDGFilterValues = List<dynamic>();
   }
-  void clearAvailableFilters(){
+  void clearUncheckedFilters() {
     this.campusFilter.clear();
+    addAlreadySelectedOptions(this.selectedCampusFilterValues, this.campusFilter);
+
     this.batchYear.clear();
+    addAlreadySelectedOptions(this.selectedBatchYearFilterValues, this.batchYear);
+
     this.SDG.clear();
+    addAlreadySelectedOptions(this.selectedSDGFilterValues, this.SDG);
+
+  }
+
+  void addAlreadySelectedOptions(List<dynamic> selectedFilterValues,
+      Map<int, dynamic> filter) {
+    for (dynamic filterOption in selectedFilterValues) {
+      filter.addAll({filter.length: filterOption});
+    }
   }
 }

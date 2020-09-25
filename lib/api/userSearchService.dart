@@ -52,7 +52,7 @@ class UserSearchService {
   }
 
   void updateAvailableFilters(List<UserModel> users) {
-    filterOptions.clearAvailableFilters();
+    filterOptions.clearUncheckedFilters();
     for (UserModel user in users) {
       if (!filterOptions.campusFilter.containsValue(user.campus)) {
         filterOptions.campusFilter.addAll(
