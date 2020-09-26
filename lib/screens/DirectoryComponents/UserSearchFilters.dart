@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:melton_app/api/userSearchService.dart';
@@ -17,6 +18,7 @@ class UserSearchFilters extends StatelessWidget {
             return Container();
           }
           return SingleChildScrollView(
+            padding: EdgeInsets.fromLTRB(0, 5, 0, 10),
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [

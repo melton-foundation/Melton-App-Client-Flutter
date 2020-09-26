@@ -42,7 +42,7 @@ class _UserSearchState extends State<UserSearch> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+        padding: EdgeInsets.fromLTRB(15, 15, 15, 5),
         child: SizedBox(
           height: 35,
           child: TextField(
