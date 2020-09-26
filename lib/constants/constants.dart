@@ -68,4 +68,6 @@ class Constants {
     17 : "Partnerships for the Goals",
   });
 
+  static const String FILTERS = "FL";
+
 }

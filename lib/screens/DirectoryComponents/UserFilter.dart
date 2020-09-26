@@ -28,27 +28,30 @@ class _UserFilterState extends State<UserFilter> {
       }
     }
 
+    List<dynamic> clearSelectedFilterValues(){
+      List<dynamic> filterSet;
+      if (widget.title.toLowerCase().contains('campus')) {
+        filterSet = widget.searchService.filterOptions.selectedCampusFilterValues;
+      } else if (widget.title.toLowerCase().contains('sdg')) {
+        filterSet = widget.searchService.filterOptions.selectedSDGFilterValues;
+      } else {
+        filterSet = widget.searchService.filterOptions.selectedBatchYearFilterValues;
+      }
+      filterSet.clear();
+      return filterSet;
+    }
+
     void _showFiltersAlertBox(BuildContext context) async {
       multiItem = [];
       populateMultiSelectValues();
       final items = multiItem;
-
+      List<dynamic> filterSet = clearSelectedFilterValues();
       void updateSelectedFilterValues(Set selection) {
-        if (selection != null) {
-          List<dynamic> filterSet;
-          if (widget.title.toLowerCase().contains('campus')) {
-            filterSet = widget.searchService.filterOptions.selectedCampusFilterValues;
-          } else if (widget.title.toLowerCase().contains('sdg')) {
-            filterSet = widget.searchService.filterOptions.selectedSDGFilterValues;
-          } else {
-            filterSet = widget.searchService.filterOptions.selectedBatchYearFilterValues;
-          }
           for (int index in selection.toList()) {
             filterSet.add(widget.values[index]);
             print(widget.values[index]);
           }
           widget.searchService.applyFiltersOnAvailableResults();
-        }
       }
 
       final selectedFilterValues = await showDialog<Set<int>>(
@@ -67,6 +70,10 @@ class _UserFilterState extends State<UserFilter> {
           isFilterSelected = true;
           widget.alreadySelectedValues = selectedFilterValues.toSet();
           updateSelectedFilterValues(selectedFilterValues);
+        }
+        else{
+          clearSelectedFilterValues();
+          widget.alreadySelectedValues.clear();
         }
         setState(() {
           widget.isFilterSelected = isFilterSelected;

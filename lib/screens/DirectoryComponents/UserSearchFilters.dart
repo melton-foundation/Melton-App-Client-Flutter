@@ -43,13 +43,15 @@ class UserSearchFilters extends StatelessWidget {
                   isFilterSelected: snapshot.data.selectedBatchYearFilterValues.length !=0,
                 )
                     : Container(),
-                UserFilter(
-                    title: 'SDG',
-                    values: snapshot.data.SDG,
-                    searchService: searchService,
-                  alreadySelectedValues: getSelectedValues(snapshot.data.selectedSDGFilterValues, snapshot.data.SDG),
-                  isFilterSelected: snapshot.data.selectedSDGFilterValues.length !=0,
-                ),
+                snapshot.data.SDG.length > 0
+                    ? UserFilter(
+                        title: 'SDG',
+                        values: snapshot.data.SDG,
+                        searchService: searchService,
+                        alreadySelectedValues: getSelectedValues(snapshot.data.selectedSDGFilterValues, snapshot.data.SDG),
+                        isFilterSelected: snapshot.data.selectedSDGFilterValues.length != 0,
+                      )
+                    : Container(),
               ],
             ),
           );
