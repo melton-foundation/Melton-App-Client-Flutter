@@ -51,7 +51,6 @@ class _UserFilterState extends State<UserFilter> {
             filterSet.add(widget.values[index]);
             print(widget.values[index]);
           }
-          widget.searchService.applyFiltersOnAvailableResults();
       }
 
       final selectedFilterValues = await showDialog<Set<int>>(
@@ -75,6 +74,7 @@ class _UserFilterState extends State<UserFilter> {
           clearSelectedFilterValues();
           widget.alreadySelectedValues.clear();
         }
+        widget.searchService.applyFiltersOnAvailableResults();
         setState(() {
           widget.isFilterSelected = isFilterSelected;
         });
