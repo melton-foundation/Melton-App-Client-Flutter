@@ -76,8 +76,8 @@ class UserSearchService {
   void updateAvailableSDGFilters(int sdg) {
     if (sdg != null && sdg >= Constants.MIN_SDG_CODE && sdg <= Constants.MAX_SDG_CODE)
     {
-      if (!filterOptions.SDG.containsKey(sdg)) {
-        filterOptions.SDG.addAll({sdg: Constants.SDGs[sdg]});
+      if (!filterOptions.SDG.containsValue(Constants.SDGs[sdg])) {
+        filterOptions.SDG.addAll({filterOptions.SDG.length: Constants.SDGs[sdg]});
       }
     }
   }
