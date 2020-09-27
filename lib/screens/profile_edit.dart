@@ -266,6 +266,11 @@ class _ProfileEditState extends State<ProfileEdit> {
                       _model.SDGs = _sdgModel;
                       ApiService().postProfile(_model).then((value) => widget.profileRefreshFunction());
                       Navigator.pop(context, true);
+                    } else {
+                      showDialog(context: context, builder: (context) {
+                        return AlertDialog(title: Text("Oops"),
+                                content: Text("There are some errors to fix in your data...\n\nProtip: Look for the red stuff"),);
+                      });
                     }
                   },
                 ),
