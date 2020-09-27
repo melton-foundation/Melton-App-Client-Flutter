@@ -67,18 +67,17 @@ class UserSearchService {
             .addAll({filterOptions.batchYear.length: user.batch});
       }
 
-      if (!filterOptions.SDG.containsValue(user.SDGs.firstSDG)) {
-        filterOptions.SDG.addAll({
-          user.SDGs.firstSDG: user.SDGs.firstSDG != 0
-              ? Constants.SDGs[user.SDGs.firstSDG]
-              : "SDG value : 0"
-        });
-      } else if (!filterOptions.SDG.containsValue(user.SDGs.secondSDG)) {
-        filterOptions.SDG
-            .addAll({user.SDGs.secondSDG: Constants.SDGs[user.SDGs.secondSDG]});
-      } else if (!filterOptions.SDG.containsValue(user.SDGs.thirdSDG)) {
-        filterOptions.SDG
-            .addAll({user.SDGs.thirdSDG: Constants.SDGs[user.SDGs.thirdSDG]});
+      updateAvailableSDGFilters(user.SDGs.firstSDG);
+      updateAvailableSDGFilters(user.SDGs.secondSDG);
+      updateAvailableSDGFilters(user.SDGs.thirdSDG);
+    }
+  }
+
+  void updateAvailableSDGFilters(int sdg) {
+    if (sdg != null && sdg >= Constants.MIN_SDG_CODE && sdg <= Constants.MAX_SDG_CODE)
+    {
+      if (!filterOptions.SDG.containsKey(sdg)) {
+        filterOptions.SDG.addAll({sdg: Constants.SDGs[sdg]});
       }
     }
   }
