@@ -70,7 +70,6 @@ class UserSearchFilters extends StatelessWidget {
         alreadySelectedValues.add(key);
       }
     });
-
     return alreadySelectedValues;
   }
 }

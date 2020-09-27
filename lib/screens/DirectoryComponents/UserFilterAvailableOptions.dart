@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 class FilterOptions{
   Map<int, dynamic> campusFilter;
   Map<int, dynamic> batchYear;
@@ -10,7 +12,7 @@ class FilterOptions{
 
   FilterOptions(){
     campusFilter = Map<int, dynamic>();
-    batchYear = Map<int, dynamic>();
+    batchYear = LinkedHashMap<int, dynamic>();
     SDG = Map<int, dynamic>();
 
     selectedCampusFilterValues = List<dynamic>();
@@ -22,7 +24,6 @@ class FilterOptions{
     addAlreadySelectedOptions(this.selectedCampusFilterValues, this.campusFilter);
 
     this.batchYear.clear();
-    addAlreadySelectedOptions(this.selectedBatchYearFilterValues, this.batchYear);
 
     this.SDG.clear();
     addAlreadySelectedOptions(this.selectedSDGFilterValues, this.SDG);

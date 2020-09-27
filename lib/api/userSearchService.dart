@@ -57,20 +57,24 @@ class UserSearchService {
 
   void updateAvailableFilters(List<UserModel> users) {
     filterOptions.clearUncheckedFilters();
+    Set<dynamic> batchSet = filterOptions.selectedBatchYearFilterValues.toSet();
     for (UserModel user in users) {
       if (!filterOptions.campusFilter.containsValue(user.campus)) {
         filterOptions.campusFilter
             .addAll({filterOptions.campusFilter.length: user.campus});
       }
-      if (!filterOptions.batchYear.containsValue(user.batch)) {
-        filterOptions.batchYear
-            .addAll({filterOptions.batchYear.length: user.batch});
-      }
+
+      batchSet.add(user.batch);
 
       updateAvailableSDGFilters(user.SDGs.firstSDG);
       updateAvailableSDGFilters(user.SDGs.secondSDG);
       updateAvailableSDGFilters(user.SDGs.thirdSDG);
     }
+    List<dynamic> batchList = batchSet.toList();
+    batchList.sort();
+    batchList.forEach((batch) {
+      filterOptions.batchYear.addAll({filterOptions.batchYear.length: batch});
+    });
   }
 
   void updateAvailableSDGFilters(int sdg) {

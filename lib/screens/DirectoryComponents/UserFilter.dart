@@ -45,9 +45,9 @@ class _UserFilterState extends State<UserFilter> {
       multiItem = [];
       populateMultiSelectValues();
       final items = multiItem;
-      List<dynamic> filterSet = clearSelectedFilterValues();
       void updateSelectedFilterValues(Set selection) {
-          for (int index in selection.toList()) {
+        List<dynamic> filterSet = clearSelectedFilterValues();
+        for (int index in selection.toList()) {
             filterSet.add(widget.values[index]);
             print(widget.values[index]);
           }
