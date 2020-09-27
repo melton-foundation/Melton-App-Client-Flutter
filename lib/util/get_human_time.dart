@@ -1,7 +1,7 @@
 class GetHumanTime {
 
   static String getHumanTime(DateTime target) {
-      DateTime now = DateTime.now(); // todo test - utc is already handled
+      DateTime now = DateTime.now();
       Duration difference = now.difference(target);
       if (difference.inMinutes < 2) {
         return "just now";
