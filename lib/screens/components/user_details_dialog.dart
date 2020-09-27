@@ -48,6 +48,7 @@ class UserDetails extends StatelessWidget {
           name: data.name,
           isJuniorFellow: data.isJuniorFellow,
           socialMediaAccounts: data.socialMediaAccounts,
+          bio: data.bio,
           work: data.work,
           SDGs: data.SDGs,
           phoneNumber: data.phoneNumber.phoneNumber,

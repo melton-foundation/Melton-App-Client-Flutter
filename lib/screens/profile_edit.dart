@@ -73,6 +73,21 @@ class _ProfileEditState extends State<ProfileEdit> {
 
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
                 TextFormField(
+                  initialValue: widget.initialModel.bio,
+                  maxLines: 3,
+                  maxLength: 200,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Bio - the story of your life",
+                    icon: Icon(Icons.movie_filter),
+                  ),
+                  onSaved: (String newValue) {
+                    _model.bio = newValue;
+                  },
+                ),
+
+                Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
+                TextFormField(
                   initialValue: widget.initialModel.work,
                   maxLines: 3,
                   maxLength: 200,
@@ -357,6 +372,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       city: validateCityAndCountry(initialModel.city, false),
       country: validateCityAndCountry(initialModel.city, true),
       batch: initialModel.batch,
+      bio: initialModel.bio,
       work: initialModel.work,
       phoneNumber: phoneModel,
       socialMediaAccounts: socialModel,
