@@ -1,16 +1,17 @@
 class StoreModel {
   int id;
   String name;
+  String image;
   String description;
   int points;
   bool active;
   bool purchased;
 
-  StoreModel({this.id, this.name, this.description, this.points, this.active,
+  StoreModel({this.id, this.name, this.image, this.description, this.points, this.active,
       this.purchased});
 
   factory StoreModel.fromJson(Map<String, dynamic> json) {
-    return StoreModel(id: json['id'], name: json['name'],
+    return StoreModel(id: json['id'], name: json['name'], image: json['previewImage'],
     description: json['description'], points: json['points'],
     active: json['active'], purchased: json['purchased']);
   }
