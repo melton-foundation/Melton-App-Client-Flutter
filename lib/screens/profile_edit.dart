@@ -268,8 +268,15 @@ class _ProfileEditState extends State<ProfileEdit> {
                       Navigator.pop(context, true);
                     } else {
                       showDialog(context: context, builder: (context) {
-                        return AlertDialog(title: Text("Oops"),
-                                content: Text("There are some errors to fix in your data...\n\nProtip: Look for the red stuff"),);
+                        return AlertDialog(
+                          title: Text("Oops"),
+                          content: Text("Fix the errors.\n\nProtip: Look for the red stuff"),
+                          actions: [
+                            FlatButton(
+                              child: Text("OK", style: TextStyle(color: Constants.meltonBlue)),
+                              onPressed: () { Navigator.pop(context); },
+                            ),
+                          ],);
                       });
                     }
                   },
