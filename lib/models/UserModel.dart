@@ -7,6 +7,7 @@ class UserModel {
   bool isJuniorFellow;
   String campus;
   String city;
+  String country;
   int batch;
   String bio;
   String work;
@@ -16,7 +17,7 @@ class UserModel {
   String picture;
 
   UserModel({this.id, this.email, this.name, this.isJuniorFellow,
-  this.campus, this.city, this.batch, this.bio, this.work, this.phoneNumber,
+  this.campus, this.city, this.country, this.batch, this.bio, this.work, this.phoneNumber,
   this.socialMediaAccounts, this.SDGs, this.picture});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -27,6 +28,7 @@ class UserModel {
       isJuniorFellow: json['isJuniorFellow'],
       campus: json['campus'],
       city: json['city'],
+      country: json['country'],
       batch: json['batch'],
       bio: json['bio'],
       work: json['work'],
