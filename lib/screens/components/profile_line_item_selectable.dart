@@ -9,6 +9,8 @@ class ProfileLineItemSelectable extends StatelessWidget {
 
   ProfileLineItemSelectable({this.label, this.content});
 
+  bool isPhone() => label == "PHONE";
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -17,28 +19,39 @@ class ProfileLineItemSelectable extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Divider(),
-          Text(label,
+          Text(
+            label,
             textAlign: TextAlign.left,
-            style: TextStyle(letterSpacing: 2.0,
+            style: TextStyle(
+                letterSpacing: 2.0,
                 color: Constants.meltonBlue,
                 fontWeight: FontWeight.bold),
           ),
-          FlatButton(
-            onPressed: () {launchTelOrMailtoUrl(content, label == "PHONE");},
-            child: SelectableText(
-              content,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Constants.meltonRed,
-                fontWeight: FontWeight.bold,
-                fontSize: 18.0,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SelectableText(
+                content,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Constants.meltonRed,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0,
+                ),
               ),
-            ),
-          ),
+              IconButton(
+                onPressed: () {
+                  launchTelOrMailtoUrl(content, isPhone());
+                },
+                icon: Icon(
+                  (isPhone() ? Icons.call : Icons.email),
+                  color: Constants.meltonBlueAccent,
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
   }
 }
-
-

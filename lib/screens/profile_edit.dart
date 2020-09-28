@@ -386,10 +386,10 @@ class _ProfileEditState extends State<ProfileEdit> {
       return "";
     } else {
       if (getCountry) {
-        return profileCity.split(",")[0];
+        return profileCity.split(",")[1];
       } else {
         // getCity
-        return profileCity.split(",")[1];
+        return profileCity.split(",")[0];
       }
     }
   }

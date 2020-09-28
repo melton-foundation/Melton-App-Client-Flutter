@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 //todo test on android and ios
 void launchUrlWebview(String url) async {
   if (await canLaunch(url)) {
-    launch(url);
+    launch(url, forceSafariVC: true, forceWebView: true);
   } else {
     print("could not launch $url");
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/models/UserModel.dart';
 import 'package:melton_app/screens/components/UserProfileInformation.dart';
+import 'package:melton_app/util/model_util.dart';
 
 class UserDetails extends StatelessWidget {
   final String userName;
@@ -55,7 +56,7 @@ class UserDetails extends StatelessWidget {
           countryCode: data.phoneNumber.countryCode,
           campus: data.campus,
           batch: data.batch,
-          city: data.city,
+          city: validateCity(data.city, data.country),
           email: data.email,
         ),
       ),

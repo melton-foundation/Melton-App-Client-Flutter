@@ -1,3 +1,4 @@
+import 'package:melton_app/util/model_util.dart';
 import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/util/social_media.dart';
 
@@ -39,13 +40,7 @@ class ProfileModel {
     );
   }
 
-  static String validateCity(String city, String country) {
-    if (city.length == 0 && country.length == 0) {
-      return "";
-    } else {
-      return city + ", " + country;
-    }
-  }
+  
 
   //todo handle null and required fields
   static Map<String, dynamic> toJson(ProfileModel model) {
