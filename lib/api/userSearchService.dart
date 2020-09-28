@@ -125,15 +125,9 @@ class UserSearchService {
       case BATCH_FILTER:
         return selectedFilterValues.contains(user.batch);
       case SDG_FILTER:
-        return selectedFilterValues.contains(user.SDGs.firstSDG != 0
-                ? Constants.SDGs[user.SDGs.firstSDG]
-                : "SDG value : 0") ||
-            selectedFilterValues.contains(user.SDGs.secondSDG != 0
-                ? Constants.SDGs[user.SDGs.secondSDG]
-                : "SDG value : 0") ||
-            selectedFilterValues.contains(user.SDGs.thirdSDG != 0
-                ? Constants.SDGs[user.SDGs.thirdSDG]
-                : "SDG value : 0");
+        return (user.SDGs.firstSDG != 0 && selectedFilterValues.contains(Constants.SDGs[user.SDGs.firstSDG])) ||
+            (user.SDGs.secondSDG != 0 && selectedFilterValues.contains(Constants.SDGs[user.SDGs.secondSDG])) ||
+            (user.SDGs.thirdSDG != 0 && selectedFilterValues.contains(Constants.SDGs[user.SDGs.thirdSDG]));
     }
     return false;
   }
