@@ -1,4 +1,5 @@
 import 'package:melton_app/util/model_util.dart';
+import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/util/social_media.dart';
 
 class ProfileModel {
@@ -77,7 +78,9 @@ class SDGList {
       return SDGList(sdg_list);
     }
     for (int i = 0; i < responseSDGs.length && i < 3; i++) {
-      sdg_list[i] = responseSDGs[i].toInt();
+      if (responseSDGs[i].toInt() >= Constants.MIN_SDG_CODE && responseSDGs[i].toInt() <= Constants.MAX_SDG_CODE) {
+        sdg_list[i] = responseSDGs[i].toInt();
+      }
     }
     return SDGList(sdg_list);
   }
