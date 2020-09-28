@@ -54,7 +54,7 @@ class _UserSearchState extends State<UserSearch> {
                 widget.searchService.searchUser(" ");
               }
             },
-//            onEditingComplete: () => {widget.searchService.searchUser(" ")},
+
             style: TextStyle(
               color: Colors.grey[800],
               fontWeight: FontWeight.bold,
