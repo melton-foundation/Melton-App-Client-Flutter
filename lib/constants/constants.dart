@@ -47,6 +47,9 @@ class Constants {
     "Other"
   ];
 
+  static const int MIN_SDG_CODE = 1;
+  static const int MAX_SDG_CODE = 17;
+
   // LinkedHashMap needed to maintain order
   static final Map<int, String> SDGs = new LinkedHashMap.from({
     1  : "No Poverty",
@@ -67,5 +70,7 @@ class Constants {
     16 : "Peace, Justice, and Strong Institutions",
     17 : "Partnerships for the Goals",
   });
+
+  static const String FILTERS = "FL";
 
 }
