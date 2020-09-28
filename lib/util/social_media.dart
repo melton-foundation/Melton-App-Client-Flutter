@@ -10,7 +10,7 @@ class SocialMedia {
   static const FACEBOOK = "Facebook";
   static const INSTAGRAM = "Instagram";
   static const TWITTER = "Twitter";
-  static const WECHAT = "Wechat ID";
+  static const WECHAT = "Wechat/Weixin ID";
   static const LINKEDIN = "Linkedin";
   static const OTHER = "Other";
 
@@ -26,10 +26,11 @@ class SocialMedia {
 
   static const HTTPS = "https://";
   static const HTTP = "http://";
-  static const FACEBOOK_URL = "https://facebook.com/";
-  static const INSTAGRAM_URL = "https://instagram.com/";
-  static const TWITTER_URL = "https://twitter.com/";
-  static const LINKEDIN_URL = "https://linkedin.com/";
+  static const FACEBOOK_URL = "facebook.com/";
+  static const INSTAGRAM_URL = "instagram.com/";
+  static const TWITTER_URL = "twitter.com/";
+  static const LINKEDIN_URL = "linkedin.com/";
+  static const COM_ENDING = ".com/";
 
   static const Map<String, String> KEY_URL_MAP = {
     FACEBOOK_KEY  : FACEBOOK_URL,
@@ -40,23 +41,22 @@ class SocialMedia {
     OTHER2_KEY    : HTTP
   };
 
-  //todo test null case behaviour
-  static String getSocialMediaAccount(SocialMediaAccounts accounts, String key) {
-    switch(key) {
+  static String getSocialMediaAccountOrPlaceholder(SocialMediaAccounts accounts, String key) {
+    switch (key) {
       case SocialMedia.FACEBOOK_KEY: {
-        return accounts.facebook;
+        return accounts.facebook ?? (SocialMedia.HTTPS + SocialMedia.KEY_URL_MAP[key]);
       } break;
       case SocialMedia.INSTAGRAM_KEY: {
-        return accounts.instagram;
+        return accounts.instagram ?? (SocialMedia.HTTPS + SocialMedia.KEY_URL_MAP[key]);
       } break;
       case SocialMedia.TWITTER_KEY: {
-        return accounts.twitter;
+        return accounts.twitter ?? (SocialMedia.HTTPS + SocialMedia.KEY_URL_MAP[key]);
       } break;
       case SocialMedia.WECHAT_KEY: {
         return accounts.wechat;
       } break;
       case SocialMedia.LINKEDIN_KEY: {
-        return accounts.linkedin;
+        return accounts.linkedin ?? (SocialMedia.HTTPS + SocialMedia.KEY_URL_MAP[key]);
       } break;
       case SocialMedia.OTHER1_KEY: {
         return accounts.others.length >= 1 ? accounts.others[0] : null;
@@ -65,10 +65,11 @@ class SocialMedia {
         return accounts.others.length >= 2 ? accounts.others[1] : null;
       } break;
     }
+    return null;
   }
 
   static void setSocialMediaAccount(SocialMediaAccounts accounts, String key, String value) {
-    switch(key) {
+    switch (key) {
       case SocialMedia.FACEBOOK_KEY: {
         accounts.facebook = value;
       } break;
@@ -107,26 +108,17 @@ class SocialMedia {
   }
 
   static bool isSocialMediaFormatted(String key, String value) {
-    switch (key) {
-      case SocialMedia.FACEBOOK_KEY: {
-        return value.startsWith(SocialMedia.FACEBOOK_URL);
-      } break;
-      case SocialMedia.INSTAGRAM_KEY: {
-        return value.startsWith(SocialMedia.INSTAGRAM_URL);
-      } break;
-      case SocialMedia.TWITTER_KEY: {
-        return value.startsWith(SocialMedia.TWITTER_URL);
-      } break;
-      case SocialMedia.WECHAT_KEY: {
-        return true; // wechat ID, alphanumeric
-      } break;
-      case SocialMedia.LINKEDIN_KEY: {
-        return value.startsWith(SocialMedia.LINKEDIN_URL);
-      } break;
-      default: {
-        return (value.startsWith(SocialMedia.HTTP) || value.startsWith(SocialMedia.HTTPS));
-      } break;
+    if (key == SocialMedia.WECHAT_KEY) {
+      return true; // no validation for wechat/weixin ID
     }
+
+    if (key == SocialMedia.OTHER1_KEY || key == SocialMedia.OTHER2_KEY) {
+      return (value.startsWith(SocialMedia.HTTP) || value.startsWith(SocialMedia.HTTPS));
+    }
+
+    return value.startsWith(SocialMedia.HTTPS) &&
+            value.contains(SocialMedia.KEY_URL_MAP[key]) &&
+            !value.endsWith(SocialMedia.COM_ENDING);
   }
 
   static getInputDecorationFromKey(String key) {

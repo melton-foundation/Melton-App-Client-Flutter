@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:melton_app/api/api.dart';
-import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/screens/components/UserProfileInformation.dart';
 import 'package:melton_app/screens/profile_edit.dart';
@@ -89,6 +88,7 @@ class _ProfileState extends State<Profile> {
         isJuniorFellow: data.isJuniorFellow,
         points: data.points,
         socialMediaAccounts: data.socialMediaAccounts,
+        bio: data.bio,
         work: data.work,
         SDGs: data.SDGs,
         phoneNumber: data.phoneNumber.phoneNumber,

@@ -9,6 +9,7 @@ class ProfileModel {
   String city;
   String country;
   int batch;
+  String bio;
   String work;
   PhoneNumber phoneNumber;
   SocialMediaAccounts socialMediaAccounts;
@@ -16,7 +17,7 @@ class ProfileModel {
   String picture;
 
   ProfileModel({this.email, this.name, this.isJuniorFellow, this.points,
-  this.campus, this.city, this.country, this.batch, this.work, this.phoneNumber,
+  this.campus, this.city, this.country, this.batch, this.bio, this.work, this.phoneNumber,
   this.socialMediaAccounts, this.SDGs, this.picture});
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -28,6 +29,7 @@ class ProfileModel {
       campus: json['profile']['campus'],
       city: validateCity(json['profile']['city'], json['profile']['country']),
       batch: json['profile']['batch'],
+      bio: json['profile']['bio'],
       work: json['profile']['work'],
       phoneNumber: PhoneNumber.fromJson(json['profile']['phoneNumber']),
       socialMediaAccounts: SocialMediaAccounts.fromJson(new List<dynamic>.from(json['profile']['socialMediaAccounts'])),
@@ -52,6 +54,7 @@ class ProfileModel {
       "city": model.city,
       "country": model.country,
       "batch": model.batch,
+      "bio": model.bio,
       "work": model.work,
       "phoneNumber": PhoneNumber.toJson(model.phoneNumber),
       "socialMediaAccounts": SocialMediaAccounts.toJson(model.socialMediaAccounts),

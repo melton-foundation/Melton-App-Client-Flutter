@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/util/social_media.dart';
 
@@ -41,11 +38,15 @@ class SingleSocialMediaEditItem extends StatelessWidget {
     return Column(
       children: [
         TextFormField(
-          initialValue: SocialMedia.getSocialMediaAccount(_accounts, _socialMediaKey),
+          initialValue: SocialMedia.getSocialMediaAccountOrPlaceholder(_accounts, _socialMediaKey),
           autovalidate: true,
           validator: (value) {
             if (value.isNotEmpty && !SocialMedia.isSocialMediaFormatted(_socialMediaKey, value)) {
-              return "Start with '" + SocialMedia.KEY_URL_MAP[_socialMediaKey] + "...'";
+              if (_socialMediaKey == SocialMedia.OTHER1_KEY ||
+                    _socialMediaKey == SocialMedia.OTHER2_KEY) {
+                return "Start with " + SocialMedia.HTTPS + " or " + SocialMedia.HTTP + "...";
+              }
+              return "Start with '" + SocialMedia.HTTPS + SocialMedia.KEY_URL_MAP[_socialMediaKey] + "...'";
             }
             return null;
           },

@@ -43,6 +43,7 @@ class _StoreState extends State<Store> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
+                        Image.network(snapshot.data[index].image ?? ""),
                         Text(snapshot.data[index].name, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
                         Text(snapshot.data[index].description),
                         Row(

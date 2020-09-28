@@ -73,6 +73,21 @@ class _ProfileEditState extends State<ProfileEdit> {
 
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
                 TextFormField(
+                  initialValue: widget.initialModel.bio,
+                  maxLines: 3,
+                  maxLength: 200,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Bio - the story of your life",
+                    icon: Icon(Icons.movie_filter),
+                  ),
+                  onSaved: (String newValue) {
+                    _model.bio = newValue;
+                  },
+                ),
+
+                Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
+                TextFormField(
                   initialValue: widget.initialModel.work,
                   maxLines: 3,
                   maxLength: 200,
@@ -266,6 +281,18 @@ class _ProfileEditState extends State<ProfileEdit> {
                       _model.SDGs = _sdgModel;
                       ApiService().postProfile(_model).then((value) => widget.profileRefreshFunction());
                       Navigator.pop(context, true);
+                    } else {
+                      showDialog(context: context, builder: (context) {
+                        return AlertDialog(
+                          title: Text("Oops"),
+                          content: Text("Fix the errors.\n\nProtip: Look for the red stuff"),
+                          actions: [
+                            FlatButton(
+                              child: Text("OK", style: TextStyle(color: Constants.meltonBlue)),
+                              onPressed: () { Navigator.pop(context); },
+                            ),
+                          ],);
+                      });
                     }
                   },
                 ),
@@ -345,6 +372,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       city: validateCityAndCountry(initialModel.city, false),
       country: validateCityAndCountry(initialModel.city, true),
       batch: initialModel.batch,
+      bio: initialModel.bio,
       work: initialModel.work,
       phoneNumber: phoneModel,
       socialMediaAccounts: socialModel,
