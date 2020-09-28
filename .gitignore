@@ -55,3 +55,5 @@ build/
 
 # keep secrets out of version control
 lib/util/secrets.dart
+
+**/google-services.json
