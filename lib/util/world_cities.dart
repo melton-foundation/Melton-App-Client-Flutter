@@ -15,7 +15,7 @@ class WorldCities {
     "Bengaluru, India":[12.9700,77.5600],
     "Hangzhou, China":[30.2500,120.1700],
     "Jena, Germany":[50.9304,11.5800],
-    "New Orleans, United States":[30.0687,-89.9288],
+    "New Orleans, United States":[29.9510,-90.0715],
     "Temuco, Chile":[-38.7300,-72.5800],
     "Tokyo, Japan":[35.6850,139.7514],
     "New York, United States":[40.6943,-73.9249],
