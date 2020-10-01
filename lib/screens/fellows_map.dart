@@ -33,7 +33,8 @@ class _FellowsMapState extends State<FellowsMap> {
     _controller.complete(controller);
     _setMapStyle();
     allUsers = await MapSearchService().usersStream.first;
-    Map<MarkerId, Marker> userMarkers = Map.fromIterable(allUsers, key: (user) => MarkerId(user.id.toString()),
+    Map<MarkerId, Marker> userMarkers = Map.fromIterable(
+        allUsers, key: (user) => MarkerId(user.id.toString()),
         value: (user) => Marker(
           markerId: MarkerId(user.id.toString()),
           //todo "not_found" needed?
@@ -138,9 +139,11 @@ class _FellowsMapState extends State<FellowsMap> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  BlackTitleText(content: selectedUser.name),
+                  selectedUser.name.length > 20 ?
+                    BlackSubtitleText(content: selectedUser.name) :
+                    BlackTitleText(content: selectedUser.name),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       BlackSubtitleText(content: selectedUser.campus),
                       BlackSubtitleText(content: "  "),
