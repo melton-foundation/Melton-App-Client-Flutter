@@ -36,6 +36,7 @@ class _FellowsMapState extends State<FellowsMap> {
     Map<MarkerId, Marker> userMarkers = Map.fromIterable(allUsers, key: (user) => MarkerId(user.id.toString()),
         value: (user) => Marker(
           markerId: MarkerId(user.id.toString()),
+          //todo "not_found" needed?
           position: MapUtil.getLatLngForCityWithRandomization(validateCity(user.city, user.country) ?? "NOT_FOUND"),
           infoWindow: InfoWindow(
             title: user.name,
@@ -85,6 +86,8 @@ class _FellowsMapState extends State<FellowsMap> {
           GoogleMap(
           onMapCreated: _onMapCreated,
           myLocationButtonEnabled: false,
+          mapToolbarEnabled: false,
+          zoomControlsEnabled: false,
           initialCameraPosition:
           CameraPosition(
             target: _center,
