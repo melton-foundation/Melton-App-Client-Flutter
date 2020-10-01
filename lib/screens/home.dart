@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:melton_app/screens/posts/posts_home_preview.dart';
 import 'package:melton_app/screens/posts/posts_preview_page.dart';
-import 'package:melton_app/screens/map.dart';
+import 'package:melton_app/screens/fellows_map.dart';
 
 import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/util/map_util.dart';
@@ -22,7 +22,7 @@ class _HomeState extends State<Home> {
         child: Icon(Icons.map),
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return Map();
+            return FellowsMap();
           }));
         },
       ),

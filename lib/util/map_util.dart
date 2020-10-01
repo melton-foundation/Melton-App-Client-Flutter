@@ -12,7 +12,7 @@ class MapUtil {
 
   static LatLng getLatLngForCity(String city) {
     if (!WorldCities.WORLD_CITIES.containsKey(city)) {
-      return LatLng(12.9, 77.7);
+      return LatLng(12.9876, 77.7334); // whitefield :P
     }
     double lat = WorldCities.WORLD_CITIES[city][0];
     double lng = WorldCities.WORLD_CITIES[city][1];
@@ -22,6 +22,25 @@ class MapUtil {
   static LatLng getLatLngForRandomMeltonCity() {
     String randomCity = Constants.meltonCities[_random.nextInt(Constants.meltonCities.length)];
     return getLatLngForCity(randomCity);
+  }
+
+  static LatLng getLatLngForCityWithRandomization(String city) {
+    if (!WorldCities.WORLD_CITIES.containsKey(city)) {
+      return LatLng(12.9876, 77.7334); // whitefield :P
+    }
+    double lat = WorldCities.WORLD_CITIES[city][0] + getRandomDisplacement();
+    double lng = WorldCities.WORLD_CITIES[city][1] + getRandomDisplacement();
+    return LatLng(lat, lng);
+  }
+
+  static double getRandomDisplacement() {
+    // to avoid overlapping multiple markers
+    // need to figure out clustering
+    double displacement = _random.nextDouble() / 5;
+    if (_random.nextBool()) {
+      displacement = displacement * -1;
+    }
+    return displacement;
   }
 
 }
