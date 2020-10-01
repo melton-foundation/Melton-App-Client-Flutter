@@ -39,7 +39,7 @@ class SingleSocialMediaEditItem extends StatelessWidget {
       children: [
         TextFormField(
           initialValue: SocialMedia.getSocialMediaAccountOrPlaceholder(_accounts, _socialMediaKey),
-          autovalidate: true,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) {
             if (value.isNotEmpty && !SocialMedia.isSocialMediaFormatted(_socialMediaKey, value)) {
               if (_socialMediaKey == SocialMedia.OTHER1_KEY ||
