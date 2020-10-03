@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:get_it/get_it.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:melton_app/models/PostsNotificationModel.dart';
 
 import 'package:melton_app/util/token_handler.dart';
 
@@ -33,6 +34,10 @@ class ApiService {
 
   Map<String, String> getAuthHeader() {
     return {"Authorization": token};
+  }
+
+  Map<String, String> getUrl(){
+    return {"url": apiUrl};
   }
 
   Map<String, String> getAuthAndJsonContentHeader() {
@@ -211,6 +216,31 @@ class ApiService {
       // todo show error msg snackbar
       print("request failed, server is being cranky :(");
     }
+  }
+
+  Future<PostsNotificationModel> getRecentPostForNotification(Map<String, dynamic> inputData) async {
+    String url = inputData['url'];
+    http.Response response = await http.get(url + "posts/", headers: {"Authorization": inputData["Authorization"]});
+
+    if(response.statusCode == 200 || response.statusCode == 201) {
+      List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
+      if(jsonResponse.length > 0){
+        DateTime latestDate = jsonResponse[0]['created'].split(".")[0] == jsonResponse[0]['updated'].split(".")[0] ?
+        DateTime.parse(jsonResponse[0]['created']): DateTime.parse(jsonResponse[0]['updated']);
+        DateTime now = DateTime.now();
+        Duration difference = now.difference(latestDate);
+        if(difference.inHours < 24 || true){
+          String title = jsonResponse[0]['title'];
+          String description = jsonResponse[0]['description'];
+          String previewImage = jsonResponse[0]['preview'];
+          return new PostsNotificationModel(
+              showNotification: true,
+              title: title,
+              description: description);
+        }
+      }
+    }
+    return new PostsNotificationModel(showNotification: false);
   }
 
   Future<PostModel> getPostById(int postId) async {

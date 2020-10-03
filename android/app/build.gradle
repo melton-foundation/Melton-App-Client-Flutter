@@ -43,6 +43,10 @@ android {
         disable 'InvalidPackage'
     }
 
+    configurations {
+        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+    }
+
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.melton_app"
