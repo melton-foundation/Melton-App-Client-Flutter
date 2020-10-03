@@ -21,13 +21,28 @@ class FellowsMap extends StatefulWidget {
 class _FellowsMapState extends State<FellowsMap> {
   Completer<GoogleMapController> _controller = Completer();
 
-
   final LatLng _center = MapUtil.getLatLngForRandomMeltonCity();
   List<UserModel> allUsers;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-  bool showMapMarkers = true;
+  BitmapDescriptor markerIcon;
+
   bool showFellowInfoBox = false;
   UserModel selectedUser;
+
+  @override
+  void initState() {
+    super.initState();
+    _setCustomMarkerIcon();
+  }
+  void _setCustomMarkerIcon() async {
+    markerIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(
+        devicePixelRatio: 1,
+      ),
+      "assets/maps/marker_icon.png"
+    );
+    // todo replace with final asset
+  }
 
   void _onMapCreated(GoogleMapController controller) async {
     _controller.complete(controller);
@@ -36,6 +51,7 @@ class _FellowsMapState extends State<FellowsMap> {
     Map<MarkerId, Marker> userMarkers = Map.fromIterable(
         allUsers, key: (user) => MarkerId(user.id.toString()),
         value: (user) => Marker(
+          icon: markerIcon,
           markerId: MarkerId(user.id.toString()),
           //todo "not_found" needed?
           position: MapUtil.getLatLngForCityWithRandomization(validateCity(user.city, user.country) ?? "NOT_FOUND"),
@@ -50,11 +66,9 @@ class _FellowsMapState extends State<FellowsMap> {
             });
           },
         ));
-    if (showMapMarkers) {
       setState(() {
         markers = userMarkers;
       });
-    }
   }
 
   void _setMapStyle() async {
