@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:melton_app/screens/posts/posts_home_preview.dart';
 import 'package:melton_app/screens/posts/posts_preview_page.dart';
+import 'package:melton_app/screens/fellows_map.dart';
 
 import 'package:melton_app/constants/constants.dart';
+import 'package:melton_app/util/map_util.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -14,6 +17,15 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.map),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return FellowsMap();
+          }));
+        },
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child:
@@ -34,9 +46,9 @@ class _HomeState extends State<Home> {
               splashColor: Constants.meltonRed,
               child: Text("SEE ALL", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
             ),
-            //todo other "home" components
-            // maps api? other stuff?
-            Expanded(child: Container(height: 150, color: Colors.amber,),),
+            Container(
+              child: Image.asset(MapUtil.MELTON_WORLD_MAP_PATH),
+            ),
           ],
         ),
       ),

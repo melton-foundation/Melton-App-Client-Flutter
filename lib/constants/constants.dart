@@ -47,6 +47,15 @@ class Constants {
     "Other"
   ];
 
+  static const List<String> meltonCities = [
+    "Accra, Ghana",
+    "Bengaluru, India",
+    "Hangzhou, China",
+    "Jena, Germany",
+    "New Orleans, United States",
+    "Temuco, Chile",
+  ];
+
   static const int MIN_SDG_CODE = 1;
   static const int MAX_SDG_CODE = 17;
 

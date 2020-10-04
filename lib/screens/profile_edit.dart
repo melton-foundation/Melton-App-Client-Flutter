@@ -45,7 +45,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       appBar: AppBar(title: Text("Edit Your Profile")),
       body: Form(
         key: _formKey,
-        autovalidate: true,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(

@@ -25,7 +25,7 @@ class _SignUpState extends State<SignUp> {
         padding: const EdgeInsets.all(8.0),
         child: Form(
           key: _formKey,
-          autovalidate: true,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: [
               Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),

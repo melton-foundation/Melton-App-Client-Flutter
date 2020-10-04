@@ -11,11 +11,11 @@ class WorldCities {
 
   //todo verify latlong of melton cities
   static const Map<String, List<double>> WORLD_CITIES = {
-    "Accra, Ghana":[5.5500,-0.2167],
-    "Bengaluru, India":[12.9700,77.5600],
+    "Accra, Ghana":[5.7500,-0.2167],
+    "Bengaluru, India":[12.9650,77.5866],
     "Hangzhou, China":[30.2500,120.1700],
     "Jena, Germany":[50.9304,11.5800],
-    "New Orleans, United States":[30.0687,-89.9288],
+    "New Orleans, United States":[29.9510,-90.0715],
     "Temuco, Chile":[-38.7300,-72.5800],
     "Tokyo, Japan":[35.6850,139.7514],
     "New York, United States":[40.6943,-73.9249],
@@ -3212,6 +3212,7 @@ class WorldCities {
     "Isna, Egypt":[25.2904,32.5499],
     "Qamdo, China":[31.1667,97.2333],
     "Arlit, Niger":[18.8200,7.3300],
+    "Berekuso, Ghana":[5.759010,-0.219068],
   };
 
 }
