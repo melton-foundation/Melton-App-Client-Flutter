@@ -53,7 +53,7 @@ class SingleSocialMediaEditItem extends StatelessWidget {
           onSaved: (String newValue) {
             SocialMedia.setSocialMediaAccount(_accounts, _socialMediaKey, newValue);
           },
-          maxLength: 60,
+          maxLength: 100,
           decoration: SocialMedia.getInputDecorationFromKey(_socialMediaKey),
         ),
         SizedBox(height: 10,),
