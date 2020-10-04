@@ -36,7 +36,8 @@ class MapUtil {
   static double getRandomDisplacement() {
     // to avoid overlapping multiple markers
     // need to figure out clustering
-    double displacement = _random.nextDouble() / 5;
+    // no library support in flutter yet, 3rd party libs aren't perfect
+    double displacement = _random.nextDouble() / 20;
     if (_random.nextBool()) {
       displacement = displacement * -1;
     }
