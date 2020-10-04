@@ -53,7 +53,7 @@ class _ProfileEditState extends State<ProfileEdit> {
               children: [
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
                 TextFormField(
-                  maxLength: 60,
+                  maxLength: 100,
                   initialValue: widget.initialModel.name,
                   validator: (value) {
                     if (value.isEmpty) {
