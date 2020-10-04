@@ -1,9 +1,8 @@
 import 'package:url_launcher/url_launcher.dart';
 
-//todo test on android and ios
 void launchUrlWebview(String url) async {
   if (await canLaunch(url)) {
-    launch(url, forceSafariVC: true, forceWebView: true, enableJavaScript: true, enableDomStorage: true);
+    launch(url, forceSafariVC: true, forceWebView: false);
   } else {
     print("could not launch $url");
   }
