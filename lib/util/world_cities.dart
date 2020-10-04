@@ -3212,6 +3212,7 @@ class WorldCities {
     "Isna, Egypt":[25.2904,32.5499],
     "Qamdo, China":[31.1667,97.2333],
     "Arlit, Niger":[18.8200,7.3300],
+    "Berekuso, Ghana":[5.759010,-0.219068],
   };
 
 }
