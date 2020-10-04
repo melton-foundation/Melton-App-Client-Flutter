@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:melton_app/Notification/NotificationBuilder.dart';
 
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/models/UserRegistrationStatusModel.dart';
@@ -76,6 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
       PersistentStorage storage = GetIt.I.get<PersistentStorage>();
       await storage.saveStringToStorage(TokenHandler.APP_TOKEN_KEY, tokenOrUnauthorized.appToken);
       await GetIt.I.get<TokenHandler>().refresh(storage);
+      NotificationBuilder().initWorkmanager();
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
         return MyHomePage();
       }));

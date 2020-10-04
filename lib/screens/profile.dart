@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:melton_app/Notification/NotificationBuilder.dart';
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/screens/components/UserProfileInformation.dart';
@@ -26,7 +25,6 @@ class _ProfileState extends State<Profile> {
     _streamController = StreamController<ProfileModel>();
     loadProfile();
     super.initState();
-     NotificationBuilder().initWorkmanager();
   }
 
   loadProfile() async {
