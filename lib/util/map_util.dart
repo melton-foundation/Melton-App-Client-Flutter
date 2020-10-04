@@ -8,6 +8,9 @@ class MapUtil {
   static const MAP_STYLE_PATH = "assets/maps/maps_style.json";
   static const MELTON_WORLD_MAP_PATH = "assets/maps/world_map_with_melton_cities.png";
 
+  static const MARKER_ICON_PATH_ANDROID = "assets/maps/marker_icon_106.png";
+  static const MARKER_ICON_PATH_IOS = "assets/maps/marker_icon_30.png";
+
   static final _random = new Random();
 
   static LatLng getLatLngForCity(String city) {

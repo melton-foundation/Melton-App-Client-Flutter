@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 
@@ -35,13 +36,18 @@ class _FellowsMapState extends State<FellowsMap> {
     _setCustomMarkerIcon();
   }
   void _setCustomMarkerIcon() async {
+    String markerIconPath;
+    if (Platform.isIOS) {
+      markerIconPath = MapUtil.MARKER_ICON_PATH_IOS;
+    } else {
+      markerIconPath = MapUtil.MARKER_ICON_PATH_ANDROID;
+    }
     markerIcon = await BitmapDescriptor.fromAssetImage(
       ImageConfiguration(
         devicePixelRatio: 1,
       ),
-      "assets/maps/marker_icon.png"
+      markerIconPath
     );
-    // todo replace with final asset
   }
 
   void _onMapCreated(GoogleMapController controller) async {
@@ -99,16 +105,21 @@ class _FellowsMapState extends State<FellowsMap> {
       body: Stack(
         children: [
           GoogleMap(
-          onMapCreated: _onMapCreated,
-          myLocationButtonEnabled: false,
-          mapToolbarEnabled: false,
-          zoomControlsEnabled: false,
-          initialCameraPosition:
-          CameraPosition(
-            target: _center,
-            zoom: 11.0,
-            ),
-          markers: Set<Marker>.of(markers.values),
+            onMapCreated: _onMapCreated,
+            myLocationButtonEnabled: false,
+            mapToolbarEnabled: false,
+            zoomControlsEnabled: false,
+            initialCameraPosition:
+            CameraPosition(
+              target: _center,
+              zoom: 11.0,
+              ),
+            markers: Set<Marker>.of(markers.values),
+            onTap: (latlng) {
+              setState(() {
+                showFellowInfoBox = false;
+              });
+            },
           ),
           showFellowInfoBox ? _getFellowInfoBox(selectedUser) : Container(),
         ],
