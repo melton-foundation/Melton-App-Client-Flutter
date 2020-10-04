@@ -229,7 +229,7 @@ class ApiService {
         DateTime.parse(jsonResponse[0]['created']): DateTime.parse(jsonResponse[0]['updated']);
         DateTime now = DateTime.now();
         Duration difference = now.difference(latestDate);
-        if(difference.inHours < 24 || true){   // Added true for testing
+        if(difference.inHours < 24){
           String title = jsonResponse[0]['title'];
           String description = jsonResponse[0]['description'];
           String previewImage = jsonResponse[0]['preview'];

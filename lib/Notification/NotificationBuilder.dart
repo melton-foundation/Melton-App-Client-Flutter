@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:melton_app/api/api.dart';
@@ -16,7 +15,7 @@ void callbackDispatcher() {
       previewImagePath = await getPreviewImagePath(postsNotificationModel.previewImage);
       FlutterLocalNotificationsPlugin notificationsPlugin =
         FlutterLocalNotificationsPlugin();
-        var android = AndroidInitializationSettings('@mipmap/ic_launcher');  // Different icon is shown in notification
+        var android = AndroidInitializationSettings('@mipmap/ic_launcher');
         var iOS = IOSInitializationSettings();
         var initSettings = InitializationSettings(android, iOS);
         notificationsPlugin.initialize(initSettings);
