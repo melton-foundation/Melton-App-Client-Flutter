@@ -164,8 +164,8 @@ class _FellowsMapState extends State<FellowsMap> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  selectedUser.name.length > 20 ?
-                    BlackSubtitleText(content: selectedUser.name) :
+                  selectedUser.name.length > 15 ?
+                    BlackSubSubtitleText(content: selectedUser.name) :
                     BlackTitleText(content: selectedUser.name),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
