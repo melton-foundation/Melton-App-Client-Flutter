@@ -17,7 +17,7 @@ void callbackDispatcher() {
         FlutterLocalNotificationsPlugin();
         var android = AndroidInitializationSettings('@mipmap/ic_launcher');
         var iOS = IOSInitializationSettings();
-        var initSettings = InitializationSettings(android, iOS);
+        var initSettings = InitializationSettings(android:android, iOS:iOS);
         notificationsPlugin.initialize(initSettings);
         showNotification(postsNotificationModel.title,
             postsNotificationModel.description, notificationsPlugin, previewImage: previewImagePath);
@@ -49,7 +49,7 @@ void showNotification(title, body, notificationsPlugin, {String previewImage}) a
     );
     android = AndroidNotificationDetails(
       'MeltonApp', 'Melton App Notification', 'Recent Post Simple Notification',
-      priority: Priority.High, importance: Importance.Max,
+      priority: Priority.high, importance: Importance.max,
       largeIcon: DrawableResourceAndroidBitmap('app_icon'),
       styleInformation: bigPictureStyleInformation,
     );
@@ -58,13 +58,13 @@ void showNotification(title, body, notificationsPlugin, {String previewImage}) a
   } else {
     android = AndroidNotificationDetails(
       'MeltonApp', 'Melton App Notification', 'Recent Post Simple Notification',
-      priority: Priority.High, importance: Importance.Max,
+      priority: Priority.high, importance: Importance.max,
       largeIcon: DrawableResourceAndroidBitmap('app_icon'),
     );
     iOS = IOSNotificationDetails();
   }
 
-  var platform = NotificationDetails(android, iOS);
+  var platform = NotificationDetails(android:android, iOS:iOS);
   await notificationsPlugin.show(
       0, '$title', '$body', platform,
       payload: 'PAYLOAD: $title');

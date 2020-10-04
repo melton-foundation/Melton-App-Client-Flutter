@@ -225,8 +225,7 @@ class ApiService {
     if(response.statusCode == 200 || response.statusCode == 201) {
       List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
       if(jsonResponse.length > 0){
-        DateTime latestDate = jsonResponse[0]['created'].split(".")[0] == jsonResponse[0]['updated'].split(".")[0] ?
-        DateTime.parse(jsonResponse[0]['created']): DateTime.parse(jsonResponse[0]['updated']);
+        DateTime latestDate = DateTime.parse(jsonResponse[0]['created']);
         DateTime now = DateTime.now();
         Duration difference = now.difference(latestDate);
         if(difference.inHours < 24){
