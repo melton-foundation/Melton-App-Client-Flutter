@@ -11,7 +11,7 @@ class WorldCities {
 
   //todo verify latlong of melton cities
   static const Map<String, List<double>> WORLD_CITIES = {
-    "Accra, Ghana":[5.5500,-0.2167],
+    "Accra, Ghana":[5.7500,-0.2167],
     "Bengaluru, India":[12.9650,77.5866],
     "Hangzhou, China":[30.2500,120.1700],
     "Jena, Germany":[50.9304,11.5800],
