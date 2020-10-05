@@ -159,7 +159,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 ),
 
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
-                Text("Melton Batch - the year you got in", style: TextStyle(color: Constants.meltonBlue),),
+                Text("Joined MF in the year", style: TextStyle(color: Constants.meltonBlue),),
                 Row(
                   children: [
                     Icon(FontAwesomeIcons.solidCalendarTimes, color: Colors.grey,),
