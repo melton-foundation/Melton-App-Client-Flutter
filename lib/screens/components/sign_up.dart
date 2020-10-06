@@ -79,7 +79,7 @@ class _SignUpState extends State<SignUp> {
               ),
 
               Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
-              FormTitle("BATCH"),
+              FormTitle("JOINED MF IN"),
               FormSubtitle("The year you got in"),
               DropdownButtonFormField<String>(
                 isExpanded: true,
