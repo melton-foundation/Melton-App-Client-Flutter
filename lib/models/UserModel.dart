@@ -33,7 +33,7 @@ class UserModel {
       bio: json['bio'],
       work: json['work'],
       phoneNumber: PhoneNumber.fromJson(json['phoneNumber']),
-      socialMediaAccounts: SocialMediaAccounts.fromJson(new List<dynamic>.from(json['socialMediaAccounts'])),
+      socialMediaAccounts: json['socialMediaAccounts'] != null ? SocialMediaAccounts.fromJson(new List<dynamic>.from(json['socialMediaAccounts'])) : null,
       SDGs: SDGList.fromJson(new List<int>.from(json['sdgs'])),
       picture: json['picture'],
     );
