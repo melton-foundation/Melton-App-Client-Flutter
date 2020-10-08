@@ -198,6 +198,9 @@ class PhoneNumber {
   PhoneNumber({this.countryCode, this.phoneNumber});
 
   factory PhoneNumber.fromJson(List<dynamic> responsePhoneNumbers) {
+    if (responsePhoneNumbers == null) {
+      return PhoneNumber(countryCode: "", phoneNumber: "");
+    }
     for (int i = 0; i < responsePhoneNumbers.length; i++) {
       try {
         Map<String, String> responsePhoneNumber = new Map<String, String>.from(responsePhoneNumbers[i]);
