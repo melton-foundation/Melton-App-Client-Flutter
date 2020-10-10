@@ -5,6 +5,7 @@ import 'package:melton_app/api/api.dart';
 import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/screens/components/UserProfileInformation.dart';
 import 'package:melton_app/screens/profile_edit.dart';
+import 'package:melton_app/sentry/SentryService.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -57,6 +58,7 @@ class _ProfileState extends State<Profile> {
               );
             }
             if (snapshot.hasError) {
+              SentryService().reportErrorToSentry(error: snapshot.error);
               return Text("${snapshot.error}"); //todo handle correctly
             }
             return Center(child: CircularProgressIndicator());

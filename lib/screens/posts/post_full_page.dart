@@ -5,6 +5,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/constants/constants.dart';
+import 'package:melton_app/sentry/SentryService.dart';
 
 import 'package:melton_app/util/get_human_time.dart';
 import 'package:melton_app/util/url_launch_util.dart';
@@ -40,6 +41,7 @@ class _PostFullPageState extends State<PostFullPage> {
               return _buildMarkdownPost(snapshot);
             }
             if (snapshot.hasError) {
+              SentryService().reportErrorToSentry(error: snapshot.error);
               return Text("${snapshot.error}"); //todo handle correctly
             }
             //todo make fun error screen

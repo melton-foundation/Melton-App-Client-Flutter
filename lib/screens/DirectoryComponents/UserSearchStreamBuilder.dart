@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:melton_app/api/userSearchService.dart';
 import 'package:melton_app/models/UserModel.dart';
 import 'package:melton_app/screens/errors/unknown_error.dart';
+import 'package:melton_app/sentry/SentryService.dart';
 import 'package:melton_app/util/text_util.dart';
 
 import 'UserTilesGrid.dart';
@@ -23,6 +24,7 @@ class UserSearchStreamBuilder extends StatelessWidget {
         stream: searchService.results,
         builder: (context, AsyncSnapshot<List<UserModel>> snapshot) {
           if (snapshot.hasError) {
+            SentryService().reportErrorToSentry(error: snapshot.error);
             //todo test and add everywhere
             return Column(
               children: [

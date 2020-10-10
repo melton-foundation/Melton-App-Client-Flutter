@@ -4,6 +4,7 @@ import 'package:melton_app/api/api.dart';
 
 import 'package:melton_app/models/UserRegisterModel.dart';
 import 'package:melton_app/models/UserRegisterResponseModel.dart';
+import 'package:melton_app/sentry/SentryService.dart';
 
 class UserRegister extends StatefulWidget {
   final UserRegisterModel model;
@@ -43,6 +44,7 @@ class _UserRegisterState extends State<UserRegister> {
           Navigator.pop(context, snapshot.data);
         }
         if (snapshot.hasError) {
+          SentryService().reportErrorToSentry(error: snapshot.error);
           print('user register has error');
           print(snapshot.error);
           Navigator.pop(context, false);
