@@ -5,7 +5,6 @@ class UserRegisterModel {
   int batch;
   String work;
   List<int> SDGs;
-  //todo any other? - that we can just populate with defaults?
 
   UserRegisterModel(String email, String name, String campus, int batch,
       String work, List<int> SDGs) {
