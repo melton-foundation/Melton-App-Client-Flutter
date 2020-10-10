@@ -44,9 +44,9 @@ class SingleSocialMediaEditItem extends StatelessWidget {
             if (value.isNotEmpty && !SocialMedia.isSocialMediaFormatted(_socialMediaKey, value)) {
               if (_socialMediaKey == SocialMedia.OTHER1_KEY ||
                     _socialMediaKey == SocialMedia.OTHER2_KEY) {
-                return "Enter " + SocialMedia.HTTPS + " or " + SocialMedia.HTTP + "...";
+                return "Enter " + SocialMedia.HTTPS + " or " + SocialMedia.HTTP + " or leave blank";//changed
               }
-              return "Enter '" + SocialMedia.HTTPS + SocialMedia.KEY_URL_MAP[_socialMediaKey] + "...'";
+              return "Enter '" + SocialMedia.HTTPS + SocialMedia.KEY_URL_MAP[_socialMediaKey] + " or leave blank'";//changed
             }
             return null;
           },
