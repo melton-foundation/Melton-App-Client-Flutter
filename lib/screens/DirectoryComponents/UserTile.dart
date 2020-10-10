@@ -55,7 +55,7 @@ class UserTile extends StatelessWidget {
 
   testStyleForUserName() {
     return TextStyle(
-      fontSize: 18,
+      fontSize: 16,
       fontWeight: FontWeight.bold,
     );
   }
