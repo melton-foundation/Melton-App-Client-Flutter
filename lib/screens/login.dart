@@ -77,7 +77,6 @@ class _LoginScreenState extends State<LoginScreen> {
       PersistentStorage storage = GetIt.I.get<PersistentStorage>();
       await storage.saveStringToStorage(TokenHandler.APP_TOKEN_KEY, tokenOrUnauthorized.appToken);
       await GetIt.I.get<TokenHandler>().refresh(storage);
-      NotificationBuilder().initWorkmanager();
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
         return MyHomePage();
       }));

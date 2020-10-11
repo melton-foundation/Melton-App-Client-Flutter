@@ -33,14 +33,15 @@ class _DirectoryState extends State<Directory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Constants.directoryBackground,
-        body: Column(
-          children: [
-            UserSearch(searchService: searchService),
-            UserSearchFilters(searchService: searchService),
-            UserSearchedString(searchService: searchService),
-            UserSearchStreamBuilder(searchService: searchService),
-          ],
-        ));
+      backgroundColor: Constants.directoryBackground,
+      body: Column(
+        children: [
+          UserSearch(searchService: searchService),
+          UserSearchFilters(searchService: searchService),
+          UserSearchedString(searchService: searchService),
+          UserSearchStreamBuilder(searchService: searchService),
+        ],
+      )
+    );
   }
 }

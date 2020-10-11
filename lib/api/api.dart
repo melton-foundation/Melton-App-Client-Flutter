@@ -222,17 +222,17 @@ class ApiService {
     print('using appToken $appToken');
     http.Response response = await http.get(apiUrl + "posts/", headers: {"Authorization": "Token " + appToken});
 
-    if(response.statusCode == 200 || response.statusCode == 201) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
-      if(jsonResponse.length > 0){
+      if (jsonResponse.length > 0) {
         DateTime latestDate = DateTime.parse(jsonResponse[0]['created']);
         DateTime now = DateTime.now();
         Duration difference = now.difference(latestDate);
-        if(difference.inHours < 24){
+        if (difference.inHours < 24) {
           String title = jsonResponse[0]['title'];
           String description = jsonResponse[0]['description'];
           String previewImage = jsonResponse[0]['preview'];
-          return new PostsNotificationModel(
+          return PostsNotificationModel(
               showNotification: true,
               title: title,
               description: description,
