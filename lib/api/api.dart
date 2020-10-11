@@ -218,9 +218,9 @@ class ApiService {
     }
   }
 
-  Future<PostsNotificationModel> getRecentPostForNotification(Map<String, dynamic> inputData) async {
-    String url = inputData['url'];
-    http.Response response = await http.get(url + "posts/", headers: {"Authorization": inputData["Authorization"]});
+  Future<PostsNotificationModel> getRecentPostForNotification(String appToken) async {
+    print('using appToken $appToken');
+    http.Response response = await http.get(apiUrl + "posts/", headers: {"Authorization": "Token " + appToken});
 
     if(response.statusCode == 200 || response.statusCode == 201) {
       List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));

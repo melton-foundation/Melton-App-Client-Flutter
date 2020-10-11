@@ -37,6 +37,7 @@ Future<String> getPreviewImagePath(String previewImage) async {
 }
 
 void showNotification(title, body, notificationsPlugin, {String previewImage}) async {
+  print('showNotification');
   var android;
   var iOS;
   if(previewImage != null ){
@@ -70,7 +71,8 @@ void showNotification(title, body, notificationsPlugin, {String previewImage}) a
       payload: 'PAYLOAD: $title');
 }
 
-_downloadAndSaveFile(String url, String fileName) async {
+//todo use types and remove var
+Future<String> _downloadAndSaveFile(String url, String fileName) async {
   var directory = await getApplicationDocumentsDirectory();
   var filePath = '${directory.path}/$fileName';
   var response = await http.get(url);
@@ -84,6 +86,26 @@ class NotificationBuilder {
   static const String WORKMANAGER_NAME = "FetchAndNotifyRecentPosts";
   static const int WORKMANAGER_DURATION_IN_MINUTES = 15;
   static const int WORKMANAGER_DELAY_IN_SECONDS = 15;
+  FlutterLocalNotificationsPlugin _notificationsPlugin;
+
+  void init() {
+    _notificationsPlugin = FlutterLocalNotificationsPlugin();
+    if (Platform.isIOS) {
+      print('in NB, platform is ios');
+      _requestIOSPermissions();
+    }
+  }
+
+  _requestIOSPermissions() {
+    _notificationsPlugin
+        .resolvePlatformSpecificImplementation<
+        IOSFlutterLocalNotificationsPlugin>()
+        .requestPermissions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+  }
 
   initWorkmanager() async{
     WidgetsFlutterBinding.ensureInitialized();
@@ -103,6 +125,22 @@ class NotificationBuilder {
         networkType: NetworkType.connected,
       ),
     );
+  }
+
+  void handleNotification(PostsNotificationModel notificationModel) async {
+    print('handleNotification');
+    String previewImagePath;
+    if (notificationModel.showNotification){
+      previewImagePath = await getPreviewImagePath(notificationModel.previewImage);
+      var android = AndroidInitializationSettings('@mipmap/ic_launcher');
+      var iOS = IOSInitializationSettings();
+      var initSettings = InitializationSettings(android:android, iOS:iOS);
+      _notificationsPlugin.initialize(initSettings);
+      showNotification(notificationModel.title,
+          notificationModel.description, _notificationsPlugin, previewImage: previewImagePath);
+    } else {
+      print("fetch : ApiService failed");
+    }
   }
 
 }

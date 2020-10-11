@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:melton_app/Notification/NotificationBuilder.dart';
 import 'package:melton_app/api/userSearchService.dart';
 import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/screens/DirectoryComponents/UserSearch.dart';
@@ -13,6 +14,15 @@ class Directory extends StatefulWidget {
 
 class _DirectoryState extends State<Directory> {
   final UserSearchService searchService = new UserSearchService();   // make this singleton
+
+  @override
+  void initState() {
+    print('in initstate of directory.dart');
+    NotificationBuilder builder = NotificationBuilder();
+    builder.init();
+    super.initState();
+  }
+
   void dispose(){
     /*TODO : check whether dispose is placed in correct place or not*/
     print('dispose directory');
