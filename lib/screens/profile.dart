@@ -6,7 +6,6 @@ import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/screens/components/UserProfileInformation.dart';
 import 'package:melton_app/screens/profile_edit.dart';
 
-
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();
@@ -18,7 +17,6 @@ class _ProfileState extends State<Profile> {
   bool isProfileUpdated = false;
 
   final Widget empty = Container(width: 0.0, height: 0.0);
-
 
   @override
   void initState() {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:melton_app/Notification/NotificationBuilder.dart';
 
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/models/UserRegistrationStatusModel.dart';

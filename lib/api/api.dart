@@ -236,7 +236,7 @@ class ApiService {
         }
       }
     }
-    return new PostsNotificationModel(showNotification: false);
+    return PostsNotificationModel(showNotification: false);
   }
 
   Future<PostModel> getPostById(int postId) async {

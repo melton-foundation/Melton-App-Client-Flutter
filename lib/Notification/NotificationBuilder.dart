@@ -16,7 +16,7 @@ void showNotification(title, body, notificationsPlugin, {String previewImage}) a
   print('showNotification');
   var android;
   var iOS;
-  if(previewImage != null ){
+  if (previewImage != null) {
     var bigPictureStyleInformation = BigPictureStyleInformation(
       FilePathAndroidBitmap(previewImage),
       contentTitle: '<b>$title</b>',
