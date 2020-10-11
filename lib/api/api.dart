@@ -36,10 +36,6 @@ class ApiService {
     return {"Authorization": token};
   }
 
-  Map<String, String> getUrl(){
-    return {"url": apiUrl};
-  }
-
   Map<String, String> getAuthAndJsonContentHeader() {
     return {
       "Authorization": token,
@@ -220,7 +216,7 @@ class ApiService {
 
   Future<PostsNotificationModel> getRecentPostForNotification(String appToken) async {
     print('using appToken $appToken');
-    http.Response response = await http.get(apiUrl + "posts/", headers: {"Authorization": "Token " + appToken});
+    http.Response response = await http.get(apiUrl + post_preview, headers: {"Authorization": "Token " + appToken});
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
