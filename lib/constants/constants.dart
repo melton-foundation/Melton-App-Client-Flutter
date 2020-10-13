@@ -34,7 +34,8 @@ class Constants {
     900: Color.fromRGBO(0, 66, 119, 1.0),
   });
 
-  static const placeholder_avatar = "assets/profile_avatar_placeholder_256px.png";
+  static const placeholder_avatar =
+      "assets/profile_avatar_placeholder_256px.png";
 
   static const List<String> campuses = [
     "AU / Accra",
@@ -61,25 +62,34 @@ class Constants {
 
   // LinkedHashMap needed to maintain order
   static final Map<int, String> SDGs = new LinkedHashMap.from({
-    1  : "No Poverty",
-    2  : "Zero Hunger",
-    3  : "Good Health and Well-being",
-    4  : "Quality Education",
-    5  : "Gender Equality",
-    6  : "Clean Water and Sanitation",
-    7  : "Affordable and Clean Energy",
-    8  : "Decent Work and Economic Growth",
-    9  : "Industry, Innovation, and Infrastructure",
-    10 : "Reducing Inequality",
-    11 : "Sustainable Cities and Communities",
-    12 : "Responsible Consumption and Production",
-    13 : "Climate Action",
-    14 : "Life Below Water",
-    15 : "Life On Land",
-    16 : "Peace, Justice, and Strong Institutions",
-    17 : "Partnerships for the Goals",
+    1: "No Poverty",
+    2: "Zero Hunger",
+    3: "Good Health and Well-being",
+    4: "Quality Education",
+    5: "Gender Equality",
+    6: "Clean Water and Sanitation",
+    7: "Affordable and Clean Energy",
+    8: "Decent Work and Economic Growth",
+    9: "Industry, Innovation, and Infrastructure",
+    10: "Reducing Inequality",
+    11: "Sustainable Cities and Communities",
+    12: "Responsible Consumption and Production",
+    13: "Climate Action",
+    14: "Life Below Water",
+    15: "Life On Land",
+    16: "Peace, Justice, and Strong Institutions",
+    17: "Partnerships for the Goals",
   });
 
   static const String FILTERS = "FL";
 
+  static const String About = 'About';
+  static const String Contact = 'Contact Us';
+  static const String Privacy = 'Privacy Policy';
+
+  static const List<String> choices = <String>[
+    About,
+    Contact,
+    Privacy,
+  ];
 }
