@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import 'package:melton_app/api/api.dart';
 
 import 'package:melton_app/models/UserRegisterModel.dart';
 import 'package:melton_app/models/UserRegisterResponseModel.dart';
+import 'package:melton_app/sentry/CustomExceptions/CustomExceptions.dart';
 import 'package:melton_app/sentry/SentryService.dart';
 
 class UserRegister extends StatefulWidget {
@@ -44,7 +46,7 @@ class _UserRegisterState extends State<UserRegister> {
           Navigator.pop(context, snapshot.data);
         }
         if (snapshot.hasError) {
-          SentryService().reportErrorToSentry(error: snapshot.error);
+          GetIt.instance.get<SentryService>().reportErrorToSentry(error: UserRegisterException("User Register : ${snapshot.error}"));
           print('user register has error');
           print(snapshot.error);
           Navigator.pop(context, false);

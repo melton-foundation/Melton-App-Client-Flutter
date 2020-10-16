@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import 'package:melton_app/models/StoreModel.dart';
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/constants/constants.dart';
+import 'package:melton_app/sentry/CustomExceptions/CustomExceptions.dart';
 import 'package:melton_app/sentry/SentryService.dart';
 
 class Store extends StatefulWidget {
@@ -111,7 +113,7 @@ class _StoreState extends State<Store> {
               );
             }
             if (snapshot.hasError) {
-              SentryService().reportErrorToSentry(error: snapshot.error);
+              GetIt.instance.get<SentryService>().reportErrorToSentry(error: StoresException("Stores : ${snapshot.error}"));
               return Text("${snapshot.error}"); //todo handle correctly
             }
             //todo make fun error screen

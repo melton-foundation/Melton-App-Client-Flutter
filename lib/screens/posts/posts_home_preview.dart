@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:melton_app/api/api.dart';
+import 'package:melton_app/sentry/CustomExceptions/CustomExceptions.dart';
 import 'package:melton_app/sentry/SentryService.dart';
 import 'package:melton_app/util/get_human_time.dart';
 import 'package:melton_app/models/PostModel.dart';
@@ -36,7 +38,7 @@ class _PostsHomePreviewState extends State<PostsHomePreview> {
           );
         }
         if (snapshot.hasError) {
-          SentryService().reportErrorToSentry(error: snapshot.error);
+          GetIt.instance.get<SentryService>().reportErrorToSentry(error: PostsHomePreviewException("Posts Home Preview : ${snapshot.error}"));
           return Text("${snapshot.error}"); //todo handle correctly
         }
         //todo make fun error screen

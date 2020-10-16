@@ -3,7 +3,11 @@ import 'package:melton_app/util/secrets.dart';
 import 'package:sentry/sentry.dart';
 
 class SentryService {
-  final sentry = SentryClient(dsn: Secrets.SENTRY_CLIENT_DSN);
+  var sentry;
+
+  SentryService(){
+    sentry = SentryClient(dsn: Secrets.SENTRY_CLIENT_DSN);
+  }
 
   getSentryLogger() {
     return sentry;
