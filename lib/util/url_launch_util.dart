@@ -38,3 +38,12 @@ launchTelOrMailtoUrl(String url, bool isTel) async {
     print("could not launch");
   }
 }
+
+launchUrl(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    //todo handle nicely
+    print("error: could not launch $url");
+  }
+}
