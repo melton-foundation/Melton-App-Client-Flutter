@@ -1,10 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/screens/components/UserProfileInformation.dart';
 import 'package:melton_app/screens/profile_edit.dart';
+import 'package:melton_app/sentry/CustomExceptions/CustomExceptions.dart';
+import 'package:melton_app/sentry/SentryService.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -57,6 +60,7 @@ class _ProfileState extends State<Profile> {
               );
             }
             if (snapshot.hasError) {
+              GetIt.instance.get<SentryService>().reportErrorToSentry(error: ProfilesException("Profiles : ${snapshot.error}"));
               return Text("${snapshot.error}"); //todo handle correctly
             }
             return Center(child: CircularProgressIndicator());

@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:melton_app/constants/constants.dart';
-
 import 'package:melton_app/screens/splash.dart';
+import 'package:melton_app/sentry/SentryService.dart';
 import 'package:melton_app/util/service_locator.dart';
 
 // todo optimize imports in all files
@@ -10,7 +13,16 @@ import 'package:melton_app/util/service_locator.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupLocator();
-  runApp(MyApp());
+  var sentry = GetIt.instance.get<SentryService>().getSentryLogger();
+  runZonedGuarded(
+        () => runApp(MyApp()),
+        (error, stackTrace) async {
+      await sentry.captureException(
+        exception: error,
+        stackTrace: stackTrace,
+      );
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
