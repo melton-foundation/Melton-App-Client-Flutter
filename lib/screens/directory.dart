@@ -17,7 +17,6 @@ class _DirectoryState extends State<Directory> {
 
   @override
   void initState() {
-    print('in initstate of directory.dart');
     NotificationBuilder builder = NotificationBuilder();
     builder.init();
     super.initState();

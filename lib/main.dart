@@ -37,7 +37,6 @@ void main() async {
 }
 
 void backgroundFetchHeadlessTask(String taskId) async {
-  print('[BackgroundFetch] Headless event received.' + taskId);
   callbackNotificationChecker(taskId);
   BackgroundFetch.finish(taskId);
 }
@@ -73,7 +72,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     BackgroundFetch.configure(
       BackgroundFetchConfig(
-        minimumFetchInterval: 15, //todo increase in prod
+        minimumFetchInterval: 1380, // 23 hours
         stopOnTerminate: false,
         startOnBoot: true,
         enableHeadless: true,
@@ -83,9 +82,7 @@ class _MyAppState extends State<MyApp> {
         requiresDeviceIdle: false,
         requiredNetworkType: NetworkType.ANY
       ), (String taskId) {callbackNotificationChecker(taskId);}).then((int status) {
-      print('[BackgroundFetch] configure success: $status');
     }).catchError((e) {
-      print('[BackgroundFetch] configure ERROR: $e');
     });
 
     if (!mounted) return;
@@ -95,13 +92,12 @@ class _MyAppState extends State<MyApp> {
 void callbackNotificationChecker(String taskId) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   if (!preferences.containsKey(TokenHandler.APP_TOKEN_KEY)) {
-    print("token not found, finishing background task");
     BackgroundFetch.finish(taskId);
   }
   String appToken = preferences.getString(TokenHandler.APP_TOKEN_KEY);
   PostsNotificationModel postsNotificationModel = await ApiService().getRecentPostForNotification(appToken);
   NotificationBuilder builder = NotificationBuilder();
   builder.init();
-  builder.handleNotification(postsNotificationModel); //todo await needed?
+  await builder.handleNotification(postsNotificationModel);
   BackgroundFetch.finish(taskId);
 }

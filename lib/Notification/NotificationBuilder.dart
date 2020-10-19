@@ -62,7 +62,6 @@ class NotificationBuilder {
   void init() {
     _notificationsPlugin = FlutterLocalNotificationsPlugin();
     if (Platform.isIOS) {
-      print('in NB, platform is ios');
       _requestIOSPermissions();
     }
   }
@@ -78,8 +77,7 @@ class NotificationBuilder {
     );
   }
 
-  void handleNotification(PostsNotificationModel notificationModel) async {
-    print('handleNotification');
+  Future<bool> handleNotification(PostsNotificationModel notificationModel) async {
     String previewImagePath;
     if (notificationModel.showNotification) {
       previewImagePath = await getPreviewImagePath(notificationModel.previewImage);
@@ -89,8 +87,9 @@ class NotificationBuilder {
       _notificationsPlugin.initialize(initSettings);
       showNotification(notificationModel.title,
           notificationModel.description, _notificationsPlugin, previewImage: previewImagePath);
+      return true;
     } else {
-      print("fetch : ApiService failed");
+      return false;
     }
   }
 
