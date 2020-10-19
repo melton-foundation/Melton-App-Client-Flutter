@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/models/UserModel.dart';
 import 'package:melton_app/screens/components/UserProfileInformation.dart';
+import 'package:melton_app/sentry/CustomExceptions/CustomExceptions.dart';
+import 'package:melton_app/sentry/SentryService.dart';
 import 'package:melton_app/util/model_util.dart';
 
 class UserDetails extends StatelessWidget {
@@ -29,6 +32,7 @@ class UserDetails extends StatelessWidget {
               return buildUserDetailsSingleChildScrollView(snapshot.data);
             }
             if (snapshot.hasError) {
+              GetIt.instance.get<SentryService>().reportErrorToSentry(error: UserDetailsException("User Details : ${snapshot.error}"));
               return Text("${snapshot.error}"); //todo handle correctly
             }
             //todo make fun error screen

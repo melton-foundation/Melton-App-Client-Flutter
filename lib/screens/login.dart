@@ -9,9 +9,11 @@ import 'package:melton_app/screens/authorization_wall.dart';
 import 'package:melton_app/util/persistent_storage.dart';
 import 'package:melton_app/screens/main_home.dart';
 import 'package:melton_app/constants/constants.dart';
+import 'package:melton_app/util/text_util.dart';
 import 'package:melton_app/util/token_handler.dart';
 import 'package:melton_app/screens/components/sign_up.dart';
 import 'package:melton_app/screens/splash.dart';
+import 'package:melton_app/util/url_launch_util.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -20,7 +22,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ["email", "profile"]);
-
+  bool privacyPolicyCheckboxValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +43,41 @@ class _LoginScreenState extends State<LoginScreen> {
               Image.asset("assets/errors/welcome_screen.png"),
               WelcomeText("WELCOME TO THE MELTON APP!"),
               WelcomeText("Let's get started!"),
-              WelcomeText("Only Melton Fellows can use this app. "),
-              WelcomeText("Your data is used solely by the Melton Foundation. For more details see: meltonapp.com/privacy"),
+              WelcomeText("Your data is used solely by the Melton Foundation. For more details see:"),
+              InkWell(
+                child: Text("meltonapp.com/privacy", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Constants.meltonBlue)),
+                onTap: () {launchUrlWebview("https://meltonapp.com/privacy");},
+              ),
+              CheckboxListTile(
+                title: WhiteSubtitleText(content: "I have read and accept the Privacy Policy"),
+                value: privacyPolicyCheckboxValue,
+                onChanged: (newValue) {
+                  setState(() {
+                    privacyPolicyCheckboxValue = newValue;
+                  });
+                },
+                controlAffinity: ListTileControlAffinity.leading,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset("assets/google.png"),
-                  RaisedButton(onPressed: () {
-                    triggerLogin();
-                  },
+                  RaisedButton(onPressed: privacyPolicyCheckboxValue ?
+                    () { triggerLogin(); } :
+                    () { showDialog(context: context, builder: (context) {
+                      return AlertDialog(
+                        title: Text("Accept the Privacy Policy"),
+                        content: Text("You need to accept the Privacy Policy to use the app."),
+                        actions: [
+                          FlatButton(
+                            child: Text("OK", style: TextStyle(color: Constants.meltonBlue)),
+                            onPressed: () { Navigator.pop(context); },
+                          ),
+                        ],
+                      );
+                      }
+                      );
+                    },
                   child: Text("SIGN IN WITH GOOGLE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                   color: Constants.meltonBlueAccent,
                   splashColor: Constants.meltonRed,

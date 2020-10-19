@@ -38,7 +38,7 @@ class UserSearchFilters extends StatelessWidget {
                     : Container(),
                 snapshot.data.batchYear.length > 0
                     ? UserFilter(
-                        title: 'Batch Year',
+                        title: 'Joining Year',
                         values: snapshot.data.batchYear,
                         searchService: searchService,
                   alreadySelectedValues: getSelectedValues(snapshot.data.selectedBatchYearFilterValues, snapshot.data.batchYear),

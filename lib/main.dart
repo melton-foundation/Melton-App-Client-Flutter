@@ -1,5 +1,6 @@
 import 'dart:async';
 
+
 import 'package:melton_app/Notification/NotificationBuilder.dart';
 import 'package:melton_app/models/PostsNotificationModel.dart';
 import 'package:melton_app/util/token_handler.dart';
@@ -7,7 +8,6 @@ import 'package:melton_app/util/token_handler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:melton_app/constants/constants.dart';
-
 import 'package:melton_app/screens/splash.dart';
 import 'package:melton_app/util/service_locator.dart';
 
@@ -21,7 +21,16 @@ import 'api/api.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupLocator();
-  runApp(MyApp());
+  var sentry = GetIt.instance.get<SentryService>().getSentryLogger();
+  runZonedGuarded(
+        () => runApp(MyApp()),
+        (error, stackTrace) async {
+      await sentry.captureException(
+        exception: error,
+        stackTrace: stackTrace,
+      );
+    },
+  );
   BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 }
 

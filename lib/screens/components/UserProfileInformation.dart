@@ -86,7 +86,7 @@ List<Widget> getUserDetails({bool isProfileModel, String picture, String name,
     getTelephoneProfileLineItem(phoneNumber, countryCode),
     getEmailProfileLineItem(email),
     getProfileLineItem("CAMPUS", campus.toUpperCase()),
-    getProfileLineItem("BATCH", batch.toString()),
+    getProfileLineItem("JOINED MF IN", batch.toString()),
     getProfileLineItemIfNotNullOrEmpty("CITY", city),
   ];
 }

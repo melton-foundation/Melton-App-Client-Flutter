@@ -25,6 +25,9 @@ dependencies:
   cupertino_icons: ^0.1.3
   rxdart: ^0.24.1
   get_it: ^4.0.4
+  sentry: ">=3.0.0 <4.0.0"
+  hexcolor: ^1.0.6
+  mailto: ^1.0.0
 
 dev_dependencies:
   flutter_test:
