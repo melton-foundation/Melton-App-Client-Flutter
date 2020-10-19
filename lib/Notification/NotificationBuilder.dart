@@ -26,7 +26,7 @@ void showNotification(title, body, notificationsPlugin, {String previewImage}) a
     );
     android = AndroidNotificationDetails(
       'MeltonApp', 'Melton App Notification', 'Recent Post Simple Notification',
-      priority: Priority.high, importance: Importance.max,
+      priority: Priority.High, importance: Importance.Max,
       largeIcon: DrawableResourceAndroidBitmap('app_icon'),
       styleInformation: bigPictureStyleInformation,
     );
@@ -35,13 +35,13 @@ void showNotification(title, body, notificationsPlugin, {String previewImage}) a
   } else {
     android = AndroidNotificationDetails(
       'MeltonApp', 'Melton App Notification', 'Recent Post Simple Notification',
-      priority: Priority.high, importance: Importance.max,
+      priority: Priority.High, importance: Importance.Max,
       largeIcon: DrawableResourceAndroidBitmap('app_icon'),
     );
     iOS = IOSNotificationDetails();
   }
 
-  var platform = NotificationDetails(android:android, iOS:iOS);
+  var platform = NotificationDetails(android, iOS);
   await notificationsPlugin.show(
       0, '$title', '$body', platform,
       payload: 'PAYLOAD: $title');
@@ -85,7 +85,7 @@ class NotificationBuilder {
       previewImagePath = await getPreviewImagePath(notificationModel.previewImage);
       var android = AndroidInitializationSettings('@mipmap/ic_launcher');
       var iOS = IOSInitializationSettings();
-      var initSettings = InitializationSettings(android:android, iOS:iOS);
+      var initSettings = InitializationSettings(android, iOS);
       _notificationsPlugin.initialize(initSettings);
       showNotification(notificationModel.title,
           notificationModel.description, _notificationsPlugin, previewImage: previewImagePath);
