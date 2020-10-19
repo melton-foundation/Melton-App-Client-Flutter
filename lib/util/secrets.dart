@@ -1,3 +1,3 @@
 class Secrets {
-  static const GOOGLE_OAUTH_CLIENT_ID = "add here";
+  static const SENTRY_CLIENT_DSN = "ADD_SENTRY_DSN_KEY_HERE";
 }

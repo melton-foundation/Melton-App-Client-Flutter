@@ -34,6 +34,18 @@ class Constants {
     900: Color.fromRGBO(0, 66, 119, 1.0),
   });
 
+  static const APPBAR_ABOUT = "About";
+  static const APPBAR_PRIVACY_POLICY = "Privacy Policy";
+  static const APPBAR_HELP = "Help";
+
+  static const MELTON_PRIVACY_POLICY_URL = "https://meltonapp.com/privacy";
+  static const MELTON_LINKEDIN_URL = "https://www.linkedin.com/company/meltonfoundation/";
+  static const MELTON_FACEBOOK_URL = "https://www.facebook.com/meltonfoundation";
+  static const MELTON_INSTAGRAM_URL = "https://www.instagram.com/meltonfoundation/";
+  static const MELTON_TWITTER_URL = "https://twitter.com/MFGlobalCitizen";
+  static const MELTON_YOUTUBE_URL = "https://www.youtube.com/user/TheMeltonFoundation";
+  static const MELTON_WEBSITE_URL = "https://meltonfoundation.org/";
+
   static const placeholder_avatar = "assets/profile_avatar_placeholder_256px.png";
 
   static const List<String> campuses = [
@@ -46,6 +58,18 @@ class Constants {
     "Westmar University",
     "Other"
   ];
+
+  static const List<String> meltonCities = [
+    "Accra, Ghana",
+    "Bengaluru, India",
+    "Hangzhou, China",
+    "Jena, Germany",
+    "New Orleans, United States",
+    "Temuco, Chile",
+  ];
+
+  static const int MIN_SDG_CODE = 1;
+  static const int MAX_SDG_CODE = 17;
 
   // LinkedHashMap needed to maintain order
   static final Map<int, String> SDGs = new LinkedHashMap.from({
@@ -67,5 +91,7 @@ class Constants {
     16 : "Peace, Justice, and Strong Institutions",
     17 : "Partnerships for the Goals",
   });
+
+  static const String FILTERS = "FL";
 
 }

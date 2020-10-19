@@ -45,7 +45,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       appBar: AppBar(title: Text("Edit Your Profile")),
       body: Form(
         key: _formKey,
-        autovalidate: true,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(
@@ -53,7 +53,7 @@ class _ProfileEditState extends State<ProfileEdit> {
               children: [
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
                 TextFormField(
-                  maxLength: 60,
+                  maxLength: 100,
                   initialValue: widget.initialModel.name,
                   validator: (value) {
                     if (value.isEmpty) {
@@ -69,6 +69,21 @@ class _ProfileEditState extends State<ProfileEdit> {
                     labelText: "Name",
                     icon: Icon(Icons.account_box),
                   ),
+                ),
+
+                Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
+                TextFormField(
+                  initialValue: widget.initialModel.bio,
+                  maxLines: 3,
+                  maxLength: 200,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Bio - the story of your life",
+                    icon: Icon(Icons.movie_filter),
+                  ),
+                  onSaved: (String newValue) {
+                    _model.bio = newValue;
+                  },
                 ),
 
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
@@ -144,7 +159,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 ),
 
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
-                Text("Melton Batch - the year you got in", style: TextStyle(color: Constants.meltonBlue),),
+                Text("Joined MF in the year", style: TextStyle(color: Constants.meltonBlue),),
                 Row(
                   children: [
                     Icon(FontAwesomeIcons.solidCalendarTimes, color: Colors.grey,),
@@ -266,6 +281,18 @@ class _ProfileEditState extends State<ProfileEdit> {
                       _model.SDGs = _sdgModel;
                       ApiService().postProfile(_model).then((value) => widget.profileRefreshFunction());
                       Navigator.pop(context, true);
+                    } else {
+                      showDialog(context: context, builder: (context) {
+                        return AlertDialog(
+                          title: Text("Oops"),
+                          content: Text("Fix the errors.\n\nProtip: Look for the red stuff"),
+                          actions: [
+                            FlatButton(
+                              child: Text("OK", style: TextStyle(color: Constants.meltonBlue)),
+                              onPressed: () { Navigator.pop(context); },
+                            ),
+                          ],);
+                      });
                     }
                   },
                 ),
@@ -345,6 +372,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       city: validateCityAndCountry(initialModel.city, false),
       country: validateCityAndCountry(initialModel.city, true),
       batch: initialModel.batch,
+      bio: initialModel.bio,
       work: initialModel.work,
       phoneNumber: phoneModel,
       socialMediaAccounts: socialModel,
@@ -358,10 +386,10 @@ class _ProfileEditState extends State<ProfileEdit> {
       return "";
     } else {
       if (getCountry) {
-        return profileCity.split(",")[0];
+        return profileCity.split(",")[1];
       } else {
         // getCity
-        return profileCity.split(",")[1];
+        return profileCity.split(",")[0];
       }
     }
   }

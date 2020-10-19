@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:melton_app/api/api.dart';
+import 'package:melton_app/sentry/SentryService.dart';
 import 'package:melton_app/util/persistent_storage.dart';
 import 'package:melton_app/util/token_handler.dart';
 
@@ -21,6 +22,10 @@ Future<void> setupLocator() async {
   });
 
   locator.registerSingleton<ApiService>(ApiService());
+
+  await locator.allReady();
+
+  locator.registerSingleton<SentryService>(SentryService());
 
   await locator.allReady();
 }

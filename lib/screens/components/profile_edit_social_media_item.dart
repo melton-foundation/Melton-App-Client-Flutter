@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/models/ProfileModel.dart';
 import 'package:melton_app/util/social_media.dart';
 
@@ -41,18 +38,22 @@ class SingleSocialMediaEditItem extends StatelessWidget {
     return Column(
       children: [
         TextFormField(
-          initialValue: SocialMedia.getSocialMediaAccount(_accounts, _socialMediaKey),
-          autovalidate: true,
+          initialValue: SocialMedia.getSocialMediaAccountOrPlaceholder(_accounts, _socialMediaKey),
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) {
             if (value.isNotEmpty && !SocialMedia.isSocialMediaFormatted(_socialMediaKey, value)) {
-              return "Start with '" + SocialMedia.KEY_URL_MAP[_socialMediaKey] + "...'";
+              if (_socialMediaKey == SocialMedia.OTHER1_KEY ||
+                    _socialMediaKey == SocialMedia.OTHER2_KEY) {
+                return "Enter " + SocialMedia.HTTPS + " or " + SocialMedia.HTTP + "...";
+              }
+              return "Enter '" + SocialMedia.HTTPS + SocialMedia.KEY_URL_MAP[_socialMediaKey] + "...'";
             }
             return null;
           },
           onSaved: (String newValue) {
             SocialMedia.setSocialMediaAccount(_accounts, _socialMediaKey, newValue);
           },
-          maxLength: 60,
+          maxLength: 100,
           decoration: SocialMedia.getInputDecorationFromKey(_socialMediaKey),
         ),
         SizedBox(height: 10,),

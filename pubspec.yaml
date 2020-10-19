@@ -22,16 +22,23 @@ dependencies:
   rxdart: ^0.24.1
   get_it: ^4.0.4
   sign_in_with_apple: ^2.5.2
+  flutter_local_notifications: ^1.4.4+4
+  background_fetch: ^0.6.0
+  path_provider: ^1.6.18
+  google_maps_flutter: ^1.0.0
+  sentry: ">=3.0.0 <4.0.0"
+  hexcolor: ^1.0.6
+  mailto: ^1.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 flutter:
-
   uses-material-design: true
 
   assets:
     - assets/.
     - assets/UN_SDG/.
     - assets/errors/.
+    - assets/maps/.

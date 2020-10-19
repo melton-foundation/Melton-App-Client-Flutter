@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:melton_app/constants/constants.dart';
+import 'package:melton_app/screens/about.dart';
 
 import 'package:melton_app/screens/login.dart';
 import 'package:melton_app/screens/profile.dart';
 import 'package:melton_app/screens/directory.dart';
 import 'package:melton_app/screens/home.dart';
 import 'package:melton_app/screens/authorization_wall.dart';
+import 'package:mailto/mailto.dart';
+import 'package:melton_app/util/url_launch_util.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -18,8 +21,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  int _currentScreenIndex = 2;
+  int _currentScreenIndex = 1;
 
   final screens = [
     Directory(),
@@ -28,6 +30,13 @@ class _MyHomePageState extends State<MyHomePage> {
     LoginScreen(),
     AuthorizationWall()
   ];
+
+  final supportMailto = Mailto(
+    to: ["meltonapp.mf@gmail.com"],
+    cc: ["bijapurpranav@gmail.com", "larsd.mf@gmail.com"],
+    subject: "Melton App: quick question",
+    body: "Hey there! ",
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +54,23 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         backgroundColor: Colors.white,
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            onSelected: handleChoice,
+            icon: Icon(
+              Icons.more_vert,
+              color: Constants.meltonRedYellowGreen[_currentScreenIndex],
+            ),
+            itemBuilder: (BuildContext context) {
+              return <String>[Constants.APPBAR_ABOUT, Constants.APPBAR_HELP, Constants.APPBAR_PRIVACY_POLICY].map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          )
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentScreenIndex,
@@ -78,5 +104,22 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: screens[_currentScreenIndex],
     );
+  }
+
+  void handleChoice(String choice) async {
+    switch (choice) {
+      case Constants.APPBAR_ABOUT:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => About()),
+        );
+        break;
+      case Constants.APPBAR_HELP:
+        await launchUrl("$supportMailto"); //todo ios test on real device
+        break;
+      case Constants.APPBAR_PRIVACY_POLICY:
+        await launchUrl(Constants.MELTON_PRIVACY_POLICY_URL);
+        break;
+    }
   }
 }

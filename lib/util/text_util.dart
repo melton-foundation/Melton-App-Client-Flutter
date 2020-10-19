@@ -70,3 +70,20 @@ class BlackSubtitleText extends StatelessWidget {
     );
   }
 }
+
+class BlackSubSubtitleText extends StatelessWidget {
+  final String content;
+
+  BlackSubSubtitleText({this.content});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(content,
+      style: TextStyle(
+          fontSize: 14,
+          color: Colors.black,
+          fontWeight: FontWeight.bold
+      ),
+    );
+  }
+}

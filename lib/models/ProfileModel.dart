@@ -1,3 +1,5 @@
+import 'package:melton_app/util/model_util.dart';
+import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/util/social_media.dart';
 
 class ProfileModel {
@@ -9,6 +11,7 @@ class ProfileModel {
   String city;
   String country;
   int batch;
+  String bio;
   String work;
   PhoneNumber phoneNumber;
   SocialMediaAccounts socialMediaAccounts;
@@ -16,7 +19,7 @@ class ProfileModel {
   String picture;
 
   ProfileModel({this.email, this.name, this.isJuniorFellow, this.points,
-  this.campus, this.city, this.country, this.batch, this.work, this.phoneNumber,
+  this.campus, this.city, this.country, this.batch, this.bio, this.work, this.phoneNumber,
   this.socialMediaAccounts, this.SDGs, this.picture});
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -28,6 +31,7 @@ class ProfileModel {
       campus: json['profile']['campus'],
       city: validateCity(json['profile']['city'], json['profile']['country']),
       batch: json['profile']['batch'],
+      bio: json['profile']['bio'],
       work: json['profile']['work'],
       phoneNumber: PhoneNumber.fromJson(json['profile']['phoneNumber']),
       socialMediaAccounts: SocialMediaAccounts.fromJson(new List<dynamic>.from(json['profile']['socialMediaAccounts'])),
@@ -36,13 +40,7 @@ class ProfileModel {
     );
   }
 
-  static String validateCity(String city, String country) {
-    if (city.length == 0 && country.length == 0) {
-      return "";
-    } else {
-      return city + ", " + country;
-    }
-  }
+  
 
   //todo handle null and required fields
   static Map<String, dynamic> toJson(ProfileModel model) {
@@ -52,6 +50,7 @@ class ProfileModel {
       "city": model.city,
       "country": model.country,
       "batch": model.batch,
+      "bio": model.bio,
       "work": model.work,
       "phoneNumber": PhoneNumber.toJson(model.phoneNumber),
       "socialMediaAccounts": SocialMediaAccounts.toJson(model.socialMediaAccounts),
@@ -79,7 +78,9 @@ class SDGList {
       return SDGList(sdg_list);
     }
     for (int i = 0; i < responseSDGs.length && i < 3; i++) {
-      sdg_list[i] = responseSDGs[i].toInt();
+      if (responseSDGs[i].toInt() >= Constants.MIN_SDG_CODE && responseSDGs[i].toInt() <= Constants.MAX_SDG_CODE) {
+        sdg_list[i] = responseSDGs[i].toInt();
+      }
     }
     return SDGList(sdg_list);
   }
@@ -197,6 +198,9 @@ class PhoneNumber {
   PhoneNumber({this.countryCode, this.phoneNumber});
 
   factory PhoneNumber.fromJson(List<dynamic> responsePhoneNumbers) {
+    if (responsePhoneNumbers == null) {
+      return PhoneNumber(countryCode: "", phoneNumber: "");
+    }
     for (int i = 0; i < responsePhoneNumbers.length; i++) {
       try {
         Map<String, String> responsePhoneNumber = new Map<String, String>.from(responsePhoneNumbers[i]);

@@ -1,9 +1,8 @@
 import 'package:url_launcher/url_launcher.dart';
 
-//todo test on android and ios
 void launchUrlWebview(String url) async {
   if (await canLaunch(url)) {
-    launch(url);
+    launch(url, forceSafariVC: true, forceWebView: false);
   } else {
     print("could not launch $url");
   }
@@ -37,5 +36,14 @@ launchTelOrMailtoUrl(String url, bool isTel) async {
   } else {
     //todo handle nicely
     print("could not launch");
+  }
+}
+
+launchUrl(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    //todo handle nicely
+    print("error: could not launch $url");
   }
 }

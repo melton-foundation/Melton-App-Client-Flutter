@@ -71,7 +71,7 @@ Widget getUserImpactPoints(int points) {
 
 List<Widget> getUserDetails({bool isProfileModel, String picture, String name,
   bool isJuniorFellow, int points, SocialMediaAccounts socialMediaAccounts,
-  String work, SDGList SDGs, String phoneNumber, String countryCode,
+  String bio, String work, SDGList SDGs, String phoneNumber, String countryCode,
   String campus, int batch, String city, String email}){
   return [
     SizedBox(height: 10.0),
@@ -80,12 +80,13 @@ List<Widget> getUserDetails({bool isProfileModel, String picture, String name,
     Center(child: JFBadge(isJF: isJuniorFellow)),
     getUserImpactPoints(points),
     getUserSocialMediaDetails(socialMediaAccounts),
+    getProfileLineItemIfNotNullOrEmpty("BIO", bio),
     getProfileLineItemIfNotNullOrEmpty("WORK", work),
     getUsersSDGInfo(SDGs),
     getTelephoneProfileLineItem(phoneNumber, countryCode),
     getEmailProfileLineItem(email),
     getProfileLineItem("CAMPUS", campus.toUpperCase()),
-    getProfileLineItem("BATCH", batch.toString()),
+    getProfileLineItem("JOINED MF IN", batch.toString()),
     getProfileLineItemIfNotNullOrEmpty("CITY", city),
   ];
 }

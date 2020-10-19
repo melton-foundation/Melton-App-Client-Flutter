@@ -15,6 +15,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
+  bool reload = false;
+
   @override
   void initState() {
     isLoggedIn();
@@ -42,9 +44,13 @@ class _SplashScreenState extends State<SplashScreen> {
     bool isInternetConnected = await GetIt.I.get<ApiService>().checkNetworkConnectivity();
 
     if (!isInternetConnected) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+      reload = await Navigator.push(context, MaterialPageRoute(builder: (_) {
         return NoInternet();
       }));
+      if (reload) {
+        //todo check warning
+        isLoggedIn();
+      }
     }
 
     bool isAppTokenValid = await GetIt.I.get<ApiService>().verifyAppTokenValid();

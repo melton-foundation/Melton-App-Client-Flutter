@@ -25,7 +25,7 @@ class _SignUpState extends State<SignUp> {
         padding: const EdgeInsets.all(8.0),
         child: Form(
           key: _formKey,
-          autovalidate: true,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: [
               Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
@@ -79,7 +79,7 @@ class _SignUpState extends State<SignUp> {
               ),
 
               Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
-              FormTitle("BATCH"),
+              FormTitle("JOINED MF IN"),
               FormSubtitle("The year you got in"),
               DropdownButtonFormField<String>(
                 isExpanded: true,
@@ -127,25 +127,59 @@ class _SignUpState extends State<SignUp> {
                     if (response.isUserExists != null && response.isUserExists) {
                       dialogShown = true;
                       showDialog(context: context, builder: (context) {
-                        return AlertDialog(title: Text("USER EXISTS!"),
-                          content: Text("Try signing in with the same email."),);
+                        return AlertDialog(
+                          title: Text("USER EXISTS!"),
+                          content: Text("Try signing in with the same email."),
+                          actions: [
+                            FlatButton(
+                              child: Text("COOL", style: TextStyle(color: Constants.meltonBlue)),
+                              onPressed: () { Navigator.popUntil(context, (route) => route.isFirst); },
+                            ),
+                          ],
+                        );
                       });
                     } else if (response.emailMessage != null) {
                       dialogShown = true;
                       showDialog(context: context, builder: (context) {
-                        return AlertDialog(title: Text(response.emailMessage),);
+                        return AlertDialog(
+                          title: Text(response.emailMessage),
+                          actions: [
+                            FlatButton(
+                              child: Text("OK", style: TextStyle(color: Constants.meltonBlue)),
+                              onPressed: () { Navigator.pop(context); },
+                            ),
+                          ],
+                        );
                       });
                     }
                     if (response.isSuccess) {
                       dialogShown = true;
                       showDialog(context: context, builder: (context) {
-                        return AlertDialog(title: Text("SUCCESS! YOU CAN SIGN IN!"),);
+                        return AlertDialog(
+                          title: Text("SUCCESS!"),
+                          content: Text("We will approve you soon. Try signing in later :)"),
+                          actions: [
+                            FlatButton(
+                              child: Text("COOL", style: TextStyle(color: Constants.meltonBlue)),
+                              onPressed: () { Navigator.popUntil(context, (route) => route.isFirst); },
+                            ),
+                          ],
+                        );
                       });
                     }
 
                     if (!dialogShown) {
                       showDialog(context: context, builder: (context) {
-                        return AlertDialog(title: Text("OOPS!"), content: Text("Something went wrong. Try again :("),);
+                        return AlertDialog(
+                          title: Text("OOPS!"),
+                          content: Text("Something went wrong. Try again :("),
+                          actions: [
+                            FlatButton(
+                              child: Text("OK", style: TextStyle(color: Constants.meltonBlue)),
+                              onPressed: () { Navigator.pop(context); },
+                            ),
+                          ],
+                          );
                       });
                     }
 
@@ -154,7 +188,15 @@ class _SignUpState extends State<SignUp> {
                     print(response.emailMessage);
                   } else {
                     return showDialog(context: context, builder: (context) {
-                      return AlertDialog(title: FormTitle("FILL IN THE MISSING FIELDS"),);
+                      return AlertDialog(
+                        title: FormTitle("FILL IN THE MISSING FIELDS"),
+                        actions: [
+                          FlatButton(
+                            child: Text("OK", style: TextStyle(color: Constants.meltonBlue)),
+                            onPressed: () { Navigator.pop(context); },
+                          ),
+                        ],
+                      );
                     });
                   }
                 },
@@ -169,7 +211,7 @@ class _SignUpState extends State<SignUp> {
                 }
               ),
 
-              SizedBox(height: 200,),
+              SizedBox(height: 400,),
 
             ],
           ),
