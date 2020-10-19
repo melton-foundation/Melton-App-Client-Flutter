@@ -15,6 +15,7 @@ import 'package:melton_app/util/text_util.dart';
 import 'package:melton_app/util/token_handler.dart';
 import 'package:melton_app/screens/components/sign_up.dart';
 import 'package:melton_app/screens/splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:melton_app/util/url_launch_util.dart';
 
@@ -125,8 +126,17 @@ class _LoginScreenState extends State<LoginScreen> {
       print(credential);
       print(credential.email);
       print(credential.authorizationCode);
-
-      tokenOrUnauthorized = await ApiService().getAppToken(credential.email, credential.authorizationCode, "APPLE");
+      String appleEmail;
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      if (credential.email == null) {
+        print('getting appleEmail from storage');
+        appleEmail = preferences.getString("appleEmail");
+      } else {
+        print('saving ${credential.email} to storage');
+        await preferences.setString("appleEmail", credential.email);
+        appleEmail = credential.email;
+      }
+      tokenOrUnauthorized = await ApiService().getAppToken(appleEmail, credential.authorizationCode, "APPLE");
     }
     if (tokenOrUnauthorized?.appToken != null) {
       PersistentStorage storage = GetIt.I.get<PersistentStorage>();
