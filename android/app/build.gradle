@@ -43,6 +43,10 @@ android {
         disable 'InvalidPackage'
     }
 
+    configurations {
+        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+    }
+
     defaultConfig {
         applicationId "com.melton_app"
         minSdkVersion 16
@@ -71,4 +75,6 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }

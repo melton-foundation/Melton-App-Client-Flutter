@@ -21,8 +21,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  int _currentScreenIndex = 2;
+  int _currentScreenIndex = 1;
 
   final screens = [
     Directory(),

@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:get_it/get_it.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:melton_app/models/PostsNotificationModel.dart';
 
 import 'package:melton_app/util/token_handler.dart';
 
@@ -211,6 +212,31 @@ class ApiService {
       // todo show error msg snackbar
       print("request failed, server is being cranky :(");
     }
+  }
+
+  Future<PostsNotificationModel> getRecentPostForNotification(String appToken) async {
+    print('using appToken $appToken');
+    http.Response response = await http.get(apiUrl + post_preview, headers: {"Authorization": "Token " + appToken});
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      List<dynamic> jsonResponse = json.decode(utf8.decode(response.bodyBytes));
+      if (jsonResponse.length > 0) {
+        DateTime latestDate = DateTime.parse(jsonResponse[0]['created']);
+        DateTime now = DateTime.now();
+        Duration difference = now.difference(latestDate);
+        if (difference.inHours < 24) {
+          String title = jsonResponse[0]['title'];
+          String description = jsonResponse[0]['description'];
+          String previewImage = jsonResponse[0]['preview'];
+          return PostsNotificationModel(
+              showNotification: true,
+              title: title,
+              description: description,
+              previewImage: previewImage);
+        }
+      }
+    }
+    return PostsNotificationModel(showNotification: false);
   }
 
   Future<PostModel> getPostById(int postId) async {
