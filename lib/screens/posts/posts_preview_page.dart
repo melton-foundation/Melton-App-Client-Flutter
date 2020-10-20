@@ -18,7 +18,7 @@ class PostsPreviewPage extends StatefulWidget {
 }
 
 class _PostsPreviewPageState extends State<PostsPreviewPage> {
-  Future<List<PostModel>> _model = ApiService().getPostPreviewList(false);
+  Future<List<PostModel>> _model = GetIt.instance.get<ApiService>().getPostPreviewList(false);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,6 @@ class _PostsPreviewPageState extends State<PostsPreviewPage> {
         return Center(child: CircularProgressIndicator());
         }
         if (snapshot.hasData) {
-        //todo make a nice widget for no /posts - like "all caught up!"
         return snapshot.data.length == 0 ? Container() : ListView.builder(itemCount: snapshot.data.length,
         itemBuilder: (BuildContext context, int index) {
           return postPreviewCard(context, snapshot.data[index]);
