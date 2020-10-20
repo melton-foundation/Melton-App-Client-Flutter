@@ -91,9 +91,21 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Platform.isIOS ?
               SignInWithAppleButton(
-                onPressed: () async {
-                  triggerLogin(false);
-                  },
+                onPressed: privacyPolicyCheckboxValue ? () async {triggerLogin(false);} :
+                    () { showDialog(context: context, builder: (context) {
+                  return AlertDialog(
+                    title: Text("Accept the Privacy Policy"),
+                    content: Text("You need to accept the Privacy Policy to use the app."),
+                    actions: [
+                      FlatButton(
+                        child: Text("OK", style: TextStyle(color: Constants.meltonBlue)),
+                        onPressed: () { Navigator.pop(context); },
+                      ),
+                    ],
+                  );
+                }
+                );
+                },
               ) : empty,
               RaisedButton(onPressed: () {
                 triggerRegister();
