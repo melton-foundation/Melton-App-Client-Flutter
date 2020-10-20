@@ -38,27 +38,38 @@ class SingleSocialMediaEditItem extends StatelessWidget {
     return Column(
       children: [
         TextFormField(
-          initialValue: SocialMedia.getSocialMediaAccountOrPlaceholder(_accounts, _socialMediaKey),
+          initialValue: SocialMedia.getSocialMediaAccountOrPlaceholder(
+              _accounts, _socialMediaKey),
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) {
-            if (value.isNotEmpty && !SocialMedia.isSocialMediaFormatted(_socialMediaKey, value)) {
+            if (value.isNotEmpty &&
+                !SocialMedia.isSocialMediaFormatted(_socialMediaKey, value)) {
               if (_socialMediaKey == SocialMedia.OTHER1_KEY ||
-                    _socialMediaKey == SocialMedia.OTHER2_KEY) {
-                return "Enter " + SocialMedia.HTTPS + " or " + SocialMedia.HTTP + "...";
+                  _socialMediaKey == SocialMedia.OTHER2_KEY) {
+                return "Start with " +
+                    SocialMedia.HTTPS +
+                    " or " +
+                    SocialMedia.HTTP +
+                    "...";
               }
-              return "Enter '" + SocialMedia.HTTPS + SocialMedia.KEY_URL_MAP[_socialMediaKey] + "...'";
+              return "Start with '" +
+                  SocialMedia.HTTPS +
+                  SocialMedia.KEY_URL_MAP[_socialMediaKey] +
+                  "...'";
             }
             return null;
           },
           onSaved: (String newValue) {
-            SocialMedia.setSocialMediaAccount(_accounts, _socialMediaKey, newValue);
+            SocialMedia.setSocialMediaAccount(
+                _accounts, _socialMediaKey, newValue);
           },
           maxLength: 100,
           decoration: SocialMedia.getInputDecorationFromKey(_socialMediaKey),
         ),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
       ],
     );
   }
 }
-
