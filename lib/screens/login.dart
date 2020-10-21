@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Constants.meltonGreenAccent, Constants.meltonYellowAccent]//, Constants.meltonBlueAccent, Constants.meltonGreenAccent],
+            colors: [Constants.meltonGreenAccent, Constants.meltonYellowAccent]
           ),
         ),
         child: Padding(
