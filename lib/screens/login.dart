@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Image.asset("assets/errors/welcome_screen.png"),
               WelcomeText("WELCOME TO THE MELTON APP!"),
-              WelcomeText("Let's get started!"),
+              WelcomeText("You can Sign In with a Melton-registered email or Sign Up to get started!"),
               InkWell(
                 child: Text("meltonapp.com/privacy", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Constants.meltonBlue)),
                 onTap: () {launchUrlWebview("https://meltonapp.com/privacy");},
@@ -85,7 +85,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   child: Text("SIGN IN WITH GOOGLE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                   color: Constants.meltonBlueAccent,
-                  splashColor: Constants.meltonRed,
                   ),
                 ],
               ),
@@ -112,7 +111,6 @@ class _LoginScreenState extends State<LoginScreen> {
               },
                 child: Text("SIGN UP", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                 color: Constants.meltonBlue,
-                splashColor: Constants.meltonYellow,
               ),
             ],
           ),
@@ -132,9 +130,6 @@ class _LoginScreenState extends State<LoginScreen> {
           AppleIDAuthorizationScopes.fullName,
         ],
       );
-      // TODO email and full name are only sent the first time. save it?
-      // what about new device?
-      // just mark this as enhancement and lave for later?
       print(credential);
       print(credential.email);
       print(credential.authorizationCode);
@@ -142,10 +137,10 @@ class _LoginScreenState extends State<LoginScreen> {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       if (credential.email == null) {
         print('getting appleEmail from storage');
-        appleEmail = preferences.getString("appleEmail");
+        appleEmail = preferences.getString(TokenHandler.APPLE_EMAIL_KEY);
       } else {
         print('saving ${credential.email} to storage');
-        await preferences.setString("appleEmail", credential.email);
+        await preferences.setString(TokenHandler.APPLE_EMAIL_KEY, credential.email);
         appleEmail = credential.email;
       }
       tokenOrUnauthorized = await ApiService().getAppToken(appleEmail, credential.authorizationCode, "APPLE");
