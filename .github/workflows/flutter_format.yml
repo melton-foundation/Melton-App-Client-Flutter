@@ -6,7 +6,7 @@ on:
     branches: [ master ]
 
 jobs:
-  format_and_analyze:
+  flutter_format:
 
     runs-on: ubuntu-latest
 
