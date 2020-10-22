@@ -35,14 +35,6 @@ class _UserRegisterState extends State<UserRegister> {
           );
         }
         if (snapshot.hasData) {
-          print('user register success');
-          print(snapshot.data.isSuccess);
-          print(snapshot.data.isUserExists);
-          print(snapshot.data.emailMessage);
-          //todo remove future.delayed from everywhere?
-          Future.delayed(Duration(seconds: 2));
-          //todo make model and confirm if user exists
-          print("popping user register");
           Navigator.pop(context, snapshot.data);
         }
         if (snapshot.hasError) {
