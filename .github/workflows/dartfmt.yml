@@ -1,4 +1,4 @@
-name: Dart CI
+name: dartfmt CI
 
 on:
   push:
@@ -16,8 +16,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install dependencies
-      run: pub get
+#     - name: Install dependencies
+#       run: pub get
     - name: Do dartfmt dry-run
       run: dartfmt -n ./ > $DARTFMT_OUTPUT
     - name: Check for non-compliant files
