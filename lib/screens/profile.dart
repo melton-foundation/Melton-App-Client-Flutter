@@ -29,7 +29,7 @@ class _ProfileState extends State<Profile> {
   }
 
   loadProfile() async {
-    ApiService().getProfile().then((res) async {
+    GetIt.instance.get<ApiService>().getProfile().then((res) async {
       _streamController.add(res);
     });
   }
