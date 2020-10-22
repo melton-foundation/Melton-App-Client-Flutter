@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'dart:io' show Platform;
+
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -13,6 +15,8 @@ import 'package:melton_app/util/text_util.dart';
 import 'package:melton_app/util/token_handler.dart';
 import 'package:melton_app/screens/components/sign_up.dart';
 import 'package:melton_app/screens/splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:melton_app/util/url_launch_util.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,6 +26,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ["email", "profile"]);
+
+  final Widget empty = Container(width: 0.0, height: 0.0);
   bool privacyPolicyCheckboxValue = false;
 
   @override
@@ -32,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Constants.meltonYellowAccent, Constants.meltonGreenAccent]//, Constants.meltonBlueAccent, Constants.meltonGreenAccent],
+            colors: [Constants.meltonGreenAccent, Constants.meltonYellowAccent]
           ),
         ),
         child: Padding(
@@ -42,8 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Image.asset("assets/errors/welcome_screen.png"),
               WelcomeText("WELCOME TO THE MELTON APP!"),
-              WelcomeText("Let's get started!"),
-              WelcomeText("Your data is used solely by the Melton Foundation. For more details see:"),
+              WelcomeText("You can Sign In with a Melton-registered email or Sign Up to get started!"),
               InkWell(
                 child: Text("meltonapp.com/privacy", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Constants.meltonBlue)),
                 onTap: () {launchUrlWebview("https://meltonapp.com/privacy");},
@@ -63,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Image.asset("assets/google.png"),
                   RaisedButton(onPressed: privacyPolicyCheckboxValue ?
-                    () { triggerLogin(); } :
+                    () { triggerLogin(true); } :
                     () { showDialog(context: context, builder: (context) {
                       return AlertDialog(
                         title: Text("Accept the Privacy Policy"),
@@ -80,16 +85,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   child: Text("SIGN IN WITH GOOGLE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                   color: Constants.meltonBlueAccent,
-                  splashColor: Constants.meltonRed,
                   ),
                 ],
               ),
+              Platform.isIOS ?
+              SignInWithAppleButton(
+                onPressed: privacyPolicyCheckboxValue ? () async {triggerLogin(false);} :
+                    () { showDialog(context: context, builder: (context) {
+                  return AlertDialog(
+                    title: Text("Accept the Privacy Policy"),
+                    content: Text("You need to accept the Privacy Policy to use the app."),
+                    actions: [
+                      FlatButton(
+                        child: Text("OK", style: TextStyle(color: Constants.meltonBlue)),
+                        onPressed: () { Navigator.pop(context); },
+                      ),
+                    ],
+                  );
+                }
+                );
+                },
+              ) : empty,
               RaisedButton(onPressed: () {
                 triggerRegister();
               },
                 child: Text("SIGN UP", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                 color: Constants.meltonBlue,
-                splashColor: Constants.meltonYellow,
               ),
             ],
           ),
@@ -98,8 +119,32 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<bool> triggerLogin() async {
-    UserRegistrationStatusModel tokenOrUnauthorized = await oauthLoginAndGetAppToken();
+  Future<void> triggerLogin(bool isGoogleLogin) async {
+    UserRegistrationStatusModel tokenOrUnauthorized;
+    if (isGoogleLogin) {
+      tokenOrUnauthorized = await oauthGoogleLoginAndGetAppToken();
+    } else {
+      final credential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+      print(credential);
+      print(credential.email);
+      print(credential.authorizationCode);
+      String appleEmail;
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      if (credential.email == null) {
+        print('getting appleEmail from storage');
+        appleEmail = preferences.getString(TokenHandler.APPLE_EMAIL_KEY);
+      } else {
+        print('saving ${credential.email} to storage');
+        await preferences.setString(TokenHandler.APPLE_EMAIL_KEY, credential.email);
+        appleEmail = credential.email;
+      }
+      tokenOrUnauthorized = await ApiService().getAppToken(appleEmail, credential.authorizationCode, "APPLE");
+    }
     if (tokenOrUnauthorized?.appToken != null) {
       PersistentStorage storage = GetIt.I.get<PersistentStorage>();
       await storage.saveStringToStorage(TokenHandler.APP_TOKEN_KEY, tokenOrUnauthorized.appToken);
@@ -120,11 +165,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   }
 
-  Future<UserRegistrationStatusModel> oauthLoginAndGetAppToken() async {
+  Future<UserRegistrationStatusModel> oauthGoogleLoginAndGetAppToken() async {
     UserRegistrationStatusModel tokenOrUnauthorized;
     await _googleSignIn.signIn().then((result) async {
       await result.authentication.then((googleKey) async {
-        tokenOrUnauthorized = await ApiService().getAppToken(result.email, googleKey.idToken);
+        tokenOrUnauthorized = await ApiService().getAppToken(result.email, googleKey.idToken, "GOOGLE");
       }).catchError((err) {
         print('oauth inner error'); //todo error screen
       });
