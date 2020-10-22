@@ -17,7 +17,7 @@ Future<void> setupLocator() async {
 
   locator.registerSingletonAsync<TokenHandler>(() async {
     TokenHandler handler = TokenHandler();
-    await handler.refresh(locator.get<PersistentStorage>()); //todo any issues?
+    await handler.refresh(locator.get<PersistentStorage>());
     return handler;
   });
 
