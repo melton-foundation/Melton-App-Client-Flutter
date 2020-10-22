@@ -59,7 +59,6 @@ class _FellowsMapState extends State<FellowsMap> {
         value: (user) => Marker(
           icon: markerIcon,
           markerId: MarkerId(user.id.toString()),
-          //todo "not_found" needed?
           position: MapUtil.getLatLngForCityWithRandomization(validateCity(user.city, user.country) ?? "NOT_FOUND"),
           infoWindow: InfoWindow(
             title: user.name,

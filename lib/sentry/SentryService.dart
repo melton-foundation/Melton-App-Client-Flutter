@@ -5,7 +5,7 @@ import 'package:sentry/sentry.dart';
 class SentryService {
   var sentry;
 
-  SentryService(){
+  SentryService() {
     sentry = SentryClient(dsn: Secrets.SENTRY_CLIENT_DSN);
   }
 
@@ -13,7 +13,8 @@ class SentryService {
     return sentry;
   }
 
-  Future<void> reportErrorToSentry({@required dynamic error, dynamic stackTrace}) async {
+  Future<void> reportErrorToSentry(
+      {@required dynamic error, dynamic stackTrace}) async {
     sentry.captureException(
       exception: error,
       stackTrace: stackTrace,

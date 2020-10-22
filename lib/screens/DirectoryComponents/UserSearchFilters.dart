@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:melton_app/api/userSearchService.dart';
@@ -32,8 +31,12 @@ class UserSearchFilters extends StatelessWidget {
                         title: 'Campus',
                         values: snapshot.data.campusFilter,
                         searchService: searchService,
-                        alreadySelectedValues: getSelectedValues(snapshot.data.selectedCampusFilterValues, snapshot.data.campusFilter),
-                    isFilterSelected: snapshot.data.selectedCampusFilterValues.length !=0,
+                        alreadySelectedValues: getSelectedValues(
+                            snapshot.data.selectedCampusFilterValues,
+                            snapshot.data.campusFilter),
+                        isFilterSelected:
+                            snapshot.data.selectedCampusFilterValues.length !=
+                                0,
                       )
                     : Container(),
                 snapshot.data.batchYear.length > 0
@@ -41,17 +44,24 @@ class UserSearchFilters extends StatelessWidget {
                         title: 'Joining Year',
                         values: snapshot.data.batchYear,
                         searchService: searchService,
-                  alreadySelectedValues: getSelectedValues(snapshot.data.selectedBatchYearFilterValues, snapshot.data.batchYear),
-                  isFilterSelected: snapshot.data.selectedBatchYearFilterValues.length !=0,
-                )
+                        alreadySelectedValues: getSelectedValues(
+                            snapshot.data.selectedBatchYearFilterValues,
+                            snapshot.data.batchYear),
+                        isFilterSelected: snapshot
+                                .data.selectedBatchYearFilterValues.length !=
+                            0,
+                      )
                     : Container(),
                 snapshot.data.SDG.length > 0
                     ? UserFilter(
                         title: 'SDG',
                         values: snapshot.data.SDG,
                         searchService: searchService,
-                        alreadySelectedValues: getSelectedValues(snapshot.data.selectedSDGFilterValues, snapshot.data.SDG),
-                        isFilterSelected: snapshot.data.selectedSDGFilterValues.length != 0,
+                        alreadySelectedValues: getSelectedValues(
+                            snapshot.data.selectedSDGFilterValues,
+                            snapshot.data.SDG),
+                        isFilterSelected:
+                            snapshot.data.selectedSDGFilterValues.length != 0,
                       )
                     : Container(),
               ],

@@ -30,7 +30,7 @@ class _StoreState extends State<Store> {
       body: WillPopScope(
         onWillPop: () {
           Navigator.pop(context, pointsIfBought);
-          return new Future(() => false); //todo verify "false"
+          return new Future(() => false);
         },
         child: FutureBuilder<List<StoreModel>>(
           future: _model,
