@@ -1,11 +1,12 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:melton_app/util/secrets.dart';
 import 'package:sentry/sentry.dart';
 
 class SentryService {
   var sentry;
 
-  SentryService(){
+  SentryService() {
     sentry = SentryClient(dsn: Secrets.SENTRY_CLIENT_DSN);
   }
 
@@ -13,7 +14,8 @@ class SentryService {
     return sentry;
   }
 
-  Future<void> reportErrorToSentry({@required dynamic error, dynamic stackTrace}) async {
+  Future<void> reportErrorToSentry(
+      {@required dynamic error, dynamic stackTrace}) async {
     sentry.captureException(
       exception: error,
       stackTrace: stackTrace,
