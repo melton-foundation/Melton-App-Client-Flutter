@@ -4,10 +4,8 @@ import 'package:get_it/get_it.dart';
 import 'package:melton_app/Notification/NotificationBuilder.dart';
 import 'package:melton_app/models/PostsNotificationModel.dart';
 import 'package:melton_app/sentry/SentryService.dart';
-import 'package:melton_app/util/persistent_storage.dart';
 import 'package:melton_app/util/token_handler.dart';
 
-//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/screens/splash.dart';
@@ -23,15 +21,6 @@ import 'api/api.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupLocator();
-
-  PersistentStorage storage = GetIt.I.get<PersistentStorage>();
-  await storage.saveStringToStorage(
-      TokenHandler.APP_TOKEN_KEY, '7fb877e5153f1695899bac29b6380e96dceeb7ec');
-  String tk = await storage.readStringFromStorage(TokenHandler.APP_TOKEN_KEY);
-
-  print("Faking it XD");
-  print(tk);
-
   var sentry = GetIt.instance.get<SentryService>().getSentryLogger();
   runZonedGuarded(
     () => runApp(MyApp()),
