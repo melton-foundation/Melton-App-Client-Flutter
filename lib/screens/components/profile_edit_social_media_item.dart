@@ -50,12 +50,12 @@ class SingleSocialMediaEditItem extends StatelessWidget {
                     SocialMedia.HTTPS +
                     " or " +
                     SocialMedia.HTTP +
-                    "...";
+                    " or leave blank";
               }
               return "Start with '" +
                   SocialMedia.HTTPS +
                   SocialMedia.KEY_URL_MAP[_socialMediaKey] +
-                  "...'";
+                  "...' or leave blank";
             }
             return null;
           },
