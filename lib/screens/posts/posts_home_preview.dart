@@ -18,9 +18,6 @@ class PostsHomePreview extends StatefulWidget {
 class _PostsHomePreviewState extends State<PostsHomePreview> {
   Future<List<PostModel>> _model = ApiService().getPostPreviewList(true);
   final Widget empty = Container(height: 0, width: 0);
-  // not accessible from other function why??
-
-//  todo test 0 posts case
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +27,6 @@ class _PostsHomePreviewState extends State<PostsHomePreview> {
           return Center(child: CircularProgressIndicator());
         }
         if (snapshot.hasData) {
-          //todo make a nice widget for no /posts - like "all caught up!"
           return snapshot.data.length == 0 ? empty : ListView.builder(itemCount: snapshot.data.length,
             itemBuilder: (BuildContext context, int index) {
             return postPreviewCard(snapshot.data[index]);

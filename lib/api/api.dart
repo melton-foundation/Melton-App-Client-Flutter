@@ -187,9 +187,6 @@ class ApiService {
     }
   }
 
-  //todo convert to sendBottomThree - or not
-  // depending on how api sends "last updated" after ordering
-  // we need to get 3 latest posts
   Future<List<PostModel>> getPostPreviewList(bool sendTopThree) async {
     http.Response response = await http.get(apiUrl + post_preview, headers: getAuthHeader());
     bool result = handleError(response);
