@@ -183,10 +183,10 @@ class _LoginScreenState extends State<LoginScreen> {
           .getAppToken(appleEmail, credential.authorizationCode, "APPLE");
     }
     if (tokenOrUnauthorized?.appToken != null) {
-      PersistentStorage storage = GetIt.I.get<PersistentStorage>();
+      PersistentStorage storage = GetIt.instance.get<PersistentStorage>();
       await storage.saveStringToStorage(
           TokenHandler.APP_TOKEN_KEY, tokenOrUnauthorized.appToken);
-      await GetIt.I.get<TokenHandler>().refresh(storage);
+      await GetIt.instance.get<TokenHandler>().refresh(storage);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
         return MyHomePage();
       }));
