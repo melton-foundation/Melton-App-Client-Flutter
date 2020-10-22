@@ -322,7 +322,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
-                      print("VALID");
                       _model.phoneNumber = _phoneModel;
                       _model.socialMediaAccounts = _socialModel;
                       _model.SDGs = _sdgModel;

@@ -14,7 +14,6 @@ Future<String> getPreviewImagePath(String previewImage) async {
 
 void showNotification(title, body, notificationsPlugin,
     {String previewImage}) async {
-  print('showNotification');
   var android;
   var iOS;
   if (previewImage != null) {

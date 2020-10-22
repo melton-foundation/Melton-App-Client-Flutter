@@ -215,10 +215,6 @@ class _SignUpState extends State<SignUp> {
                             );
                           });
                     }
-
-                    print(response.isSuccess);
-                    print(response.isUserExists);
-                    print(response.emailMessage);
                   } else {
                     return showDialog(
                         context: context,

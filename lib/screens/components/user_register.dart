@@ -39,8 +39,6 @@ class _UserRegisterState extends State<UserRegister> {
           GetIt.instance.get<SentryService>().reportErrorToSentry(
               error:
                   UserRegisterException("User Register : ${snapshot.error}"));
-          print('user register has error');
-          print(snapshot.error);
           Navigator.pop(context, false);
         }
         return Container();

@@ -170,16 +170,11 @@ class _LoginScreenState extends State<LoginScreen> {
           AppleIDAuthorizationScopes.fullName,
         ],
       );
-      print(credential);
-      print(credential.email);
-      print(credential.authorizationCode);
       String appleEmail;
       SharedPreferences preferences = await SharedPreferences.getInstance();
       if (credential.email == null) {
-        print('getting appleEmail from storage');
         appleEmail = preferences.getString(TokenHandler.APPLE_EMAIL_KEY);
       } else {
-        print('saving ${credential.email} to storage');
         await preferences.setString(
             TokenHandler.APPLE_EMAIL_KEY, credential.email);
         appleEmail = credential.email;
@@ -214,10 +209,10 @@ class _LoginScreenState extends State<LoginScreen> {
         tokenOrUnauthorized = await ApiService()
             .getAppToken(result.email, googleKey.idToken, "GOOGLE");
       }).catchError((err) {
-        print('oauth inner error'); //todo error screen
+        //todo error screen
       });
     }).catchError((err) {
-      print('oauth error occured'); //todo error screen
+      //todo error screen
     });
     return tokenOrUnauthorized;
   }

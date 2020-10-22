@@ -99,7 +99,6 @@ class ApiService {
       return users;
     } else {
       //todo show error msg
-      print("request failed");
       return null;
     }
   }
@@ -112,7 +111,6 @@ class ApiService {
       return UserModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       //todo show error msg
-      print("request failed");
     }
     return UserModel();
   }
@@ -131,7 +129,6 @@ class ApiService {
       return users;
     } else {
       //todo show error msg
-      print("request failed");
       return null;
     }
   }
@@ -145,7 +142,6 @@ class ApiService {
           json.decode(utf8.decode(response.bodyBytes)));
     } else {
       //todo show error msg
-      print("request failed");
       return null;
     }
   }
@@ -159,7 +155,6 @@ class ApiService {
           json.decode(utf8.decode(response.bodyBytes)));
     } else {
       //todo show error msg
-      print("request failed");
       return null;
     }
   }
@@ -178,7 +173,6 @@ class ApiService {
       return items;
     } else {
       //todo show error msg snackbar?
-      print("request failed");
       return null;
     }
   }
@@ -192,7 +186,6 @@ class ApiService {
           json.decode(utf8.decode(response.bodyBytes)));
     } else {
       // todo show error msg snackbar
-      print("request failed, server is being cranky :(");
       return null;
     }
   }
@@ -216,14 +209,12 @@ class ApiService {
       }
     } else {
       // todo show error msg snackbar
-      print("request failed, server is being cranky :(");
       return null;
     }
   }
 
   Future<PostsNotificationModel> getRecentPostForNotification(
       String appToken) async {
-    print('using appToken $appToken');
     http.Response response = await http.get(apiUrl + post_preview,
         headers: {"Authorization": "Token " + appToken});
 
@@ -260,7 +251,6 @@ class ApiService {
       return post;
     } else {
       // todo show error msg snackbar
-      print("request failed, server is being cranky :(");
       return null;
     }
   }
@@ -268,7 +258,6 @@ class ApiService {
   Future<bool> postProfile(ProfileModel model) async {
     Map<String, dynamic> modelMap = ProfileModel.toJson(model);
     String modelJson = jsonEncode(modelMap);
-    print(modelJson);
     http.Response response = await http.post(apiUrl + profile,
         headers: getAuthAndJsonContentHeader(), body: modelJson);
     bool result = handleError(response);
@@ -276,7 +265,6 @@ class ApiService {
       return true;
     } else {
       // todo show error msg snackbar
-      print("request failed, server is being cranky :(");
       return null;
     }
   }
@@ -303,11 +291,8 @@ class ApiService {
   Future<UserRegisterResponseModel> postRegisterUser(
       UserRegisterModel model) async {
     Map<String, dynamic> modelMap = model.toJson(model);
-    print(json.encode(modelMap));
     http.Response response = await http.post(apiUrl + register,
         headers: getAuthAndJsonContentHeader(), body: json.encode(modelMap));
-    print(response.statusCode);
-    print(response.body);
     if (response.statusCode == 200 ||
         response.statusCode == 201 ||
         response.statusCode == 400) {

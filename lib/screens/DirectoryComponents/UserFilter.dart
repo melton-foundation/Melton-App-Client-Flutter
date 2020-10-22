@@ -56,7 +56,6 @@ class _UserFilterState extends State<UserFilter> {
         List<dynamic> filterSet = clearSelectedFilterValues();
         for (int index in selection.toList()) {
           filterSet.add(widget.values[index]);
-          print(widget.values[index]);
         }
       }
 
