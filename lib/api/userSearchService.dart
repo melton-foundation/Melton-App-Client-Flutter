@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:get_it/get_it.dart';
 import 'package:melton_app/api/api.dart';
 import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/models/UserModel.dart';
@@ -20,12 +21,14 @@ class UserSearchService {
         updateAvailableFilters(allUsers);
         yield applyFiltersOnResponse(allUsers);
       } else if (searchedName.trim().length == 0) {
-        allUsers = await ApiService().getUsers();
+        allUsers = await GetIt.instance.get<ApiService>().getUsers();
         allUsers.shuffle();
         updateAvailableFilters(allUsers);
         yield anyFilterSelected() ? applyFiltersOnResponse(allUsers) : allUsers;
       } else {
-        allUsers = await ApiService().getUserModelByName(searchedName.trim());
+        allUsers = await GetIt.instance
+            .get<ApiService>()
+            .getUserModelByName(searchedName.trim());
         updateAvailableFilters(allUsers);
         yield anyFilterSelected() ? applyFiltersOnResponse(allUsers) : allUsers;
       }

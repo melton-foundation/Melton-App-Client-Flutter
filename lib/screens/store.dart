@@ -17,7 +17,8 @@ class Store extends StatefulWidget {
 }
 
 class _StoreState extends State<Store> {
-  Future<List<StoreModel>> _model = ApiService().getStoreItems();
+  Future<List<StoreModel>> _model =
+      GetIt.instance.get<ApiService>().getStoreItems();
   int pointsIfBought;
 
   _StoreState({this.pointsIfBought});
@@ -118,17 +119,21 @@ class _StoreState extends State<Store> {
                                                             ),
                                                             onPressed:
                                                                 () async {
-                                                              StoreItemBuy
-                                                                  item =
-                                                                  await ApiService()
-                                                                      .buyStoreItem(snapshot
+                                                              StoreItemBuy item = await GetIt
+                                                                  .instance
+                                                                  .get<
+                                                                      ApiService>()
+                                                                  .buyStoreItem(
+                                                                      snapshot
                                                                           .data[
                                                                               index]
                                                                           .id);
                                                               setState(() {
-                                                                _model =
-                                                                    ApiService()
-                                                                        .getStoreItems();
+                                                                _model = GetIt
+                                                                    .instance
+                                                                    .get<
+                                                                        ApiService>()
+                                                                    .getStoreItems();
                                                                 pointsIfBought =
                                                                     item.availablePoints;
                                                               });

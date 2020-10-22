@@ -17,7 +17,7 @@ class UserDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<UserModel> _userModel =
-        ApiService().getUserModelById(id); // TODO: add error case here
+        GetIt.instance.get<ApiService>().getUserModelById(id);
     return Scaffold(
       appBar: AppBar(title: Text(userName)),
       body: Padding(

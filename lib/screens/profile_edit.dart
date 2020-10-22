@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:melton_app/api/api.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
@@ -325,7 +326,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                       _model.phoneNumber = _phoneModel;
                       _model.socialMediaAccounts = _socialModel;
                       _model.SDGs = _sdgModel;
-                      ApiService()
+                      GetIt.instance
+                          .get<ApiService>()
                           .postProfile(_model)
                           .then((value) => widget.profileRefreshFunction());
                       Navigator.pop(context, true);

@@ -16,8 +16,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/api.dart';
 
-// todo optimize imports in all files
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupLocator();

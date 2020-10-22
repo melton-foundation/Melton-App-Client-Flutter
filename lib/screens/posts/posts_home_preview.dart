@@ -15,7 +15,8 @@ class PostsHomePreview extends StatefulWidget {
 }
 
 class _PostsHomePreviewState extends State<PostsHomePreview> {
-  Future<List<PostModel>> _model = ApiService().getPostPreviewList(true);
+  Future<List<PostModel>> _model =
+      GetIt.instance.get<ApiService>().getPostPreviewList(true);
   final Widget empty = Container(height: 0, width: 0);
 
   @override

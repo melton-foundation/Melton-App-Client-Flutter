@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> isLoggedIn() async {
     bool isInternetConnected =
-        await GetIt.I.get<ApiService>().checkNetworkConnectivity();
+        await GetIt.instance.get<ApiService>().checkNetworkConnectivity();
 
     if (!isInternetConnected) {
       reload = await Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     bool isAppTokenValid =
-        await GetIt.I.get<ApiService>().verifyAppTokenValid();
+        await GetIt.instance.get<ApiService>().verifyAppTokenValid();
 
     if (isAppTokenValid) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
