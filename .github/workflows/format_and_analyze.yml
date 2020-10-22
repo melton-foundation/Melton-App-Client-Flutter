@@ -1,0 +1,23 @@
+name: Flutter Format and Analyze
+
+on:
+  push:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  format_and_analyze:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: 'stable'
+    - name: Install dependencies
+      run: flutter pub get
+    - name: Flutter Analyze
+      run: flutter analyze --no-pub 
+    - name: Flutter Format
+      run: flutter format --dry-run --set-exit-if-changed .
