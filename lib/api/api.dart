@@ -48,7 +48,7 @@ class ApiService {
   };
 
   Future<UserRegistrationStatusModel> getAppToken(String email, String oauthToken,
-      {String oauthProvider="GOOGLE"}) async {
+      String oauthProvider) async {
     Map<String, String> jsonBodyMap = {
       "email": email,
       "token": oauthToken,
