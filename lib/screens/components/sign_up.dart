@@ -102,7 +102,7 @@ class _SignUpState extends State<SignUp> {
 
               Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
               FormTitle("WORK"),
-              FormSubtitle("Tell us about your work!"),
+              FormSubtitle("Tell us about your work"),
               TextFormField(
                 maxLength: 200,
                 maxLines: 2,

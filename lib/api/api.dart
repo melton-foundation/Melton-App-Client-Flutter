@@ -101,6 +101,7 @@ class ApiService {
     } else {
       //todo show error msg
       print("request failed");
+      return null;
     }
   }
 
@@ -131,6 +132,7 @@ class ApiService {
     } else {
       //todo show error msg
       print("request failed");
+      return null;
     }
   }
 
@@ -143,6 +145,7 @@ class ApiService {
     else {
       //todo show error msg
       print("request failed");
+      return null;
     }
   }
 
@@ -155,6 +158,7 @@ class ApiService {
     else {
       //todo show error msg
       print("request failed");
+      return null;
     }
   }
 
@@ -172,6 +176,7 @@ class ApiService {
     } else {
       //todo show error msg snackbar?
       print("request failed");
+      return null;
     }
   }
 
@@ -184,6 +189,7 @@ class ApiService {
     } else {
       // todo show error msg snackbar
       print("request failed, server is being cranky :(");
+      return null;
     }
   }
 
@@ -206,6 +212,7 @@ class ApiService {
     } else {
       // todo show error msg snackbar
       print("request failed, server is being cranky :(");
+      return null;
     }
   }
 
@@ -244,6 +251,7 @@ class ApiService {
     } else {
       // todo show error msg snackbar
       print("request failed, server is being cranky :(");
+      return null;
     }
   }
 
@@ -259,6 +267,7 @@ class ApiService {
     } else {
       // todo show error msg snackbar
       print("request failed, server is being cranky :(");
+      return null;
     }
   }
 
@@ -293,6 +302,7 @@ class ApiService {
       UserRegisterResponseModel responseModel = UserRegisterResponseModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       return responseModel;
     }
+    return null;
   }
 
 }

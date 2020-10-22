@@ -70,16 +70,16 @@ class SDGList {
   }
 
   factory SDGList.fromJson(List<int> responseSDGs) {
-    List<int> sdg_list = [0, 0, 0];
+    List<int> sdgList = [0, 0, 0];
     if (responseSDGs == null) {
-      return SDGList(sdg_list);
+      return SDGList(sdgList);
     }
     for (int i = 0; i < responseSDGs.length && i < 3; i++) {
       if (responseSDGs[i].toInt() >= Constants.MIN_SDG_CODE && responseSDGs[i].toInt() <= Constants.MAX_SDG_CODE) {
-        sdg_list[i] = responseSDGs[i].toInt();
+        sdgList[i] = responseSDGs[i].toInt();
       }
     }
-    return SDGList(sdg_list);
+    return SDGList(sdgList);
   }
 
   static List<dynamic> toJson(SDGList model) {

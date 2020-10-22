@@ -179,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return tokenOrUnauthorized;
   }
 
-  Future<String> triggerRegister() async {
+  Future<void> triggerRegister() async {
     showModalBottomSheet(context: context, isScrollControlled: true,
         builder: (BuildContext context) {
       return SignUp();
