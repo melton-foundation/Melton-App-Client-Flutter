@@ -6,7 +6,6 @@ class UserRegisterModel {
   String work;
   List<int> SDGs;
 
-
   UserRegisterModel(String email, String name, String campus, int batch,
       String work, List<int> SDGs) {
     this.email = email;
@@ -24,12 +23,9 @@ class UserRegisterModel {
     this.SDGs = [1, 2, 3];
   }
 
-
   Map<String, dynamic> toJson(UserRegisterModel model) {
     return {
-      "user": {
-        "email": model.email
-      },
+      "user": {"email": model.email},
       "name": model.name,
       "campus": model.campus,
       "batch": model.batch,

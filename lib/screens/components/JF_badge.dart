@@ -8,18 +8,25 @@ class JFBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isJF ? Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        child: Text("  JUNIOR FELLOW  ",
-          style: TextStyle(fontWeight: FontWeight.bold,
-            color: Colors.white),),
-        decoration: BoxDecoration(
-          color: Constants.meltonYellowAccent,
-          boxShadow: [BoxShadow(blurRadius: 1.0)],
-          gradient: LinearGradient(colors: [Constants.meltonBlueAccent, Constants.meltonRedAccent]),
-        ),
-      ),
-    ) : Container();
+    return isJF
+        ? Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              child: Text(
+                "  JUNIOR FELLOW  ",
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+              ),
+              decoration: BoxDecoration(
+                color: Constants.meltonYellowAccent,
+                boxShadow: [BoxShadow(blurRadius: 1.0)],
+                gradient: LinearGradient(colors: [
+                  Constants.meltonBlueAccent,
+                  Constants.meltonRedAccent
+                ]),
+              ),
+            ),
+          )
+        : Container();
   }
 }

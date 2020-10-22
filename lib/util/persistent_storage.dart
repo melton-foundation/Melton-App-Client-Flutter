@@ -1,7 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PersistentStorage {
-
   static SharedPreferences _preferences;
 
   init() async {
@@ -21,5 +20,4 @@ class PersistentStorage {
   Future<String> readStringFromStorage(String key) async {
     return _preferences.getString(key);
   }
-
 }

@@ -1,15 +1,16 @@
 class UserRegisterResponseModel {
-
   bool isSuccess;
   bool isUserExists;
   String emailMessage;
 
   static const SUCCESS = "success";
   static const FAILURE = "failure";
-  static const USER_EXISTS_MESSAGE = "User with this email address already exists.";
+  static const USER_EXISTS_MESSAGE =
+      "User with this email address already exists.";
   static const INVALID_EMAIL = "Enter a valid email address.";
 
-  UserRegisterResponseModel({this.isSuccess, this.isUserExists, this.emailMessage});
+  UserRegisterResponseModel(
+      {this.isSuccess, this.isUserExists, this.emailMessage});
 
   factory UserRegisterResponseModel.fromJson(Map<String, dynamic> json) {
     return UserRegisterResponseModel(
@@ -38,7 +39,8 @@ class UserRegisterResponseModel {
     return false;
   }
 
-  static String getEmailMessage(String responseType, Map<String, dynamic> email) {
+  static String getEmailMessage(
+      String responseType, Map<String, dynamic> email) {
     if (responseType == FAILURE) {
       if (email != null) {
         return email['email'][0];

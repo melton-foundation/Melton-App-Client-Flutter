@@ -28,23 +28,27 @@ class _HomeState extends State<Home> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child:
-        Column(
+        child: Column(
           children: [
-            Text("MELTON NEWS", style: TextStyle(
-              color: Constants.meltonRed,
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold,
-            )),
+            Text("MELTON NEWS",
+                style: TextStyle(
+                  color: Constants.meltonRed,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                )),
             Expanded(child: PostsHomePreview()),
             RaisedButton(
               onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => PostsPreviewPage()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => PostsPreviewPage()));
               },
               color: Constants.meltonYellow,
               splashColor: Constants.meltonRed,
-              child: Text("SEE ALL", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+              child: Text(
+                "SEE ALL",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
             ),
             Container(
               child: Image.asset(MapUtil.MELTON_WORLD_MAP_PATH),

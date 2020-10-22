@@ -30,15 +30,15 @@ class _UserRegisterState extends State<UserRegister> {
           return Scaffold(
               body: Container(
                   color: Colors.white,
-                  child: Center(child: CircularProgressIndicator())
-              )
-          );
+                  child: Center(child: CircularProgressIndicator())));
         }
         if (snapshot.hasData) {
           Navigator.pop(context, snapshot.data);
         }
         if (snapshot.hasError) {
-          GetIt.instance.get<SentryService>().reportErrorToSentry(error: UserRegisterException("User Register : ${snapshot.error}"));
+          GetIt.instance.get<SentryService>().reportErrorToSentry(
+              error:
+                  UserRegisterException("User Register : ${snapshot.error}"));
           print('user register has error');
           print(snapshot.error);
           Navigator.pop(context, false);

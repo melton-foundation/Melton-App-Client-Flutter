@@ -46,10 +46,12 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Image.asset("assets/icon.png", height: 40.0, width: 40.0),
             SizedBox(width: 20.0),
-            Text(widget.title, style: TextStyle(
-              color: Constants.meltonRedYellowGreen[_currentScreenIndex],
-              fontWeight: FontWeight.bold,
-            ),
+            Text(
+              widget.title,
+              style: TextStyle(
+                color: Constants.meltonRedYellowGreen[_currentScreenIndex],
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
@@ -62,7 +64,11 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Constants.meltonRedYellowGreen[_currentScreenIndex],
             ),
             itemBuilder: (BuildContext context) {
-              return <String>[Constants.APPBAR_ABOUT, Constants.APPBAR_HELP, Constants.APPBAR_PRIVACY_POLICY].map((String choice) {
+              return <String>[
+                Constants.APPBAR_ABOUT,
+                Constants.APPBAR_HELP,
+                Constants.APPBAR_PRIVACY_POLICY
+              ].map((String choice) {
                 return PopupMenuItem<String>(
                   value: choice,
                   child: Text(choice),
@@ -78,21 +84,30 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Constants.meltonBlue,
         items: [
           BottomNavigationBarItem(
-            title: Text("Directory", style: TextStyle(color: Constants.meltonBlue,
-                fontWeight: FontWeight.bold, fontSize: 16.0)),
+            title: Text("Directory",
+                style: TextStyle(
+                    color: Constants.meltonBlue,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0)),
             icon: Icon(Icons.contacts, color: Constants.meltonBlue),
             backgroundColor: Constants.meltonRedAccent,
           ),
           BottomNavigationBarItem(
-            title: Text("Home", style: TextStyle(color: Constants.meltonBlue,
-                fontWeight: FontWeight.bold, fontSize: 16.0)),
+            title: Text("Home",
+                style: TextStyle(
+                    color: Constants.meltonBlue,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0)),
             icon: Icon(Icons.home, color: Constants.meltonBlue),
             backgroundColor: Constants.meltonYellowAccent,
           ),
           BottomNavigationBarItem(
-            title: Text("Profile", style: TextStyle(color: Constants.meltonBlue,
-                fontWeight: FontWeight.bold, fontSize: 16.0)),
-            icon:  Icon(Icons.person, color: Constants.meltonBlue),
+            title: Text("Profile",
+                style: TextStyle(
+                    color: Constants.meltonBlue,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0)),
+            icon: Icon(Icons.person, color: Constants.meltonBlue),
             backgroundColor: Constants.meltonGreenAccent,
           ),
         ],

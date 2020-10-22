@@ -10,7 +10,12 @@ class UserFilter extends StatefulWidget {
   final UserSearchService searchService;
 
   UserFilter(
-      {Key key, @required this.title, @required this.values, this.alreadySelectedValues, @required this.searchService, this.isFilterSelected=false})
+      {Key key,
+      @required this.title,
+      @required this.values,
+      this.alreadySelectedValues,
+      @required this.searchService,
+      this.isFilterSelected = false})
       : super(key: key);
 
   @override
@@ -28,14 +33,16 @@ class _UserFilterState extends State<UserFilter> {
       }
     }
 
-    List<dynamic> clearSelectedFilterValues(){
+    List<dynamic> clearSelectedFilterValues() {
       List<dynamic> filterSet;
       if (widget.title.toLowerCase().contains('campus')) {
-        filterSet = widget.searchService.filterOptions.selectedCampusFilterValues;
+        filterSet =
+            widget.searchService.filterOptions.selectedCampusFilterValues;
       } else if (widget.title.toLowerCase().contains('sdg')) {
         filterSet = widget.searchService.filterOptions.selectedSDGFilterValues;
       } else {
-        filterSet = widget.searchService.filterOptions.selectedBatchYearFilterValues;
+        filterSet =
+            widget.searchService.filterOptions.selectedBatchYearFilterValues;
       }
       filterSet.clear();
       return filterSet;
@@ -48,9 +55,9 @@ class _UserFilterState extends State<UserFilter> {
       void updateSelectedFilterValues(Set selection) {
         List<dynamic> filterSet = clearSelectedFilterValues();
         for (int index in selection.toList()) {
-            filterSet.add(widget.values[index]);
-            print(widget.values[index]);
-          }
+          filterSet.add(widget.values[index]);
+          print(widget.values[index]);
+        }
       }
 
       final selectedFilterValues = await showDialog<Set<int>>(
@@ -69,8 +76,7 @@ class _UserFilterState extends State<UserFilter> {
           isFilterSelected = true;
           widget.alreadySelectedValues = selectedFilterValues.toSet();
           updateSelectedFilterValues(selectedFilterValues);
-        }
-        else{
+        } else {
           clearSelectedFilterValues();
           widget.alreadySelectedValues.clear();
         }

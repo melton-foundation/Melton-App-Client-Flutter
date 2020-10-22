@@ -36,9 +36,12 @@ class UserSearchService {
 
   List<UserModel> applyFiltersOnResponse(List<UserModel> userList) {
     List<UserModel> users = List<UserModel>();
-    users =  applyFilter(userList, filterOptions.selectedCampusFilterValues, CAMPUS_FILTER);
-    users =  applyFilter(users, filterOptions.selectedBatchYearFilterValues, BATCH_FILTER);
-    users =  applyFilter(users, filterOptions.selectedSDGFilterValues, SDG_FILTER);
+    users = applyFilter(
+        userList, filterOptions.selectedCampusFilterValues, CAMPUS_FILTER);
+    users = applyFilter(
+        users, filterOptions.selectedBatchYearFilterValues, BATCH_FILTER);
+    users =
+        applyFilter(users, filterOptions.selectedSDGFilterValues, SDG_FILTER);
     return users;
   }
 
@@ -78,10 +81,12 @@ class UserSearchService {
   }
 
   void updateAvailableSDGFilters(int sdg) {
-    if (sdg != null && sdg >= Constants.MIN_SDG_CODE && sdg <= Constants.MAX_SDG_CODE)
-    {
+    if (sdg != null &&
+        sdg >= Constants.MIN_SDG_CODE &&
+        sdg <= Constants.MAX_SDG_CODE) {
       if (!filterOptions.SDG.containsValue(Constants.SDGs[sdg])) {
-        filterOptions.SDG.addAll({filterOptions.SDG.length: Constants.SDGs[sdg]});
+        filterOptions.SDG
+            .addAll({filterOptions.SDG.length: Constants.SDGs[sdg]});
       }
     }
   }
@@ -125,9 +130,15 @@ class UserSearchService {
       case BATCH_FILTER:
         return selectedFilterValues.contains(user.batch);
       case SDG_FILTER:
-        return (user.SDGs.firstSDG != 0 && selectedFilterValues.contains(Constants.SDGs[user.SDGs.firstSDG])) ||
-            (user.SDGs.secondSDG != 0 && selectedFilterValues.contains(Constants.SDGs[user.SDGs.secondSDG])) ||
-            (user.SDGs.thirdSDG != 0 && selectedFilterValues.contains(Constants.SDGs[user.SDGs.thirdSDG]));
+        return (user.SDGs.firstSDG != 0 &&
+                selectedFilterValues
+                    .contains(Constants.SDGs[user.SDGs.firstSDG])) ||
+            (user.SDGs.secondSDG != 0 &&
+                selectedFilterValues
+                    .contains(Constants.SDGs[user.SDGs.secondSDG])) ||
+            (user.SDGs.thirdSDG != 0 &&
+                selectedFilterValues
+                    .contains(Constants.SDGs[user.SDGs.thirdSDG]));
     }
     return false;
   }

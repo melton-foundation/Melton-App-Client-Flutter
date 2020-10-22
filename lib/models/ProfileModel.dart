@@ -18,9 +18,21 @@ class ProfileModel {
   SDGList SDGs;
   String picture;
 
-  ProfileModel({this.email, this.name, this.isJuniorFellow, this.points,
-  this.campus, this.city, this.country, this.batch, this.bio, this.work, this.phoneNumber,
-  this.socialMediaAccounts, this.SDGs, this.picture});
+  ProfileModel(
+      {this.email,
+      this.name,
+      this.isJuniorFellow,
+      this.points,
+      this.campus,
+      this.city,
+      this.country,
+      this.batch,
+      this.bio,
+      this.work,
+      this.phoneNumber,
+      this.socialMediaAccounts,
+      this.SDGs,
+      this.picture});
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
@@ -34,7 +46,8 @@ class ProfileModel {
       bio: json['profile']['bio'],
       work: json['profile']['work'],
       phoneNumber: PhoneNumber.fromJson(json['profile']['phoneNumber']),
-      socialMediaAccounts: SocialMediaAccounts.fromJson(new List<dynamic>.from(json['profile']['socialMediaAccounts'])),
+      socialMediaAccounts: SocialMediaAccounts.fromJson(
+          new List<dynamic>.from(json['profile']['socialMediaAccounts'])),
       SDGs: SDGList.fromJson(new List<int>.from(json['profile']['sdgs'])),
       picture: json['profile']['picture'],
     );
@@ -50,7 +63,8 @@ class ProfileModel {
       "bio": model.bio,
       "work": model.work,
       "phoneNumber": PhoneNumber.toJson(model.phoneNumber),
-      "socialMediaAccounts": SocialMediaAccounts.toJson(model.socialMediaAccounts),
+      "socialMediaAccounts":
+          SocialMediaAccounts.toJson(model.socialMediaAccounts),
       "sdgs": SDGList.toJson(model.SDGs)
     };
   }
@@ -75,7 +89,8 @@ class SDGList {
       return SDGList(sdgList);
     }
     for (int i = 0; i < responseSDGs.length && i < 3; i++) {
-      if (responseSDGs[i].toInt() >= Constants.MIN_SDG_CODE && responseSDGs[i].toInt() <= Constants.MAX_SDG_CODE) {
+      if (responseSDGs[i].toInt() >= Constants.MIN_SDG_CODE &&
+          responseSDGs[i].toInt() <= Constants.MAX_SDG_CODE) {
         sdgList[i] = responseSDGs[i].toInt();
       }
     }
@@ -105,34 +120,48 @@ class SocialMediaAccounts {
   String linkedin;
   List<String> others;
 
-  SocialMediaAccounts({this.facebook, this.instagram, this.twitter, this.wechat,
-  this.linkedin, this.others});
+  SocialMediaAccounts(
+      {this.facebook,
+      this.instagram,
+      this.twitter,
+      this.wechat,
+      this.linkedin,
+      this.others});
 
-  factory SocialMediaAccounts.fromJson(List<dynamic> responseSocialMediaAccounts) {
-    SocialMediaAccounts socialMediaAccounts = SocialMediaAccounts(others: new List<String>());
+  factory SocialMediaAccounts.fromJson(
+      List<dynamic> responseSocialMediaAccounts) {
+    SocialMediaAccounts socialMediaAccounts =
+        SocialMediaAccounts(others: new List<String>());
     for (int i = 0; i < responseSocialMediaAccounts.length; i++) {
       try {
-        responseSocialMediaAccounts[i] = new Map<String, String>.from(responseSocialMediaAccounts[i]);
+        responseSocialMediaAccounts[i] =
+            new Map<String, String>.from(responseSocialMediaAccounts[i]);
       } catch (e) {
         continue;
       }
 
       if (validateAccount(responseSocialMediaAccounts[i], "facebook")) {
-        socialMediaAccounts.facebook = responseSocialMediaAccounts[i]['account'].toLowerCase();
+        socialMediaAccounts.facebook =
+            responseSocialMediaAccounts[i]['account'].toLowerCase();
       } else if (validateAccount(responseSocialMediaAccounts[i], "instagram")) {
-        socialMediaAccounts.instagram = responseSocialMediaAccounts[i]['account'].toLowerCase();
+        socialMediaAccounts.instagram =
+            responseSocialMediaAccounts[i]['account'].toLowerCase();
       } else if (validateAccount(responseSocialMediaAccounts[i], "twitter")) {
-        socialMediaAccounts.twitter = responseSocialMediaAccounts[i]['account'].toLowerCase();
+        socialMediaAccounts.twitter =
+            responseSocialMediaAccounts[i]['account'].toLowerCase();
       } else if (validateAccount(responseSocialMediaAccounts[i], "wechat")) {
-        socialMediaAccounts.wechat = responseSocialMediaAccounts[i]['account'].toLowerCase();
+        socialMediaAccounts.wechat =
+            responseSocialMediaAccounts[i]['account'].toLowerCase();
       } else if (validateAccount(responseSocialMediaAccounts[i], "linkedin")) {
-        socialMediaAccounts.linkedin = responseSocialMediaAccounts[i]['account'].toLowerCase();
+        socialMediaAccounts.linkedin =
+            responseSocialMediaAccounts[i]['account'].toLowerCase();
       } else if (validateAccount(responseSocialMediaAccounts[i], "other")) {
         // only first 3 "other" links are considered
         if (socialMediaAccounts.others.length == 3) {
           continue;
         }
-        socialMediaAccounts.others.add(responseSocialMediaAccounts[i]['account']);
+        socialMediaAccounts.others
+            .add(responseSocialMediaAccounts[i]['account']);
       }
     }
     return socialMediaAccounts;
@@ -180,12 +209,12 @@ class SocialMediaAccounts {
       return (account['account'].toLowerCase().startsWith(SocialMedia.HTTP) ||
           account['account'].toLowerCase().startsWith(SocialMedia.HTTPS));
     } else if (type == "wechat") {
-      return account['type'].toLowerCase() == type && account['account'].length > 0;
+      return account['type'].toLowerCase() == type &&
+          account['account'].length > 0;
     }
-    return account['type'].toLowerCase() == type
-        && account['account'].toLowerCase().startsWith(SocialMedia.HTTPS);
+    return account['type'].toLowerCase() == type &&
+        account['account'].toLowerCase().startsWith(SocialMedia.HTTPS);
   }
-
 }
 
 class PhoneNumber {
@@ -200,12 +229,14 @@ class PhoneNumber {
     }
     for (int i = 0; i < responsePhoneNumbers.length; i++) {
       try {
-        Map<String, String> responsePhoneNumber = new Map<String, String>.from(responsePhoneNumbers[i]);
+        Map<String, String> responsePhoneNumber =
+            new Map<String, String>.from(responsePhoneNumbers[i]);
         if (responsePhoneNumber['number'].length == 0) {
           continue;
         }
         // only first phone number is returned
-        return PhoneNumber(countryCode: responsePhoneNumber['countryCode'],
+        return PhoneNumber(
+            countryCode: responsePhoneNumber['countryCode'],
             phoneNumber: responsePhoneNumber['number']);
       } catch (e) {
         continue;
@@ -216,14 +247,13 @@ class PhoneNumber {
 
   static List<dynamic> toJson(PhoneNumber model) {
     List<dynamic> returnList = [];
-    if (model.phoneNumber != null && model.phoneNumber.length > 0 &&
-        model.countryCode!= null && model.countryCode.length > 0) {
-      returnList.add({
-        "number": model.phoneNumber,
-        "countryCode": model.countryCode
-      });
+    if (model.phoneNumber != null &&
+        model.phoneNumber.length > 0 &&
+        model.countryCode != null &&
+        model.countryCode.length > 0) {
+      returnList
+          .add({"number": model.phoneNumber, "countryCode": model.countryCode});
     }
     return returnList;
   }
-
 }

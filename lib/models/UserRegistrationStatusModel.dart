@@ -6,9 +6,6 @@ class UserRegistrationStatusModel {
 
   factory UserRegistrationStatusModel.fromJson(Map<String, dynamic> json) {
     return UserRegistrationStatusModel(
-      isApproved: json['isApproved'],
-      appToken: json['appToken']
-    );
+        isApproved: json['isApproved'], appToken: json['appToken']);
   }
-
 }

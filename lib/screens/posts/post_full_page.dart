@@ -42,7 +42,9 @@ class _PostFullPageState extends State<PostFullPage> {
               return _buildMarkdownPost(snapshot);
             }
             if (snapshot.hasError) {
-              GetIt.instance.get<SentryService>().reportErrorToSentry(error: PostFullPageException("Posts full page : ${snapshot.error}"));
+              GetIt.instance.get<SentryService>().reportErrorToSentry(
+                  error: PostFullPageException(
+                      "Posts full page : ${snapshot.error}"));
               return Text("${snapshot.error}"); //todo handle correctly
             }
             //todo make fun error screen

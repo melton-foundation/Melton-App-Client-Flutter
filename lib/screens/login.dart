@@ -36,10 +36,12 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Constants.meltonGreenAccent, Constants.meltonYellowAccent]
-          ),
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Constants.meltonGreenAccent,
+                Constants.meltonYellowAccent
+              ]),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -48,13 +50,21 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Image.asset("assets/errors/welcome_screen.png"),
               WelcomeText("WELCOME TO THE MELTON APP!"),
-              WelcomeText("You can Sign In with a Melton-registered email or Sign Up to get started!"),
+              WelcomeText(
+                  "You can Sign In with a Melton-registered email or Sign Up to get started!"),
               InkWell(
-                child: Text("meltonapp.com/privacy", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Constants.meltonBlue)),
-                onTap: () {launchUrlWebview("https://meltonapp.com/privacy");},
+                child: Text("meltonapp.com/privacy",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Constants.meltonBlue)),
+                onTap: () {
+                  launchUrlWebview("https://meltonapp.com/privacy");
+                },
               ),
               CheckboxListTile(
-                title: WhiteSubtitleText(content: "I have read and accept the Privacy Policy"),
+                title: WhiteSubtitleText(
+                    content: "I have read and accept the Privacy Policy"),
                 value: privacyPolicyCheckboxValue,
                 onChanged: (newValue) {
                   setState(() {
@@ -67,49 +77,79 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset("assets/google.png"),
-                  RaisedButton(onPressed: privacyPolicyCheckboxValue ?
-                    () { triggerLogin(true); } :
-                    () { showDialog(context: context, builder: (context) {
-                      return AlertDialog(
-                        title: Text("Accept the Privacy Policy"),
-                        content: Text("You need to accept the Privacy Policy to use the app."),
-                        actions: [
-                          FlatButton(
-                            child: Text("OK", style: TextStyle(color: Constants.meltonBlue)),
-                            onPressed: () { Navigator.pop(context); },
-                          ),
-                        ],
-                      );
-                      }
-                      );
-                    },
-                  child: Text("SIGN IN WITH GOOGLE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                  color: Constants.meltonBlueAccent,
+                  RaisedButton(
+                    onPressed: privacyPolicyCheckboxValue
+                        ? () {
+                            triggerLogin(true);
+                          }
+                        : () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("Accept the Privacy Policy"),
+                                    content: Text(
+                                        "You need to accept the Privacy Policy to use the app."),
+                                    actions: [
+                                      FlatButton(
+                                        child: Text("OK",
+                                            style: TextStyle(
+                                                color: Constants.meltonBlue)),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                });
+                          },
+                    child: Text(
+                      "SIGN IN WITH GOOGLE",
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    color: Constants.meltonBlueAccent,
                   ),
                 ],
               ),
-              Platform.isIOS ?
-              SignInWithAppleButton(
-                onPressed: privacyPolicyCheckboxValue ? () async {triggerLogin(false);} :
-                    () { showDialog(context: context, builder: (context) {
-                  return AlertDialog(
-                    title: Text("Accept the Privacy Policy"),
-                    content: Text("You need to accept the Privacy Policy to use the app."),
-                    actions: [
-                      FlatButton(
-                        child: Text("OK", style: TextStyle(color: Constants.meltonBlue)),
-                        onPressed: () { Navigator.pop(context); },
-                      ),
-                    ],
-                  );
-                }
-                );
+              Platform.isIOS
+                  ? SignInWithAppleButton(
+                      onPressed: privacyPolicyCheckboxValue
+                          ? () async {
+                              triggerLogin(false);
+                            }
+                          : () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text("Accept the Privacy Policy"),
+                                      content: Text(
+                                          "You need to accept the Privacy Policy to use the app."),
+                                      actions: [
+                                        FlatButton(
+                                          child: Text("OK",
+                                              style: TextStyle(
+                                                  color: Constants.meltonBlue)),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                    )
+                  : empty,
+              RaisedButton(
+                onPressed: () {
+                  triggerRegister();
                 },
-              ) : empty,
-              RaisedButton(onPressed: () {
-                triggerRegister();
-              },
-                child: Text("SIGN UP", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                child: Text(
+                  "SIGN UP",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
                 color: Constants.meltonBlue,
               ),
             ],
@@ -140,14 +180,17 @@ class _LoginScreenState extends State<LoginScreen> {
         appleEmail = preferences.getString(TokenHandler.APPLE_EMAIL_KEY);
       } else {
         print('saving ${credential.email} to storage');
-        await preferences.setString(TokenHandler.APPLE_EMAIL_KEY, credential.email);
+        await preferences.setString(
+            TokenHandler.APPLE_EMAIL_KEY, credential.email);
         appleEmail = credential.email;
       }
-      tokenOrUnauthorized = await ApiService().getAppToken(appleEmail, credential.authorizationCode, "APPLE");
+      tokenOrUnauthorized = await ApiService()
+          .getAppToken(appleEmail, credential.authorizationCode, "APPLE");
     }
     if (tokenOrUnauthorized?.appToken != null) {
       PersistentStorage storage = GetIt.I.get<PersistentStorage>();
-      await storage.saveStringToStorage(TokenHandler.APP_TOKEN_KEY, tokenOrUnauthorized.appToken);
+      await storage.saveStringToStorage(
+          TokenHandler.APP_TOKEN_KEY, tokenOrUnauthorized.appToken);
       await GetIt.I.get<TokenHandler>().refresh(storage);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
         return MyHomePage();
@@ -162,14 +205,14 @@ class _LoginScreenState extends State<LoginScreen> {
         return SplashScreen();
       }));
     }
-
   }
 
   Future<UserRegistrationStatusModel> oauthGoogleLoginAndGetAppToken() async {
     UserRegistrationStatusModel tokenOrUnauthorized;
     await _googleSignIn.signIn().then((result) async {
       await result.authentication.then((googleKey) async {
-        tokenOrUnauthorized = await ApiService().getAppToken(result.email, googleKey.idToken, "GOOGLE");
+        tokenOrUnauthorized = await ApiService()
+            .getAppToken(result.email, googleKey.idToken, "GOOGLE");
       }).catchError((err) {
         print('oauth inner error'); //todo error screen
       });
@@ -180,12 +223,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> triggerRegister() async {
-    showModalBottomSheet(context: context, isScrollControlled: true,
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
         builder: (BuildContext context) {
-      return SignUp();
-    });
+          return SignUp();
+        });
   }
-
 }
 
 class WelcomeText extends StatelessWidget {
@@ -195,9 +239,10 @@ class WelcomeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,
-      color: Colors.white),);
+    return Text(
+      text,
+      style: TextStyle(
+          fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+    );
   }
 }
-
-

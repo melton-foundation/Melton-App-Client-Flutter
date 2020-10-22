@@ -42,7 +42,6 @@ class _SignUpState extends State<SignUp> {
                   _model.name = newValue;
                 },
               ),
-
               Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
               FormTitle("EMAIL"),
               FormSubtitle("Use a Melton-registered email if you can"),
@@ -58,7 +57,6 @@ class _SignUpState extends State<SignUp> {
                   _model.email = newValue;
                 },
               ),
-
               Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
               FormTitle("CAMPUS"),
               DropdownButtonFormField<String>(
@@ -77,7 +75,6 @@ class _SignUpState extends State<SignUp> {
                 }).toList(),
                 value: Constants.campuses[0],
               ),
-
               Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
               FormTitle("JOINED MF IN"),
               FormSubtitle("The year you got in"),
@@ -90,16 +87,18 @@ class _SignUpState extends State<SignUp> {
                   _model.batch = int.parse(newValue);
                 },
                 items: new List<int>.generate(currentYear - FIRST_BATCH + 1,
-                        (index) => FIRST_BATCH + index).map((e) => e.toString())
-                    .toList().reversed.map<DropdownMenuItem<String>>((s) {
-                      return DropdownMenuItem<String>(
-                        value: s,
-                        child: Text(s),
-                      );
+                        (index) => FIRST_BATCH + index)
+                    .map((e) => e.toString())
+                    .toList()
+                    .reversed
+                    .map<DropdownMenuItem<String>>((s) {
+                  return DropdownMenuItem<String>(
+                    value: s,
+                    child: Text(s),
+                  );
                 }).toList(),
                 value: FIRST_BATCH.toString(),
               ),
-
               Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
               FormTitle("WORK"),
               FormSubtitle("Tell us about your work"),
@@ -112,107 +111,148 @@ class _SignUpState extends State<SignUp> {
                   }
                 },
               ),
-
               RaisedButton(
-                child: Text("REGISTER", style: TextStyle(color: Colors.white),),
+                child: Text(
+                  "REGISTER",
+                  style: TextStyle(color: Colors.white),
+                ),
                 color: Theme.of(context).primaryColor,
                 onPressed: () async {
                   bool dialogShown = false;
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-                    UserRegisterResponseModel response = await Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => UserRegister(model: _model,))
-                    );
+                    UserRegisterResponseModel response =
+                        await Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => UserRegister(
+                                  model: _model,
+                                )));
 
-                    if (response.isUserExists != null && response.isUserExists) {
+                    if (response.isUserExists != null &&
+                        response.isUserExists) {
                       dialogShown = true;
-                      showDialog(context: context, builder: (context) {
-                        return AlertDialog(
-                          title: Text("USER EXISTS!"),
-                          content: Text("Try signing in with the same email."),
-                          actions: [
-                            FlatButton(
-                              child: Text("COOL", style: TextStyle(color: Constants.meltonBlue)),
-                              onPressed: () { Navigator.popUntil(context, (route) => route.isFirst); },
-                            ),
-                          ],
-                        );
-                      });
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("USER EXISTS!"),
+                              content:
+                                  Text("Try signing in with the same email."),
+                              actions: [
+                                FlatButton(
+                                  child: Text("COOL",
+                                      style: TextStyle(
+                                          color: Constants.meltonBlue)),
+                                  onPressed: () {
+                                    Navigator.popUntil(
+                                        context, (route) => route.isFirst);
+                                  },
+                                ),
+                              ],
+                            );
+                          });
                     } else if (response.emailMessage != null) {
                       dialogShown = true;
-                      showDialog(context: context, builder: (context) {
-                        return AlertDialog(
-                          title: Text(response.emailMessage),
-                          actions: [
-                            FlatButton(
-                              child: Text("OK", style: TextStyle(color: Constants.meltonBlue)),
-                              onPressed: () { Navigator.pop(context); },
-                            ),
-                          ],
-                        );
-                      });
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text(response.emailMessage),
+                              actions: [
+                                FlatButton(
+                                  child: Text("OK",
+                                      style: TextStyle(
+                                          color: Constants.meltonBlue)),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          });
                     }
                     if (response.isSuccess) {
                       dialogShown = true;
-                      showDialog(context: context, builder: (context) {
-                        return AlertDialog(
-                          title: Text("SUCCESS!"),
-                          content: Text("We will approve you soon. Try signing in later :)"),
-                          actions: [
-                            FlatButton(
-                              child: Text("COOL", style: TextStyle(color: Constants.meltonBlue)),
-                              onPressed: () { Navigator.popUntil(context, (route) => route.isFirst); },
-                            ),
-                          ],
-                        );
-                      });
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("SUCCESS!"),
+                              content: Text(
+                                  "We will approve you soon. Try signing in later :)"),
+                              actions: [
+                                FlatButton(
+                                  child: Text("COOL",
+                                      style: TextStyle(
+                                          color: Constants.meltonBlue)),
+                                  onPressed: () {
+                                    Navigator.popUntil(
+                                        context, (route) => route.isFirst);
+                                  },
+                                ),
+                              ],
+                            );
+                          });
                     }
 
                     if (!dialogShown) {
-                      showDialog(context: context, builder: (context) {
-                        return AlertDialog(
-                          title: Text("OOPS!"),
-                          content: Text("Something went wrong. Try again :("),
-                          actions: [
-                            FlatButton(
-                              child: Text("OK", style: TextStyle(color: Constants.meltonBlue)),
-                              onPressed: () { Navigator.pop(context); },
-                            ),
-                          ],
-                          );
-                      });
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("OOPS!"),
+                              content:
+                                  Text("Something went wrong. Try again :("),
+                              actions: [
+                                FlatButton(
+                                  child: Text("OK",
+                                      style: TextStyle(
+                                          color: Constants.meltonBlue)),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          });
                     }
 
                     print(response.isSuccess);
                     print(response.isUserExists);
                     print(response.emailMessage);
                   } else {
-                    return showDialog(context: context, builder: (context) {
-                      return AlertDialog(
-                        title: FormTitle("FILL IN THE MISSING FIELDS"),
-                        actions: [
-                          FlatButton(
-                            child: Text("OK", style: TextStyle(color: Constants.meltonBlue)),
-                            onPressed: () { Navigator.pop(context); },
-                          ),
-                        ],
-                      );
-                    });
+                    return showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: FormTitle("FILL IN THE MISSING FIELDS"),
+                            actions: [
+                              FlatButton(
+                                child: Text("OK",
+                                    style:
+                                        TextStyle(color: Constants.meltonBlue)),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          );
+                        });
                   }
                 },
               ),
-
               Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
               RaisedButton(
-                child: Text("CLOSE", style: TextStyle(color: Colors.white),),
-                color: Constants.meltonRedAccent,
-                onPressed: () {
-                  Navigator.pop(context);
-                }
+                  child: Text(
+                    "CLOSE",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  color: Constants.meltonRedAccent,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+              SizedBox(
+                height: 400,
               ),
-
-              SizedBox(height: 400,),
-
             ],
           ),
         ),
@@ -228,8 +268,13 @@ class FormTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: TextStyle(color: Constants.meltonBlue,
-        fontWeight: FontWeight.bold, fontSize: 18),);
+    return Text(
+      text,
+      style: TextStyle(
+          color: Constants.meltonBlue,
+          fontWeight: FontWeight.bold,
+          fontSize: 18),
+    );
   }
 }
 
@@ -240,8 +285,9 @@ class FormSubtitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: TextStyle(color: Constants.meltonBlue, fontSize: 14),);
+    return Text(
+      text,
+      style: TextStyle(color: Constants.meltonBlue, fontSize: 14),
+    );
   }
 }
-
-

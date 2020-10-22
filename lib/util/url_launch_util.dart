@@ -10,8 +10,9 @@ void launchUrlWebview(String url) async {
 
 //todo test on android and ios
 launchSocialMediaUrl(String url) async {
-  if (await canLaunch(url))  {
-    bool nativeLaunchSuccess = await launch(url, forceSafariVC: false, universalLinksOnly: true);
+  if (await canLaunch(url)) {
+    bool nativeLaunchSuccess =
+        await launch(url, forceSafariVC: false, universalLinksOnly: true);
     if (!nativeLaunchSuccess) {
       await launch(url, forceSafariVC: false, forceWebView: false);
     }

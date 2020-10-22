@@ -39,14 +39,19 @@ class Constants {
   static const APPBAR_HELP = "Help";
 
   static const MELTON_PRIVACY_POLICY_URL = "https://meltonapp.com/privacy/";
-  static const MELTON_LINKEDIN_URL = "https://www.linkedin.com/company/meltonfoundation/";
-  static const MELTON_FACEBOOK_URL = "https://www.facebook.com/meltonfoundation/";
-  static const MELTON_INSTAGRAM_URL = "https://www.instagram.com/meltonfoundation/";
+  static const MELTON_LINKEDIN_URL =
+      "https://www.linkedin.com/company/meltonfoundation/";
+  static const MELTON_FACEBOOK_URL =
+      "https://www.facebook.com/meltonfoundation/";
+  static const MELTON_INSTAGRAM_URL =
+      "https://www.instagram.com/meltonfoundation/";
   static const MELTON_TWITTER_URL = "https://twitter.com/MFGlobalCitizen/";
-  static const MELTON_YOUTUBE_URL = "https://www.youtube.com/user/TheMeltonFoundation/";
+  static const MELTON_YOUTUBE_URL =
+      "https://www.youtube.com/user/TheMeltonFoundation/";
   static const MELTON_WEBSITE_URL = "https://meltonfoundation.org/";
 
-  static const placeholder_avatar = "assets/profile_avatar_placeholder_256px.png";
+  static const placeholder_avatar =
+      "assets/profile_avatar_placeholder_256px.png";
 
   static const List<String> campuses = [
     "AU / Accra",
@@ -73,25 +78,24 @@ class Constants {
 
   // LinkedHashMap needed to maintain order
   static final Map<int, String> SDGs = new LinkedHashMap.from({
-    1  : "No Poverty",
-    2  : "Zero Hunger",
-    3  : "Good Health and Well-being",
-    4  : "Quality Education",
-    5  : "Gender Equality",
-    6  : "Clean Water and Sanitation",
-    7  : "Affordable and Clean Energy",
-    8  : "Decent Work and Economic Growth",
-    9  : "Industry, Innovation, and Infrastructure",
-    10 : "Reducing Inequality",
-    11 : "Sustainable Cities and Communities",
-    12 : "Responsible Consumption and Production",
-    13 : "Climate Action",
-    14 : "Life Below Water",
-    15 : "Life On Land",
-    16 : "Peace, Justice, and Strong Institutions",
-    17 : "Partnerships for the Goals",
+    1: "No Poverty",
+    2: "Zero Hunger",
+    3: "Good Health and Well-being",
+    4: "Quality Education",
+    5: "Gender Equality",
+    6: "Clean Water and Sanitation",
+    7: "Affordable and Clean Energy",
+    8: "Decent Work and Economic Growth",
+    9: "Industry, Innovation, and Infrastructure",
+    10: "Reducing Inequality",
+    11: "Sustainable Cities and Communities",
+    12: "Responsible Consumption and Production",
+    13: "Climate Action",
+    14: "Life Below Water",
+    15: "Life On Land",
+    16: "Peace, Justice, and Strong Institutions",
+    17: "Partnerships for the Goals",
   });
 
   static const String FILTERS = "FL";
-
 }

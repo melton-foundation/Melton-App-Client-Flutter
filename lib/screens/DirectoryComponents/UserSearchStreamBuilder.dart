@@ -26,7 +26,9 @@ class UserSearchStreamBuilder extends StatelessWidget {
         stream: searchService.results,
         builder: (context, AsyncSnapshot<List<UserModel>> snapshot) {
           if (snapshot.hasError) {
-            GetIt.instance.get<SentryService>().reportErrorToSentry(error:  UserSearchStreamBuilderException("User Search StreamBuilder : ${snapshot.error}"));
+            GetIt.instance.get<SentryService>().reportErrorToSentry(
+                error: UserSearchStreamBuilderException(
+                    "User Search StreamBuilder : ${snapshot.error}"));
             //todo test and add everywhere
             return Column(
               children: [
@@ -40,18 +42,20 @@ class UserSearchStreamBuilder extends StatelessWidget {
               case ConnectionState.none:
               case ConnectionState.done:
                 searchService.searchUser(" ");
-                return Center(child: CircularProgressIndicator(backgroundColor: Colors.white,));
+                return Center(
+                    child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                ));
               case ConnectionState.active:
                 if (snapshot.hasData) {
                   if (snapshot.data.length == 0) {
-                    return Center(child:
-                    Column(
+                    return Center(
+                        child: Column(
                       children: [
                         Image.asset("assets/errors/error_no_results.png"),
                         WhiteTitleText(content: "NO RESULTS FOUND!"),
                       ],
-                    )
-                    );
+                    ));
                   } else {
                     return UserTilesGrid(context: context, snapshot: snapshot);
                   }

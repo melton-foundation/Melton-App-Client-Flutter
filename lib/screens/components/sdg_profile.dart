@@ -19,9 +19,11 @@ class SDGProfile extends StatelessWidget {
         Divider(),
         Padding(
           padding: const EdgeInsets.fromLTRB(8.0, 0, 0, 0),
-          child: Text("SDGs",
+          child: Text(
+            "SDGs",
             textAlign: TextAlign.left,
-            style: TextStyle(letterSpacing: 2.0,
+            style: TextStyle(
+                letterSpacing: 2.0,
                 color: Constants.meltonBlue,
                 fontWeight: FontWeight.bold),
           ),
@@ -29,9 +31,21 @@ class SDGProfile extends StatelessWidget {
         SizedBox(height: 20.0),
         Row(
           children: [
-            Expanded(flex: 1, child: Image.asset(SDG_image_path + firstSDG.toString() + SDG_image_extension)),
-            Expanded(flex: 1, child: Image.asset(SDG_image_path + secondSDG.toString() + SDG_image_extension)),
-            Expanded(flex: 1, child: Image.asset(SDG_image_path + thirdSDG.toString() + SDG_image_extension)),
+            Expanded(
+                flex: 1,
+                child: Image.asset(SDG_image_path +
+                    firstSDG.toString() +
+                    SDG_image_extension)),
+            Expanded(
+                flex: 1,
+                child: Image.asset(SDG_image_path +
+                    secondSDG.toString() +
+                    SDG_image_extension)),
+            Expanded(
+                flex: 1,
+                child: Image.asset(SDG_image_path +
+                    thirdSDG.toString() +
+                    SDG_image_extension)),
           ],
         ),
       ],
