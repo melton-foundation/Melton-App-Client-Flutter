@@ -251,7 +251,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                             },
                             child: Text("DONE")));
                       },
-                      //todo make close as dismiss and dont save changed items
                       closeButton: null,
                       displayClearIcon: false,
                     ),
@@ -266,8 +265,6 @@ class _ProfileEditState extends State<ProfileEdit> {
 
                   ],
                 ),
-
-                //todo remaining dropdowns and fields
 
                 RaisedButton(
                   color: Theme.of(context).primaryColor,
@@ -334,7 +331,6 @@ class _ProfileEditState extends State<ProfileEdit> {
     }
   }
 
-  //todo move static methods to new util class
   static bool isPhoneNumberPresent(PhoneNumber phoneNumberMap) {
     if (phoneNumberMap.countryCode.length > 0 &&
         phoneNumberMap.phoneNumber.length > 0) {

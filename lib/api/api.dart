@@ -79,8 +79,6 @@ class ApiService {
     }
   }
 
-  //add support for no internet error screen?
-  // todo IMP - handle 403 case for all api calls - redirect to error screen
   Future<bool> verifyAppTokenValid() async {
     http.Response response = await http.get(apiUrl + "profile/", headers: getAuthHeader());
     if (response.statusCode == 200) {
