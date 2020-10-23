@@ -23,7 +23,7 @@ launchTelOrMailtoUrl(String url, bool isTel) async {
     url = "tel://+" + url;
   } else {
     //isEmail
-    url = "mailto:" + url + "?subject=Hey! I found you on the MF App";
+    url = "mailto:" + url + "?subject=Hey!%20I%20found%20you%20on%20the%20MF%20App";
   }
   if (await canLaunch(url)) {
     launch(url);
