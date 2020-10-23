@@ -38,12 +38,12 @@ class Constants {
   static const APPBAR_PRIVACY_POLICY = "Privacy Policy";
   static const APPBAR_HELP = "Help";
 
-  static const MELTON_PRIVACY_POLICY_URL = "https://meltonapp.com/privacy";
+  static const MELTON_PRIVACY_POLICY_URL = "https://meltonapp.com/privacy/";
   static const MELTON_LINKEDIN_URL = "https://www.linkedin.com/company/meltonfoundation/";
-  static const MELTON_FACEBOOK_URL = "https://www.facebook.com/meltonfoundation";
+  static const MELTON_FACEBOOK_URL = "https://www.facebook.com/meltonfoundation/";
   static const MELTON_INSTAGRAM_URL = "https://www.instagram.com/meltonfoundation/";
-  static const MELTON_TWITTER_URL = "https://twitter.com/MFGlobalCitizen";
-  static const MELTON_YOUTUBE_URL = "https://www.youtube.com/user/TheMeltonFoundation";
+  static const MELTON_TWITTER_URL = "https://twitter.com/MFGlobalCitizen/";
+  static const MELTON_YOUTUBE_URL = "https://www.youtube.com/user/TheMeltonFoundation/";
   static const MELTON_WEBSITE_URL = "https://meltonfoundation.org/";
 
   static const placeholder_avatar = "assets/profile_avatar_placeholder_256px.png";

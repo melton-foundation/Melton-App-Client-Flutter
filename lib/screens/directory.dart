@@ -22,9 +22,7 @@ class _DirectoryState extends State<Directory> {
     super.initState();
   }
 
-  void dispose(){
-    /*TODO : check whether dispose is placed in correct place or not*/
-    print('dispose directory');
+  void dispose() {
     searchService.dispose();
     super.dispose();
   }

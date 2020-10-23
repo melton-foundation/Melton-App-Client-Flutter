@@ -48,7 +48,7 @@ class ApiService {
   };
 
   Future<UserRegistrationStatusModel> getAppToken(String email, String oauthToken,
-      {String oauthProvider="GOOGLE"}) async {
+      String oauthProvider) async {
     Map<String, String> jsonBodyMap = {
       "email": email,
       "token": oauthToken,
@@ -79,8 +79,6 @@ class ApiService {
     }
   }
 
-  //add support for no internet error screen?
-  // todo IMP - handle 403 case for all api calls - redirect to error screen
   Future<bool> verifyAppTokenValid() async {
     http.Response response = await http.get(apiUrl + "profile/", headers: getAuthHeader());
     if (response.statusCode == 200) {
@@ -189,9 +187,6 @@ class ApiService {
     }
   }
 
-  //todo convert to sendBottomThree - or not
-  // depending on how api sends "last updated" after ordering
-  // we need to get 3 latest posts
   Future<List<PostModel>> getPostPreviewList(bool sendTopThree) async {
     http.Response response = await http.get(apiUrl + post_preview, headers: getAuthHeader());
     bool result = handleError(response);

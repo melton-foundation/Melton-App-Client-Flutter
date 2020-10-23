@@ -33,7 +33,6 @@ class UserRegisterResponseModel {
           return false;
         }
       }
-      //todo handle upstream?
       return null;
     }
     return false;

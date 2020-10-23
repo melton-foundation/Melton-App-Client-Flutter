@@ -40,9 +40,6 @@ class ProfileModel {
     );
   }
 
-  
-
-  //todo handle null and required fields
   static Map<String, dynamic> toJson(ProfileModel model) {
     return {
       "name": model.name,
