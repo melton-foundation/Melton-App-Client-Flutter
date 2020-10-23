@@ -13,7 +13,8 @@ class Directory extends StatefulWidget {
 }
 
 class _DirectoryState extends State<Directory> {
-  final UserSearchService searchService = new UserSearchService();   // make this singleton
+  final UserSearchService searchService =
+      new UserSearchService(); // make this singleton
 
   @override
   void initState() {
@@ -30,15 +31,14 @@ class _DirectoryState extends State<Directory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Constants.directoryBackground,
-      body: Column(
-        children: [
-          UserSearch(searchService: searchService),
-          UserSearchFilters(searchService: searchService),
-          UserSearchedString(searchService: searchService),
-          UserSearchStreamBuilder(searchService: searchService),
-        ],
-      )
-    );
+        backgroundColor: Constants.directoryBackground,
+        body: Column(
+          children: [
+            UserSearch(searchService: searchService),
+            UserSearchFilters(searchService: searchService),
+            UserSearchedString(searchService: searchService),
+            UserSearchStreamBuilder(searchService: searchService),
+          ],
+        ));
   }
 }

@@ -15,5 +15,4 @@ class TokenHandler {
   String getToken() {
     return "Token " + token;
   }
-
 }

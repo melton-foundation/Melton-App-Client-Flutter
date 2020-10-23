@@ -17,7 +17,7 @@ class UserDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<UserModel> _userModel =
-        ApiService().getUserModelById(id); // TODO: add error case here
+        GetIt.instance.get<ApiService>().getUserModelById(id);
     return Scaffold(
       appBar: AppBar(title: Text(userName)),
       body: Padding(
@@ -32,7 +32,9 @@ class UserDetails extends StatelessWidget {
               return buildUserDetailsSingleChildScrollView(snapshot.data);
             }
             if (snapshot.hasError) {
-              GetIt.instance.get<SentryService>().reportErrorToSentry(error: UserDetailsException("User Details : ${snapshot.error}"));
+              GetIt.instance.get<SentryService>().reportErrorToSentry(
+                  error:
+                      UserDetailsException("User Details : ${snapshot.error}"));
               return Text("${snapshot.error}"); //todo handle correctly
             }
             //todo make fun error screen

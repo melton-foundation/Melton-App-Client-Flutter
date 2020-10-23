@@ -6,14 +6,14 @@ import 'package:http/http.dart' as http;
 
 Future<String> getPreviewImagePath(String previewImage) async {
   String imagePath;
-  if(previewImage != null && previewImage.length != 0) {
+  if (previewImage != null && previewImage.length != 0) {
     imagePath = await _downloadAndSaveFile(previewImage, 'notification.jpg');
   }
   return imagePath;
 }
 
-void showNotification(title, body, notificationsPlugin, {String previewImage}) async {
-  print('showNotification');
+void showNotification(title, body, notificationsPlugin,
+    {String previewImage}) async {
   var android;
   var iOS;
   if (previewImage != null) {
@@ -25,8 +25,11 @@ void showNotification(title, body, notificationsPlugin, {String previewImage}) a
       htmlFormatSummaryText: false,
     );
     android = AndroidNotificationDetails(
-      'MeltonApp', 'Melton App Notification', 'Recent Post Simple Notification',
-      priority: Priority.High, importance: Importance.Max,
+      'MeltonApp',
+      'Melton App Notification',
+      'Recent Post Simple Notification',
+      priority: Priority.High,
+      importance: Importance.Max,
       largeIcon: DrawableResourceAndroidBitmap('app_icon'),
       styleInformation: bigPictureStyleInformation,
     );
@@ -34,16 +37,18 @@ void showNotification(title, body, notificationsPlugin, {String previewImage}) a
         attachments: [IOSNotificationAttachment(previewImage)]);
   } else {
     android = AndroidNotificationDetails(
-      'MeltonApp', 'Melton App Notification', 'Recent Post Simple Notification',
-      priority: Priority.High, importance: Importance.Max,
+      'MeltonApp',
+      'Melton App Notification',
+      'Recent Post Simple Notification',
+      priority: Priority.High,
+      importance: Importance.Max,
       largeIcon: DrawableResourceAndroidBitmap('app_icon'),
     );
     iOS = IOSNotificationDetails();
   }
 
   var platform = NotificationDetails(android, iOS);
-  await notificationsPlugin.show(
-      0, '$title', '$body', platform,
+  await notificationsPlugin.show(0, '$title', '$body', platform,
       payload: 'PAYLOAD: $title');
 }
 
@@ -68,29 +73,31 @@ class NotificationBuilder {
 
   _requestIOSPermissions() {
     _notificationsPlugin
-      .resolvePlatformSpecificImplementation
-      <IOSFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>()
         .requestPermissions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+          alert: true,
+          badge: true,
+          sound: true,
+        );
   }
 
-  Future<bool> handleNotification(PostsNotificationModel notificationModel) async {
+  Future<bool> handleNotification(
+      PostsNotificationModel notificationModel) async {
     String previewImagePath;
     if (notificationModel.showNotification) {
-      previewImagePath = await getPreviewImagePath(notificationModel.previewImage);
+      previewImagePath =
+          await getPreviewImagePath(notificationModel.previewImage);
       var android = AndroidInitializationSettings('@mipmap/ic_launcher');
       var iOS = IOSInitializationSettings();
       var initSettings = InitializationSettings(android, iOS);
       _notificationsPlugin.initialize(initSettings);
-      showNotification(notificationModel.title,
-          notificationModel.description, _notificationsPlugin, previewImage: previewImagePath);
+      showNotification(notificationModel.title, notificationModel.description,
+          _notificationsPlugin,
+          previewImage: previewImagePath);
       return true;
     } else {
       return false;
     }
   }
-
 }

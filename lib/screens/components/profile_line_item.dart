@@ -15,11 +15,13 @@ class ProfileLineItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Divider(),
-          Text(label,
-          textAlign: TextAlign.left,
-          style: TextStyle(letterSpacing: 2.0,
-          color: Constants.meltonBlue,
-          fontWeight: FontWeight.bold),
+          Text(
+            label,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                letterSpacing: 2.0,
+                color: Constants.meltonBlue,
+                fontWeight: FontWeight.bold),
           ),
           Text(
             content,

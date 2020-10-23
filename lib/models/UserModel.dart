@@ -16,9 +16,21 @@ class UserModel {
   SDGList SDGs;
   String picture;
 
-  UserModel({this.id, this.email, this.name, this.isJuniorFellow,
-  this.campus, this.city, this.country, this.batch, this.bio, this.work, this.phoneNumber,
-  this.socialMediaAccounts, this.SDGs, this.picture});
+  UserModel(
+      {this.id,
+      this.email,
+      this.name,
+      this.isJuniorFellow,
+      this.campus,
+      this.city,
+      this.country,
+      this.batch,
+      this.bio,
+      this.work,
+      this.phoneNumber,
+      this.socialMediaAccounts,
+      this.SDGs,
+      this.picture});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -33,7 +45,10 @@ class UserModel {
       bio: json['bio'],
       work: json['work'],
       phoneNumber: PhoneNumber.fromJson(json['phoneNumber']),
-      socialMediaAccounts: json['socialMediaAccounts'] != null ? SocialMediaAccounts.fromJson(new List<dynamic>.from(json['socialMediaAccounts'])) : null,
+      socialMediaAccounts: json['socialMediaAccounts'] != null
+          ? SocialMediaAccounts.fromJson(
+              new List<dynamic>.from(json['socialMediaAccounts']))
+          : null,
       SDGs: SDGList.fromJson(new List<int>.from(json['sdgs'])),
       picture: json['picture'],
     );

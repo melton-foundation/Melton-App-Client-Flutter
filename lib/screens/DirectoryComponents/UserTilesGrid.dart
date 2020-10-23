@@ -19,8 +19,7 @@ class UserTilesGrid extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
       childAspectRatio: (orientation == Orientation.portrait) ? 1.0 : 1.3,
       children: List.generate(snapshot.data.length, (index) {
-        return UserTile(
-            context: context, snapshot: snapshot, index: index);
+        return UserTile(context: context, snapshot: snapshot, index: index);
       }),
     );
   }

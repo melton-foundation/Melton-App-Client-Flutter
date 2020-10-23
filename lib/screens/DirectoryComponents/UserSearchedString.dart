@@ -17,7 +17,8 @@ class UserSearchedString extends StatelessWidget {
         if (snapshot.data == null || snapshot.data.trim().length <= 2) {
           return Container();
         }
-        return WhiteSubtitleText(content: "Showing Fellows with '${snapshot.data}'");
+        return WhiteSubtitleText(
+            content: "Showing Fellows with '${snapshot.data}'");
       },
     );
   }

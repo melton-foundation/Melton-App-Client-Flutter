@@ -26,14 +26,15 @@ Widget getProfileLineItemIfNotNullOrEmpty(String label, String content) {
   return ProfileLineItem(label: label, content: content);
 }
 
-
 Widget getProfileLineItem(String label, String content) {
   return ProfileLineItem(label: label, content: content);
 }
 
 Widget getTelephoneProfileLineItem(String phoneNumber, String countryCode) {
   return !(phoneNumber.length > 0 && countryCode.length > 0)
-      ? empty : ProfileLineItemSelectable(label: "PHONE", content: "+$countryCode $phoneNumber");
+      ? empty
+      : ProfileLineItemSelectable(
+          label: "PHONE", content: "+$countryCode $phoneNumber");
 }
 
 Widget getEmailProfileLineItem(String email) {
@@ -69,10 +70,22 @@ Widget getUserImpactPoints(int points) {
   );
 }
 
-List<Widget> getUserDetails({bool isProfileModel, String picture, String name,
-  bool isJuniorFellow, int points, SocialMediaAccounts socialMediaAccounts,
-  String bio, String work, SDGList SDGs, String phoneNumber, String countryCode,
-  String campus, int batch, String city, String email}){
+List<Widget> getUserDetails(
+    {bool isProfileModel,
+    String picture,
+    String name,
+    bool isJuniorFellow,
+    int points,
+    SocialMediaAccounts socialMediaAccounts,
+    String bio,
+    String work,
+    SDGList SDGs,
+    String phoneNumber,
+    String countryCode,
+    String campus,
+    int batch,
+    String city,
+    String email}) {
   return [
     SizedBox(height: 10.0),
     ProfilePhoto(url: picture),

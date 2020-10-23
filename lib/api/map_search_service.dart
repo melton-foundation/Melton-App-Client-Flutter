@@ -13,11 +13,13 @@ class MapSearchService {
   }
 
   Future<void> loadUsersAndAddToStream() async {
-    List<UserModel> allUsers = await GetIt.instance.get<ApiService>().getUsers();
+    List<UserModel> allUsers =
+        await GetIt.instance.get<ApiService>().getUsers();
     _users.sink.add(allUsers);
   }
 
-  StreamController<List<UserModel>> _users = StreamController<List<UserModel>>();
+  StreamController<List<UserModel>> _users =
+      StreamController<List<UserModel>>();
 
   // only first output is listened to, then subscription is cancelled
   Stream<List<UserModel>> get usersStream => _users.stream;
@@ -26,4 +28,3 @@ class MapSearchService {
     _users.close();
   }
 }
-

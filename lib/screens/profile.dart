@@ -37,8 +37,8 @@ class _ProfileState extends State<Profile> {
   Future<void> _handleRefresh() async {
     await loadProfile();
     await Future.delayed(Duration(seconds: 2));
-    Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text("Refreshed profile!")));
+    Scaffold.of(context)
+        .showSnackBar(SnackBar(content: Text("Refreshed profile!")));
   }
 
   @override
@@ -60,7 +60,8 @@ class _ProfileState extends State<Profile> {
               );
             }
             if (snapshot.hasError) {
-              GetIt.instance.get<SentryService>().reportErrorToSentry(error: ProfilesException("Profiles : ${snapshot.error}"));
+              GetIt.instance.get<SentryService>().reportErrorToSentry(
+                  error: ProfilesException("Profiles : ${snapshot.error}"));
               return Text("${snapshot.error}"); //todo handle correctly
             }
             return Center(child: CircularProgressIndicator());
@@ -69,9 +70,13 @@ class _ProfileState extends State<Profile> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.edit),
           onPressed: () async {
-            _loaded == null ? null :
-            isProfileUpdated = await Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => ProfileEdit(initialModel: _loaded, profileRefreshFunction: loadProfile)));
+            _loaded == null
+                ? null
+                : isProfileUpdated = await Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (_) => ProfileEdit(
+                            initialModel: _loaded,
+                            profileRefreshFunction: loadProfile)));
             if (isProfileUpdated != null && isProfileUpdated) {
               Scaffold.of(context).showSnackBar(SnackBar(
                 content: Text("Saved profile."),
@@ -79,8 +84,7 @@ class _ProfileState extends State<Profile> {
               loadProfile();
             }
           },
-        )
-    );
+        ));
   }
 
   ListView buildUserDetailsListView(ProfileModel data) {

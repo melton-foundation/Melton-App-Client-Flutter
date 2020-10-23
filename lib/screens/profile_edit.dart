@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:melton_app/api/api.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
@@ -25,7 +26,8 @@ class _ProfileEditState extends State<ProfileEdit> {
 
   ProfileModel _model;
   PhoneNumber _phoneModel = PhoneNumber();
-  SocialMediaAccounts _socialModel = SocialMediaAccounts(others: new List<String>());
+  SocialMediaAccounts _socialModel =
+      SocialMediaAccounts(others: new List<String>());
   SDGList _sdgModel = SDGList.profileUpdateConstructor();
 
   final phoneNumberRegex = RegExp(r"^\+[0-9]{1,3}\ [0-9]{4}[0-9]*$");
@@ -39,7 +41,8 @@ class _ProfileEditState extends State<ProfileEdit> {
     _phoneModel = widget.initialModel.phoneNumber;
     _socialModel = widget.initialModel.socialMediaAccounts;
     _sdgModel = widget.initialModel.SDGs;
-    _model = createProfileModelFromInitialModel(widget.initialModel, _phoneModel, _socialModel, _sdgModel);
+    _model = createProfileModelFromInitialModel(
+        widget.initialModel, _phoneModel, _socialModel, _sdgModel);
 
     return Scaffold(
       appBar: AppBar(title: Text("Edit Your Profile")),
@@ -70,7 +73,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                     icon: Icon(Icons.account_box),
                   ),
                 ),
-
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
                 TextFormField(
                   initialValue: widget.initialModel.bio,
@@ -85,7 +87,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                     _model.bio = newValue;
                   },
                 ),
-
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
                 TextFormField(
                   initialValue: widget.initialModel.work,
@@ -100,13 +101,20 @@ class _ProfileEditState extends State<ProfileEdit> {
                     _model.work = newValue;
                   },
                 ),
-
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
-                Text("City", style: TextStyle(color: Constants.meltonBlue),),
+                Text(
+                  "City",
+                  style: TextStyle(color: Constants.meltonBlue),
+                ),
                 Row(
                   children: [
-                    Icon(Icons.home, color: Colors.grey,),
-                    SizedBox(width: 10,),
+                    Icon(
+                      Icons.home,
+                      color: Colors.grey,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: SearchableDropdown.single(
                         value: widget.initialModel.city,
@@ -131,13 +139,20 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                   ],
                 ),
-
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
-                Text("Melton Campus", style: TextStyle(color: Constants.meltonBlue),),
+                Text(
+                  "Melton Campus",
+                  style: TextStyle(color: Constants.meltonBlue),
+                ),
                 Row(
                   children: [
-                    Icon(FontAwesomeIcons.university, color: Colors.grey,),
-                    SizedBox(width: 10,),
+                    Icon(
+                      FontAwesomeIcons.university,
+                      color: Colors.grey,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: DropdownButtonFormField(
                         isExpanded: true,
@@ -145,25 +160,35 @@ class _ProfileEditState extends State<ProfileEdit> {
                         onSaved: (String newValue) {
                           _model.campus = newValue;
                         },
-                        items: Constants.campuses.map<DropdownMenuItem<String>>((s) {
+                        items: Constants.campuses
+                            .map<DropdownMenuItem<String>>((s) {
                           return DropdownMenuItem<String>(
                             value: s,
                             child: Text(s),
                           );
                         }).toList(),
-                        value: Constants.campuses.contains(widget.initialModel.campus) ?
-                        widget.initialModel.campus : OTHER_CAMPUS,
+                        value: Constants.campuses
+                                .contains(widget.initialModel.campus)
+                            ? widget.initialModel.campus
+                            : OTHER_CAMPUS,
                       ),
                     ),
                   ],
                 ),
-
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
-                Text("Joined MF in the year", style: TextStyle(color: Constants.meltonBlue),),
+                Text(
+                  "Joined MF in the year",
+                  style: TextStyle(color: Constants.meltonBlue),
+                ),
                 Row(
                   children: [
-                    Icon(FontAwesomeIcons.solidCalendarTimes, color: Colors.grey,),
-                    SizedBox(width: 10,),
+                    Icon(
+                      FontAwesomeIcons.solidCalendarTimes,
+                      color: Colors.grey,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
                       child: DropdownButtonFormField<String>(
                         isExpanded: true,
@@ -171,26 +196,39 @@ class _ProfileEditState extends State<ProfileEdit> {
                           _model.batch = int.parse(newValue);
                         },
                         onChanged: (String newValue) {},
-                        items: new List<int>.generate(currentYear - FIRST_BATCH + 1,
-                                (index) => FIRST_BATCH + index).map((e) => e.toString()).toList().reversed.map<DropdownMenuItem<String>>((s) {
+                        items: new List<int>.generate(
+                                currentYear - FIRST_BATCH + 1,
+                                (index) => FIRST_BATCH + index)
+                            .map((e) => e.toString())
+                            .toList()
+                            .reversed
+                            .map<DropdownMenuItem<String>>((s) {
                           return DropdownMenuItem<String>(
                             value: s,
                             child: Text(s),
                           );
                         }).toList(),
-                        value: new List<int>.generate(currentYear - FIRST_BATCH + 1,
-                                (index) => FIRST_BATCH + index).map((e) => e.toString()).toList()
-                            .contains(widget.initialModel.batch.toString()) ?
-                        widget.initialModel.batch.toString() : FIRST_BATCH.toString(),
+                        value: new List<int>.generate(
+                                    currentYear - FIRST_BATCH + 1,
+                                    (index) => FIRST_BATCH + index)
+                                .map((e) => e.toString())
+                                .toList()
+                                .contains(widget.initialModel.batch.toString())
+                            ? widget.initialModel.batch.toString()
+                            : FIRST_BATCH.toString(),
                       ),
                     ),
                   ],
                 ),
-
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
                 TextFormField(
-                  initialValue: isPhoneNumberPresent(widget.initialModel.phoneNumber) ?
-                  ("+" + widget.initialModel.phoneNumber.countryCode + " " + widget.initialModel.phoneNumber.phoneNumber) : "",
+                  initialValue:
+                      isPhoneNumberPresent(widget.initialModel.phoneNumber)
+                          ? ("+" +
+                              widget.initialModel.phoneNumber.countryCode +
+                              " " +
+                              widget.initialModel.phoneNumber.phoneNumber)
+                          : "",
                   validator: (value) {
                     if (value.isNotEmpty && !isPhoneNumberFormatted(value)) {
                       return "'+CC XXXXXXXXXX', 'CC' is country code";
@@ -203,7 +241,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                       _phoneModel.phoneNumber = "";
                       return;
                     }
-                    List<String> strings = newValue.substring(1).split(RegExp("\\s+"));
+                    List<String> strings =
+                        newValue.substring(1).split(RegExp("\\s+"));
                     _phoneModel.countryCode = strings[0];
                     _phoneModel.phoneNumber = strings[1];
                   },
@@ -214,18 +253,26 @@ class _ProfileEditState extends State<ProfileEdit> {
                     icon: Icon(Icons.phone),
                   ),
                 ),
-
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
-                Text("UN SDGs you care about", style: TextStyle(color: Constants.meltonBlue),),
+                Text(
+                  "UN SDGs you care about",
+                  style: TextStyle(color: Constants.meltonBlue),
+                ),
                 Row(
                   children: [
-                    Icon(FontAwesomeIcons.handHoldingHeart, color: Colors.grey,),
-                    SizedBox(width: 10,),
+                    Icon(
+                      FontAwesomeIcons.handHoldingHeart,
+                      color: Colors.grey,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
                     SearchableDropdown.multiple(
-                    selectedItems: getSDGNumsFromSDGList(widget.initialModel.SDGs),
-                    hint: "------------------------",
-                    searchHint: "Select up to 3",
-                    items: Constants.SDGs.values.toList().map((s) {
+                      selectedItems:
+                          getSDGNumsFromSDGList(widget.initialModel.SDGs),
+                      hint: "------------------------",
+                      searchHint: "Select up to 3",
+                      items: Constants.SDGs.values.toList().map((s) {
                         return DropdownMenuItem<String>(
                           value: s,
                           child: Text(s),
@@ -233,7 +280,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                       }).toList(),
                       onChanged: (selections) {},
                       validator: (selections) {
-                        if (selections.length > 3)  {
+                        if (selections.length > 3) {
                           return "Maximum 3 selections allowed!";
                         }
                         if (selections.length == 0) {
@@ -246,9 +293,9 @@ class _ProfileEditState extends State<ProfileEdit> {
                             onPressed: isInvalidSDGsSelection(selections.length)
                                 ? null
                                 : () {
-                                setSDGModelFromSelections(selections);
-                                Navigator.pop(doneContext);
-                            },
+                                    setSDGModelFromSelections(selections);
+                                    Navigator.pop(doneContext);
+                                  },
                             child: Text("DONE")));
                       },
                       closeButton: null,
@@ -256,40 +303,53 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                   ],
                 ),
-
                 Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 20)),
-                Text("Social Media", style: TextStyle(color: Constants.meltonBlue),),
+                Text(
+                  "Social Media",
+                  style: TextStyle(color: Constants.meltonBlue),
+                ),
                 Column(
                   children: [
                     ProfileEditSocialMediaItem(_socialModel),
-
                   ],
                 ),
-
                 RaisedButton(
                   color: Theme.of(context).primaryColor,
-                  child: Text("UPDATE PROFILE", style: TextStyle(color: Colors.white),),
+                  child: Text(
+                    "UPDATE PROFILE",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
-                      print("VALID");
                       _model.phoneNumber = _phoneModel;
                       _model.socialMediaAccounts = _socialModel;
                       _model.SDGs = _sdgModel;
-                      ApiService().postProfile(_model).then((value) => widget.profileRefreshFunction());
+                      GetIt.instance
+                          .get<ApiService>()
+                          .postProfile(_model)
+                          .then((value) => widget.profileRefreshFunction());
                       Navigator.pop(context, true);
                     } else {
-                      showDialog(context: context, builder: (context) {
-                        return AlertDialog(
-                          title: Text("Oops"),
-                          content: Text("Fix the errors.\n\nProtip: Look for the red stuff"),
-                          actions: [
-                            FlatButton(
-                              child: Text("OK", style: TextStyle(color: Constants.meltonBlue)),
-                              onPressed: () { Navigator.pop(context); },
-                            ),
-                          ],);
-                      });
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("Oops"),
+                              content: Text(
+                                  "Fix the errors.\n\nProtip: Look for the red stuff"),
+                              actions: [
+                                FlatButton(
+                                  child: Text("OK",
+                                      style: TextStyle(
+                                          color: Constants.meltonBlue)),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          });
                     }
                   },
                 ),
@@ -360,24 +420,27 @@ class _ProfileEditState extends State<ProfileEdit> {
     return false;
   }
 
-  createProfileModelFromInitialModel(ProfileModel initialModel, PhoneNumber phoneModel,
-      SocialMediaAccounts socialModel, SDGList sdgModel) {
+  createProfileModelFromInitialModel(
+      ProfileModel initialModel,
+      PhoneNumber phoneModel,
+      SocialMediaAccounts socialModel,
+      SDGList sdgModel) {
     return ProfileModel(
-      name: initialModel.name,
-      campus: initialModel.campus,
-      city: validateCityAndCountry(initialModel.city, false),
-      country: validateCityAndCountry(initialModel.city, true),
-      batch: initialModel.batch,
-      bio: initialModel.bio,
-      work: initialModel.work,
-      phoneNumber: phoneModel,
-      socialMediaAccounts: socialModel,
-      SDGs: sdgModel
-    );
+        name: initialModel.name,
+        campus: initialModel.campus,
+        city: validateCityAndCountry(initialModel.city, false),
+        country: validateCityAndCountry(initialModel.city, true),
+        batch: initialModel.batch,
+        bio: initialModel.bio,
+        work: initialModel.work,
+        phoneNumber: phoneModel,
+        socialMediaAccounts: socialModel,
+        SDGs: sdgModel);
   }
 
   validateCityAndCountry(String profileCity, bool getCountry) {
-    if (profileCity == null || profileCity.length == 0 ||
+    if (profileCity == null ||
+        profileCity.length == 0 ||
         profileCity.split(",").length < 2) {
       return "";
     } else {
@@ -389,5 +452,4 @@ class _ProfileEditState extends State<ProfileEdit> {
       }
     }
   }
-
 }
