@@ -7,7 +7,7 @@
 # Create API keys
     Replace the "YOUR_KEY_HERE" in the app with your API keys for the features you want to check out:
     - Google Oauth - used for sign in flow, create it from Google Cloud or Firebase.
-        -  For iOS, replace your iOS client ID in reverse domain notation in `Info.plist`
+        -  For iOS, replace your iOS client ID in reverse domain notation in `Info.plist` and add your `GoogleService-Info.plist` to `ios/Runner`
                 ```
                 <key>CFBundleURLSchemes</key>
                 <array>
