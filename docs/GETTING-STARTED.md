@@ -22,7 +22,7 @@ Replace the "YOUR_KEY_HERE" in the app with your API keys for the features you w
     -  For iOS, replace in `AppDelegate.swift`
             `GMSServices.provideAPIKey("YOUR-API-KEY")`
     -  For Android, replace in your `AndroidManifest.xml`
-            ```xml
+            ```
             <meta-data android:name="com.google.android.geo.API_KEY"
                         android:value="YOUR-KEY-HERE"/>
             ```
