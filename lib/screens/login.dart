@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.bold,
                         color: Constants.meltonBlue)),
                 onTap: () {
-                  launchUrlWebview("https://meltonapp.com/privacy");
+                  launchUrlWebview("https://meltonapp.com/privacy/");
                 },
               ),
               CheckboxListTile(

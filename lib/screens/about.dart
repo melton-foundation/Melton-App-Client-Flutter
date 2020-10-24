@@ -44,7 +44,7 @@ Widget getTextSection() {
   return Container(
     padding: const EdgeInsets.all(32),
     child: Text(
-      "The Melton App was made by and made for Melton Fellows. You can find exciting Fellows projects, view the Fellows directory and find Fellows in many cities of the world using the Fellows Map."
+      "The Melton App was made by and made for Melton Fellows. You can find exciting Fellows projects, view the Fellows directory and find Fellows around the world using the Fellows Map."
       "\n\nThe Melton Foundation promotes and enables global citizenship as a way for individuals and organizations to work together across boundaries of place and identity to address global challenges.",
       textAlign: TextAlign.center,
       style: TextStyle(
