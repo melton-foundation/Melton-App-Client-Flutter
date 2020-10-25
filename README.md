@@ -9,7 +9,7 @@ App by and for Melton Foundation Fellows - https://meltonfoundation.org/
 Flutter app for iOS and Android with Google Maps markers, markdown preview, directory search with filters, simple online store.
 
 Contributions are welcome :)
-Please have a look at our GitHub Issues and [GETTING-STARTED.md](GETTING-STARTED.md)
+Please have a look at our GitHub Issues and [GETTING-STARTED.md](docs/GETTING-STARTED.md)
 
 ## Features
 
