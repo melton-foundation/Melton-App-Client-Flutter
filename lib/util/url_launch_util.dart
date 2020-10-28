@@ -17,9 +17,9 @@ launchSocialMediaUrl(String url) async {
   }
 }
 
-//todo test on android and ios
 launchTelOrMailtoUrl(String url, bool isTel) async {
   if (isTel) {
+    url = url.replaceAll(" ", "");
     url = "tel://+" + url;
   } else {
     //isEmail
