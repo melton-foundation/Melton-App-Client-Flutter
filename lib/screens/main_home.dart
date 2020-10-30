@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final supportMailto = Mailto(
     to: ["meltonapp.mf@gmail.com"],
-    cc: ["bijapurpranav@gmail.com", "larsd.mf@gmail.com"],
+    cc: ["bijapurpranav@gmail.com", "ldietzel@meltonfoundation.org"],
     subject: "Melton App: quick question",
     body: "Hey there! ",
   );
@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
         );
         break;
       case Constants.APPBAR_HELP:
-        await launchUrl("$supportMailto"); //todo ios test on real device
+        await launchUrl("$supportMailto");
         break;
       case Constants.APPBAR_PRIVACY_POLICY:
         await launchUrl(Constants.MELTON_PRIVACY_POLICY_URL);
