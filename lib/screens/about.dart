@@ -56,21 +56,32 @@ Widget getTextSection() {
 }
 
 Widget getSocialMediaSection() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  return Column(
     children: [
-      getSocialMediaIconButton(FontAwesomeIcons.linkedin, HexColor("#2867B2"),
-          Constants.MELTON_LINKEDIN_URL),
-      getSocialMediaIconButton(FontAwesomeIcons.facebook, HexColor("#3B5998"),
-          Constants.MELTON_FACEBOOK_URL),
-      getSocialMediaIconButton(FontAwesomeIcons.instagram, HexColor("#C13584"),
-          Constants.MELTON_INSTAGRAM_URL),
-      getSocialMediaIconButton(FontAwesomeIcons.twitter, HexColor("#1DA1F2"),
-          Constants.MELTON_TWITTER_URL),
-      getSocialMediaIconButton(FontAwesomeIcons.youtube, HexColor("#FF0000"),
-          Constants.MELTON_YOUTUBE_URL),
-      getSocialMediaIconButton(
-          FontAwesomeIcons.link, Colors.black, Constants.MELTON_WEBSITE_URL),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          getSocialMediaIconButton(FontAwesomeIcons.linkedin,
+              HexColor("#2867B2"), Constants.MELTON_LINKEDIN_URL),
+          getSocialMediaIconButton(FontAwesomeIcons.facebook,
+              HexColor("#3B5998"), Constants.MELTON_FACEBOOK_URL),
+          getSocialMediaIconButton(FontAwesomeIcons.instagram,
+              HexColor("#C13584"), Constants.MELTON_INSTAGRAM_URL),
+          getSocialMediaIconButton(FontAwesomeIcons.twitter,
+              HexColor("#1DA1F2"), Constants.MELTON_TWITTER_URL),
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          getSocialMediaIconButton(FontAwesomeIcons.youtube,
+              HexColor("#FF0000"), Constants.MELTON_YOUTUBE_URL),
+          getSocialMediaIconButton(FontAwesomeIcons.flickr, HexColor("#FF0084"),
+              Constants.MELTON_FLICKR_URL),
+          getSocialMediaIconButton(FontAwesomeIcons.link, Colors.black,
+              Constants.MELTON_WEBSITE_URL),
+        ],
+      ),
     ],
   );
 }

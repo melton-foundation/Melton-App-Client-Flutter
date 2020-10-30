@@ -48,7 +48,10 @@ class Constants {
   static const MELTON_TWITTER_URL = "https://twitter.com/MFGlobalCitizen/";
   static const MELTON_YOUTUBE_URL =
       "https://www.youtube.com/user/TheMeltonFoundation/";
-  static const MELTON_WEBSITE_URL = "https://meltonfoundation.org/";
+  static const MELTON_FLICKR_URL =
+      "https://www.flickr.com/people/meltonfoundation/";
+  static const MELTON_WEBSITE_URL =
+      "https://meltonfoundation.org/get-involved/";
 
   static const placeholder_avatar =
       "assets/profile_avatar_placeholder_256px.png";
