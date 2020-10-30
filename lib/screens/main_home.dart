@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final supportMailto = Mailto(
     to: ["meltonapp.mf@gmail.com"],
-    cc: ["bijapurpranav@gmail.com", "larsd.mf@gmail.com"],
+    cc: ["bijapurpranav@gmail.com", "ldietzel@meltonfoundation.org"],
     subject: "Melton App: quick question",
     body: "Hey there! ",
   );
