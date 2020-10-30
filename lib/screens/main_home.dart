@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
         );
         break;
       case Constants.APPBAR_HELP:
-        await launchUrl("$supportMailto"); //todo ios test on real device
+        await launchUrl("$supportMailto");
         break;
       case Constants.APPBAR_PRIVACY_POLICY:
         await launchUrl(Constants.MELTON_PRIVACY_POLICY_URL);

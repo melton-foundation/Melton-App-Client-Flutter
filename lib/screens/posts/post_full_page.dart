@@ -27,7 +27,6 @@ class _PostFullPageState extends State<PostFullPage> {
 
   @override
   Widget build(BuildContext context) {
-    //todo test and replace all screens with singleton ApiService
     _model = GetIt.instance.get<ApiService>().getPostById(widget.postId);
     return Scaffold(
       backgroundColor: Colors.grey[200],
