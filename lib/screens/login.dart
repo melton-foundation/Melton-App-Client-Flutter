@@ -15,7 +15,6 @@ import 'package:melton_app/util/text_util.dart';
 import 'package:melton_app/util/token_handler.dart';
 import 'package:melton_app/screens/components/sign_up.dart';
 import 'package:melton_app/screens/splash.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:melton_app/util/url_launch_util.dart';
 
@@ -59,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.bold,
                         color: Constants.meltonBlue)),
                 onTap: () {
-                  launchUrlWebview("https://meltonapp.com/privacy/");
+                  launchUrlWebview(Constants.MELTON_PRIVACY_POLICY_URL);
                 },
               ),
               CheckboxListTile(
@@ -170,17 +169,10 @@ class _LoginScreenState extends State<LoginScreen> {
           AppleIDAuthorizationScopes.fullName,
         ],
       );
-      String appleEmail;
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-      if (credential.email == null) {
-        appleEmail = preferences.getString(TokenHandler.APPLE_EMAIL_KEY);
-      } else {
-        await preferences.setString(
-            TokenHandler.APPLE_EMAIL_KEY, credential.email);
-        appleEmail = credential.email;
-      }
-      tokenOrUnauthorized = await ApiService()
-          .getAppToken(appleEmail, credential.authorizationCode, "APPLE");
+      tokenOrUnauthorized = await ApiService().getAppTokenUsingAppleOauth(
+          credential.userIdentifier,
+          credential.email,
+          credential.authorizationCode);
     }
     if (tokenOrUnauthorized?.appToken != null) {
       PersistentStorage storage = GetIt.instance.get<PersistentStorage>();
@@ -207,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
     await _googleSignIn.signIn().then((result) async {
       await result.authentication.then((googleKey) async {
         tokenOrUnauthorized = await ApiService()
-            .getAppToken(result.email, googleKey.idToken, "GOOGLE");
+            .getAppTokenUsingGoogleOauth(result.email, googleKey.idToken);
       }).catchError((err) {
         //todo error screen
       });
