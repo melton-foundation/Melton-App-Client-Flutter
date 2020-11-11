@@ -45,12 +45,33 @@ class ApiService {
     "Content-Type": "application/json"
   };
 
-  Future<UserRegistrationStatusModel> getAppToken(
-      String email, String oauthToken, String oauthProvider) async {
+  Future<UserRegistrationStatusModel> getAppTokenUsingGoogleOauth(
+      String email, String oauthToken) async {
     Map<String, String> jsonBodyMap = {
+      "appleId": null,
       "email": email,
       "token": oauthToken,
-      "authProvider": oauthProvider
+      "authProvider": "GOOGLE"
+    };
+    http.Response response = await http.post(apiUrl + "login/",
+        headers: contentHeader, body: json.encode(jsonBodyMap));
+    if (response.statusCode == 200) {
+      return UserRegistrationStatusModel.fromJson(
+          json.decode(utf8.decode(response.bodyBytes)));
+    } else if (response.statusCode == 403) {
+      return UserRegistrationStatusModel(isApproved: false, appToken: null);
+    } else {
+      return null;
+    }
+  }
+
+  Future<UserRegistrationStatusModel> getAppTokenUsingAppleOauth(
+      String appleUserId, String email, String oauthToken) async {
+    Map<String, String> jsonBodyMap = {
+      "appleId": appleUserId,
+      "email": email,
+      "token": oauthToken,
+      "authProvider": "APPLE"
     };
     http.Response response = await http.post(apiUrl + "login/",
         headers: contentHeader, body: json.encode(jsonBodyMap));
