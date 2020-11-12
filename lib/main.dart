@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:get_it/get_it.dart';
-import 'package:melton_app/Notification/NotificationBuilder.dart';
+import 'package:melton_app/notification/notification_builder.dart';
 import 'package:melton_app/models/PostsNotificationModel.dart';
 import 'package:melton_app/sentry/SentryService.dart';
 import 'package:melton_app/util/token_handler.dart';
