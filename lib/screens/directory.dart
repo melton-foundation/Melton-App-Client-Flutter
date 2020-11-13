@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:melton_app/Notification/NotificationBuilder.dart';
+import 'package:melton_app/notification/notification_builder.dart';
 import 'package:melton_app/api/userSearchService.dart';
 import 'package:melton_app/constants/constants.dart';
 import 'package:melton_app/screens/DirectoryComponents/UserSearch.dart';
