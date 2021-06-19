@@ -3,7 +3,7 @@ description: App for Melton Foundation Fellows - https://meltonapp.com/
 
 publish_to: 'none'
 
-version: 1.1.1+4
+version: 1.2.0+8
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   http: ^0.12.2
   font_awesome_flutter: ^8.8.1
-  url_launcher: ^5.5.0
+  url_launcher: ^6.0.0
   flutter_markdown: ^0.4.3
   google_sign_in: ^4.5.3
   shared_preferences: '>=0.5.10 <2.0.0'
@@ -22,7 +22,7 @@ dependencies:
   flutter_local_notifications: ^1.4.4+4
   background_fetch: ^0.6.0
   path_provider: ^1.6.18
-  google_maps_flutter: ^1.0.0
+  google_maps_flutter: ^2.0.6
   rxdart: ^0.24.1
   get_it: ^4.0.4
   sentry: ">=3.0.0 <4.0.0"
